@@ -4,7 +4,7 @@ subtitle: "Lesson 5: Linear Models and Multiple Regression"
 author: "Mahdieh Tourani"
 date: "September 29, 2026"
 title-slide-attributes:
-  data-background-image: "images/cover05.JPG"
+  data-background-image: "images/cover05.jpg"
   data-background-size: "25%"
   data-background-position: "right 7px bottom 20px"
 ---

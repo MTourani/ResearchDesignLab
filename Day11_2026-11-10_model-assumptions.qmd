@@ -4,7 +4,7 @@ subtitle: "Lesson 10: Model Assumptions and Diagnostics"
 author: "Mahdieh Tourani"
 date: "November 10, 2026"
 title-slide-attributes:
-  data-background-image: "images/cover09.JPG"
+  data-background-image: "images/cover09.jpg"
   data-background-size: "40%"
   data-background-position: "right 1px bottom 10px"
 ---

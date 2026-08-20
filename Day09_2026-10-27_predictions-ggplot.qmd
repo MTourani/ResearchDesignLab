@@ -554,13 +554,12 @@ ggplot(data = trout, aes(x = weight)) +
     a.  A 180 cm snake in **forest** habitat
     b.  A 250 cm snake in **grassland** habitat
     c.  A 5-metre snake in **grassland** habitat
-    
+
 2.  From the logistic model, find the probability of snake infestation for:
 
     a.  An island 80 km away with 1500 inhabitants
     b.  An uninhabited island 100 km away
     c.  An island 50 miles away with 800 inhabitants *(watch units!)*
-
 :::
 
 ```{webr}
