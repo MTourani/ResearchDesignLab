@@ -197,7 +197,7 @@ Likewise, if you ever have a question about what version of R you are using, you
 ## Course AI policy
 
 | Task | Status | Notes |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Understanding concepts, debugging error messages, learning a package | [🟢 Encouraged]{.chip .go} | No disclosure needed for incidental use |
 | Boilerplate & scaffolding (plot themes, cleaning templates) | [🟢 Allowed]{.chip .go} | Note it in a code comment |
 | Choosing a model or test, study-design decisions | [🟡 Case-by-case]{.chip .wait} | AI can help you brainstorm; the justification must be yours |
@@ -223,7 +223,7 @@ Watch out for [vibe coding](https://arxiv.org/html/2510.22254v1): accepting AI o
 ## Step 2: Choose Your Tool
 
 | Tool | Best for |
-|----|----|
+|------------------------------------|------------------------------------|
 | Conversational (Claude, ChatGPT) | Architecture questions, debugging, learning a new package |
 | IDE assistant (Copilot-style) | Autocompletion, staying in flow |
 | Autonomous agent (Claude Code, Cursor) | Multi-file edits, rapid prototyping |
@@ -285,7 +285,7 @@ Every university policy agrees on disclosing AI use.
 
 In code, use a header comment as below:
 
-```{webr}
+```{r}
 # Debugging help from Claude (Anthropic), 5 Jul 2026:
 # fixed a factor-level mismatch in the random-effects term below
 model <- lmer(mass ~ treatment + (1 | site), data = df)
