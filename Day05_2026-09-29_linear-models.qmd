@@ -1,0 +1,431 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 5: Linear Models and Multiple Regression"
+author: "Mahdieh Tourani"
+date: "September 29, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover05.JPG"
+  data-background-size: "25%"
+  data-background-position: "right 7px bottom 20px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Linear models
+2.  Simple linear regression
+3.  Multiple regression
+4.  Practice
+
+# Linear models
+
+## Overview
+
+-   We quantify linear relationships between a **response variable** (dependent) and **explanatory variables** (independent variables or predictors) using simple and multiple linear regression models.
+-   Linear models (LMs) are relatively simple, but incredibly powerful
+
+# Simple linear regression
+
+## Simulate data
+
+We will use (made-up) plant data to illustrate how simple linear regression models are fitted. First, we clear the workspace and simulate three datasets.
+
+```{webr}
+set.seed(541)
+# data1: intercept-only (plant heights)
+data1 <- data.frame(id        = paste0("A", 1:100),
+                    height_cm = rnorm(100, mean = 23.09, sd = 2.82))
+# data2: height ~ nitrogen
+data2 <- data.frame(id             = paste0("A", 1:100),
+                    nitrogen_gsqm  = runif(100, 50, 700),
+                    height_cm      = NA)
+data2$height_cm <- 23.15 + 0.00985 * data2$nitrogen_gsqm + rnorm(100, 0, 2.84)
+# data3: height ~ species (A vs B)
+data3 <- data.frame(id      = paste0("plant", 1:100),
+                    species = rep(c("Species A", "Species B"), 50))
+data3$height_cm <- ifelse(data3$species == "Species A",
+                          rnorm(50, 23.53, 2.8),
+                          rnorm(50, 20.17, 2.8))
+```
+
+> These data consist of the individual identification (id) and height (in cm) of 100 plants. All heights were measured 30 days after germination.
+
+## Intercept-only model
+
+The height of the plants is our variable of interest and we can fit a simple linear regression model using the lm() function. You can specify an intercept-only model by using a “1” after the tilde (∼) in the regression formula.
+
+```{webr}
+library(stats)
+m1 <- stats::lm(height_cm ~ 1, data = data1)
+summary(m1)
+```
+
+::: callout-note
+We have a response variable (height_cm), but no predictor variables. Therefore, we cannot estimate a slope, only an intercept term. In the absence of a slope, the intercept is equivalent to the mean height of all plants.
+:::
+
+::: callout-tip
+The model output can be displayed with the summary() function.
+:::
+
+## Intercept-only model
+
+The intercept value is the average height (in cm) of plants in this sample. The low p-value indicates that this value is significantly different from 0. Next, let’s plot the data and add the regression line.
+
+```{webr}
+plot(data1$height_cm,
+     pch = 19, 
+     col = "grey",
+     ylab = "Plant height (cm)")
+abline(m1, col = "red", lwd = 2)
+```
+
+## Intercept-only model
+
+To better understand what residuals are, let’s add them to the plot as well. To do so, we obtain the model-predicted value for each data point (i.e., the height a plant would have had if it were on the regression line) using the predict() function. Then we just connect each data point with its predicted value using segments().
+
+```{webr}
+plot(data1$height_cm,
+     pch = 19,
+     col = "grey",
+     ylab = "Plant height (cm)")
+abline(m1, col = "red", lwd = 2)
+fit <- predict(m1)
+segments(seq_along(data1$height_cm),
+         fit,
+         seq_along(data1$height_cm),
+         data1$height_cm)
+```
+
+## Intercept-only model
+
+Plotting a scatter plot or a regression line is not that useful when dealing with an intercept-only model. As an alternative, we can plot the density distribution of the data (the response variable) and then superimpose both the calculated and model-estimated mean. And as we just mentioned, these are identical.
+
+```{webr}
+plot(density(data1$height_cm))
+abline(v = mean(data1$height_cm), lwd = 6, col = grey(0.4))  # calculated mean
+abline(v = coef(m1), lwd = 2, col = "orange")   # model estimated mean
+```
+
+## Continuous predictor
+
+Generally, in regression analysis, we are interested in quantifying the relationship between predictor and response variables. We now inspect data2, which, in addition to each plant’s height, also contains the amount of Nitrogen added to each plant’s growing soil (g per $m^2$). First, we inspect the data and visualize plant height against nitrogen addition:
+
+```{webr}
+head(data2)
+plot(height_cm ~ nitrogen_gsqm,
+     data = data2,
+     pch = 19,
+     col = "grey",
+     xlab = expression(Nitrogen~addition~(g/m^2)),
+     ylab = "Plant height (cm)")
+```
+
+::: callout-tip
+Always include units with axes labels.
+:::
+
+## Continuous predictor
+
+We can fit a linear regression model to the data; this model includes a slope term for the effect of soil nitrogen concentration on plant height. The intercept term is implied and does not need to be specified in the formula.
+
+```{webr}
+m2 <- stats::lm(height_cm ~ nitrogen_gsqm, data = data2)
+summary(m2)
+```
+
+## Continuous predictor
+
+The intercept (23.15 cm) is the expected height of a plant when the nitrogen added to the soil is 0 g /$m^2$. The slope coefficient (0.0099 cm) is the expected increase in plant height in cm for every 1 g /$m^2$ increase in nitrogen added to the soil. The low p-value indicates that this slope is significantly different from 0.
+
+> How would you summarize this finding?
+
+::: incremental
+One way to summarize this finding could be: We detected a significant positive relationship between plant height and the amount of nitrogen added to the soil (beta = 0.01, t = 8.11, p \<0.001). For example, a plant supplemented with 100 g soil nitrogen reached an average height of 24.14 cm compared with 23.15 cm for a plant without supplementary nitrogen.
+:::
+
+## Continuous predictor
+
+We can use the model object to add the regression line to the scatter plot. And as earlier, we can also show the residuals in the same plot.
+
+```{webr}
+plot(height_cm ~ nitrogen_gsqm, 
+     data = data2,
+     pch = 19,
+     col = "grey",
+     xlab = "Nitrogen addition (g/m^2)",
+     ylab = "Plant height (cm)")
+abline(m2, col = "red", lwd = 2)
+fit <- predict(m2)
+segments(data2$nitrogen_gsqm,
+         fit,
+         data2$nitrogen_gsqm,
+         data2$height_cm)
+```
+
+## Categorical predictor
+
+We can also use categorical predictor variables. In a linear regression, such variables are dealt with by turning them into so-called dummy variables. This is done by setting one level as a reference value (set to 0; this is the one associated with the intercept). All other levels (set to 1) are then compared with the reference level, one by one. We illustrate the use of categorical predictors in simple linear regression using a new version of the plant data.
+
+```{webr}
+head(data3)
+
+```
+
+> This data set contains the id and height for two species of plants (species A and B).
+
+## Categorical predictor
+
+Next, we fit the simple linear regression with species as the predictor variable:
+
+```{webr}
+m3 <- stats::lm(height_cm ~ species, data = data3)
+summary(m3)
+```
+
+## Categorical predictor
+
+The intercept (23.53 cm) is the expected height of a plant of the reference species (A). The slope coefficient (-3.36 cm) is the expected difference in plant height of species B compared with species A. The negative coefficient indicates that the height of species B is (on average) lower than the height of species A. The low p-value indicates that the difference is significant. \>How would you summarize this finding?
+
+## Categorical predictor
+
+One way to summarize this finding could be: Species A grew significantly higher than species B (beta = -3.36, t = -5.991, p \<0.001). The average height following a 30-day growing period for species A was 23.53 cm, compared with 20.17 cm for species B.
+
+## Categorical predictor
+
+Finally, we plot the data and add the regression line:
+
+```{webr}
+boxplot(height_cm ~ species,
+        data = data3,
+        at = c(0, 1),
+        xlab = "",
+        ylab = "Plant height (cm)")
+abline(m3, col = "red", lwd = 2)
+```
+
+## Your turn
+
+::: {.callout-tip title="Practice 1"}
+Using your own data:
+
+1.  Identify variables in your data set that can be used as response and predictor variables in simple linear regression
+2.  Fit at least one LM with a **continuous** predictor and one with a **categorical** predictor.
+3.  Inspect the output and write a 1–3 sentence interpretation as a comment in your R script.
+4.  Generate figures showing the data and the regression line for each of the regression models you fit.
+:::
+
+# Multiple regression
+
+## Overview
+
+Regression models can have multiple predictors. This lesson will give you a basic understanding of the effects estimates (coefficients) generated by multiple linear regression. When the effects of multiple predictor variables in a regression are independent of each other, we refer to them as additive effects. Today, we look at three examples with different predictor variables that have additive effects on the response.
+
+```{webr}
+p1 <- data.frame(id        = paste0("P", 1:100),
+                 species   = rep(c("Species A", "Species B"), 50),
+                 pesticide = rep(c(FALSE, TRUE), each = 50),
+                 height_cm = NA) # Plant Data 1: species + pesticide (categorical + categorical)
+p1$height_cm <- 23.5 +
+                ifelse(p1$species == "Species B", -3.4, 0) +
+                ifelse(p1$pesticide, 2.1, 0) +
+                rnorm(100, 0, 2.5)
+p2 <- data.frame(nitrogen_gsqm = runif(100, 50, 700),
+                 species       = rep(c("Species A", "Species B"), 50),
+                 height_cm     = NA) # Plant Data 2: nitrogen + species (continuous + categorical)
+p2$height_cm <- 22 +
+                0.01 * p2$nitrogen_gsqm +
+                ifelse(p2$species == "Species B", -3.0, 0) +
+                rnorm(100, 0, 2.5)
+p3 <- data.frame( nitrogen_gsqm = runif(100, 50, 700),
+                  temperature   = rep(c(15, 25), 50),
+                  height_cm     = NA) # Plant Data 3: nitrogen + temperature (continuous + continuous)
+p3$height_cm <- 20 +
+                0.01 * p3$nitrogen_gsqm +
+                0.5  * p3$temperature +
+                rnorm(100, 0, 2.5)
+```
+
+## Categorical + Categorical
+
+We fit a linear regression model to the first data object. This regression model contains the additive effects of species (Species A and Species B) and whether pesticide was applied during the growth period (TRUE/FALSE).
+
+```{webr}
+m1 <- stats::lm(height_cm ~ species + pesticide, data = p1)
+summary(m1)
+```
+
+::: callout-note
+The output contains separate coefficients for the intercept and every effect included in the model. Remember, categorical variables are treated as dummy variables, with one category serving as the intercept value (0) to which each additional category is then compared.
+:::
+
+## Categorical + Categorical
+
+The model object essentially contains a machine that can be used to make predictions, i.e., to calculate the expected value of the response variable (height_cm) given certain values of the predictor variables (species and pesticide).
+
+To make a prediction, we first create a new data object (in this case, one that contains all possible combinations of species and pesticide). We then provide that data object to the predict() function which generates the predictions (fitted values of plant height) for each set of predictor values, as well as the associated standard errors.
+
+```{webr}
+new_data <- expand.grid(species   = c("Species A", "Species B"),
+                        pesticide = c(FALSE, TRUE))
+temp <- predict(m1, newdata = new_data, se.fit = TRUE)
+new_data$fit    <- temp$fit
+new_data$uci    <- new_data$fit + 1.96 * temp$se.fit
+new_data$lci    <- new_data$fit - 1.96 * temp$se.fit
+
+```
+
+## Categorical + Categorical
+
+We can use what you have previously learned about plotting in R to generate a graph that visualizes the results (model predictions).
+
+```{webr}
+cols <- c("orange", "turquoise")
+names(cols) <- sort(unique(new_data$species))
+
+plot(fit ~ as.numeric(pesticide),
+     data = new_data,
+     xlim = c(-0.25, 1.25),
+     col  = cols[species],
+     pch = 19,
+     cex = 2,
+     ylim = c(min(new_data$lci), max(new_data$uci)),
+     axes = FALSE,
+     xlab = "Treatment",
+     ylab = "Height (cm)")
+axis(1, at = c(0, 1), labels = c("w/o pesticide", "w/ pesticide"))
+axis(2)
+# Add confidence intervals
+segments(as.numeric(new_data$pesticide),
+         new_data$lci,
+         as.numeric(new_data$pesticide),
+         new_data$uci,
+         col  = cols[new_data$species],
+         lwd  = 5,
+         lend = 1)
+# Add legend
+legend("topleft", 
+       legend = names(cols), 
+       pch    = 19,
+       pt.cex = 2,
+       col    = cols, 
+       bty    = "n")
+```
+
+## Continuous + Categorical
+
+Let’s fit a model with one continuous and one categorical predictor variable.
+
+```{webr}
+m2 <- stats::lm(height_cm ~ nitrogen_gsqm + species, data = p2)
+summary(m2)
+```
+
+## Continuous + Categorical
+
+Then create a new table with combination of predictor variables and use the predict ():
+
+```{webr}
+n_range  <- seq(min(p2$nitrogen_gsqm),
+                max(p2$nitrogen_gsqm),
+                length.out = 50)
+new_data <- expand.grid(nitrogen_gsqm = n_range,
+                        species       = c("Species A", "Species B"))
+temp <- predict(m2, newdata = new_data, se.fit = TRUE)
+new_data$fit <- temp$fit
+new_data$uci <- new_data$fit + 1.96 * temp$se.fit
+new_data$lci <- new_data$fit - 1.96 * temp$se.fit
+```
+
+## Continuous + Categorical
+
+Finally, plot the results:
+
+```{webr}
+cols <- c("orange", "turquoise")
+names(cols) <- sort(unique(new_data$species))
+
+plot(height_cm ~ nitrogen_gsqm,
+     data = p2,
+     pch = 19,
+     col = cols[species],
+     cex = 0.4,
+     ylab = "Height (cm)",
+     xlab = "Nitrogen (g/m²)")
+for (sp in names(cols)) {
+  sub <- new_data[new_data$species == sp, ]
+  # Add regression line
+  lines(fit ~ nitrogen_gsqm, data = sub, col = cols[sp], lwd = 3)
+  # Add confidence intervals
+  lines(lci ~ nitrogen_gsqm, data = sub, col = cols[sp], lty = 2)
+  lines(uci ~ nitrogen_gsqm, data = sub, col = cols[sp], lty = 2)
+}
+# Add legend
+legend("topleft", 
+       legend = names(cols),
+       lwd    = 3, 
+       col    = cols,
+       bty    = "n", 
+       title  = "Species")
+```
+
+## Continuous + Continuous
+
+Let’s fit a model with two continuous predictor variables.
+
+```{webr}
+m3 <- stats::lm(height_cm ~ nitrogen_gsqm + temperature, data = p3)
+summary(m3)
+```
+
+## Continuous + Continuous
+
+We can make predictions and visualize the results as before.
+
+```{webr}
+n_range  <- seq(min(p3$nitrogen_gsqm),
+                max(p3$nitrogen_gsqm),
+                length.out = 50)
+new_data <- expand.grid(nitrogen_gsqm = n_range,
+                        temperature   = c(15, 25))
+temp <- predict(m3, newdata = new_data, se.fit = TRUE)
+new_data$fit <- temp$fit
+new_data$uci <- new_data$fit + 1.96 * temp$se.fit
+new_data$lci <- new_data$fit - 1.96 * temp$se.fit
+
+cols  <- c("orange", "turquoise")
+cats  <- sort(unique(new_data$temperature))
+names(cols) <- as.character(cats)
+plot(height_cm ~ nitrogen_gsqm,
+     data = p3,
+     pch = 19,
+     cex = 0.4,
+     ylab = "Height (cm)", xlab = "Nitrogen (g/m²)")
+
+for (t in as.character(cats)) {
+  sub <- new_data[as.character(new_data$temperature) == t, ]
+  #Add regression line
+  lines(fit ~ nitrogen_gsqm, data = sub, col = cols[t], lwd = 3)
+  #Add confidence intervals
+  lines(lci ~ nitrogen_gsqm, data = sub, col = cols[t], lty = 2)
+  lines(uci ~ nitrogen_gsqm, data = sub, col = cols[t], lty = 2)
+}
+#Add legend
+legend("topleft",
+       legend = paste(cats, "°C"),
+       lwd = 3, 
+       col = cols,
+       bty = "n",
+       title = "Temperature")
+```
+
+## Your turn
+
+::: {.callout-tip title="Practice 2"}
+Using your own data:
+
+1.  Fit at least one multiple regression with additive terms of two predictor variables.
+2.  Inspect the output and write a 1–3 sentence interpretation as a comment in your R script.
+3.  Generate figures showing the data and the regression line for each of the regression models you fit.
+:::

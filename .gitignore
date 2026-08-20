@@ -1,0 +1,15 @@
+
+# RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto working files
+/.quarto/
+*_cache/
+*.rmarkdown
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,205 @@
+[
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html",
+    "href": "Day05_2026-09-29_linear-models.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Linear models\nSimple linear regression\nMultiple regression\nPractice"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#outline",
+    "href": "Day05_2026-09-29_linear-models.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nLinear models\nSimple linear regression\nMultiple regression\nPractice"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#overview",
+    "href": "Day05_2026-09-29_linear-models.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\n\nWe quantify linear relationships between a response variable (dependent) and explanatory variables (independent variables or predictors) using simple and multiple linear regression models.\nLinear models (LMs) are relatively simple, but incredibly powerful"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#simulate-data",
+    "href": "Day05_2026-09-29_linear-models.html#simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simulate data",
+    "text": "Simulate data\nWe will use (made-up) plant data to illustrate how simple linear regression models are fitted. First, we clear the workspace and simulate three datasets.\n\n\n\n\n\n\n\n\n\nThese data consist of the individual identification (id) and height (in cm) of 100 plants. All heights were measured 30 days after germination."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model",
+    "href": "Day05_2026-09-29_linear-models.html#intercept-only-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only model",
+    "text": "Intercept-only model\nThe height of the plants is our variable of interest and we can fit a simple linear regression model using the lm() function. You can specify an intercept-only model by using a “1” after the tilde (∼) in the regression formula.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nWe have a response variable (height_cm), but no predictor variables. Therefore, we cannot estimate a slope, only an intercept term. In the absence of a slope, the intercept is equivalent to the mean height of all plants.\n\n\n\n\n\n\n\n\n\nTip\n\n\nThe model output can be displayed with the summary() function."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-1",
+    "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only model",
+    "text": "Intercept-only model\nThe intercept value is the average height (in cm) of plants in this sample. The low p-value indicates that this value is significantly different from 0. Next, let’s plot the data and add the regression line."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-2",
+    "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only model",
+    "text": "Intercept-only model\nTo better understand what residuals are, let’s add them to the plot as well. To do so, we obtain the model-predicted value for each data point (i.e., the height a plant would have had if it were on the regression line) using the predict() function. Then we just connect each data point with its predicted value using segments()."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-3",
+    "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only model",
+    "text": "Intercept-only model\nPlotting a scatter plot or a regression line is not that useful when dealing with an intercept-only model. As an alternative, we can plot the density distribution of the data (the response variable) and then superimpose both the calculated and model-estimated mean. And as we just mentioned, these are identical."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-predictor",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous predictor",
+    "text": "Continuous predictor\nGenerally, in regression analysis, we are interested in quantifying the relationship between predictor and response variables. We now inspect data2, which, in addition to each plant’s height, also contains the amount of Nitrogen added to each plant’s growing soil (g per \\(m^2\\)). First, we inspect the data and visualize plant height against nitrogen addition:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nAlways include units with axes labels."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-1",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous predictor",
+    "text": "Continuous predictor\nWe can fit a linear regression model to the data; this model includes a slope term for the effect of soil nitrogen concentration on plant height. The intercept term is implied and does not need to be specified in the formula."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-2",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous predictor",
+    "text": "Continuous predictor\nThe intercept (23.15 cm) is the expected height of a plant when the nitrogen added to the soil is 0 g /\\(m^2\\). The slope coefficient (0.0099 cm) is the expected increase in plant height in cm for every 1 g /\\(m^2\\) increase in nitrogen added to the soil. The low p-value indicates that this slope is significantly different from 0.\n\nHow would you summarize this finding?\n\nOne way to summarize this finding could be: We detected a significant positive relationship between plant height and the amount of nitrogen added to the soil (beta = 0.01, t = 8.11, p &lt;0.001). For example, a plant supplemented with 100 g soil nitrogen reached an average height of 24.14 cm compared with 23.15 cm for a plant without supplementary nitrogen."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-3",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous predictor",
+    "text": "Continuous predictor\nWe can use the model object to add the regression line to the scatter plot. And as earlier, we can also show the residuals in the same plot."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-predictor",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical predictor",
+    "text": "Categorical predictor\nWe can also use categorical predictor variables. In a linear regression, such variables are dealt with by turning them into so-called dummy variables. This is done by setting one level as a reference value (set to 0; this is the one associated with the intercept). All other levels (set to 1) are then compared with the reference level, one by one. We illustrate the use of categorical predictors in simple linear regression using a new version of the plant data.\n\n\n\n\n\n\n\n\n\nThis data set contains the id and height for two species of plants (species A and B)."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-1",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical predictor",
+    "text": "Categorical predictor\nNext, we fit the simple linear regression with species as the predictor variable:"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-2",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical predictor",
+    "text": "Categorical predictor\nThe intercept (23.53 cm) is the expected height of a plant of the reference species (A). The slope coefficient (-3.36 cm) is the expected difference in plant height of species B compared with species A. The negative coefficient indicates that the height of species B is (on average) lower than the height of species A. The low p-value indicates that the difference is significant. &gt;How would you summarize this finding?"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-3",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical predictor",
+    "text": "Categorical predictor\nOne way to summarize this finding could be: Species A grew significantly higher than species B (beta = -3.36, t = -5.991, p &lt;0.001). The average height following a 30-day growing period for species A was 23.53 cm, compared with 20.17 cm for species B."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-4",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-4",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical predictor",
+    "text": "Categorical predictor\nFinally, we plot the data and add the regression line:"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#your-turn",
+    "href": "Day05_2026-09-29_linear-models.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 1\n\n\nUsing your own data:\n\nIdentify variables in your data set that can be used as response and predictor variables in simple linear regression\nFit at least one LM with a continuous predictor and one with a categorical predictor.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#overview-1",
+    "href": "Day05_2026-09-29_linear-models.html#overview-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nRegression models can have multiple predictors. This lesson will give you a basic understanding of the effects estimates (coefficients) generated by multiple linear regression. When the effects of multiple predictor variables in a regression are independent of each other, we refer to them as additive effects. Today, we look at three examples with different predictor variables that have additive effects on the response."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-categorical",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical + Categorical",
+    "text": "Categorical + Categorical\nWe fit a linear regression model to the first data object. This regression model contains the additive effects of species (Species A and Species B) and whether pesticide was applied during the growth period (TRUE/FALSE).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nThe output contains separate coefficients for the intercept and every effect included in the model. Remember, categorical variables are treated as dummy variables, with one category serving as the intercept value (0) to which each additional category is then compared."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical-1",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-categorical-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical + Categorical",
+    "text": "Categorical + Categorical\nThe model object essentially contains a machine that can be used to make predictions, i.e., to calculate the expected value of the response variable (height_cm) given certain values of the predictor variables (species and pesticide).\nTo make a prediction, we first create a new data object (in this case, one that contains all possible combinations of species and pesticide). We then provide that data object to the predict() function which generates the predictions (fitted values of plant height) for each set of predictor values, as well as the associated standard errors."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical-2",
+    "href": "Day05_2026-09-29_linear-models.html#categorical-categorical-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Categorical + Categorical",
+    "text": "Categorical + Categorical\nWe can use what you have previously learned about plotting in R to generate a graph that visualizes the results (model predictions)."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-categorical",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous + Categorical",
+    "text": "Continuous + Categorical\nLet’s fit a model with one continuous and one categorical predictor variable."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical-1",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-categorical-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous + Categorical",
+    "text": "Continuous + Categorical\nThen create a new table with combination of predictor variables and use the predict ():"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical-2",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-categorical-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous + Categorical",
+    "text": "Continuous + Categorical\nFinally, plot the results:"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-continuous",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-continuous",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous + Continuous",
+    "text": "Continuous + Continuous\nLet’s fit a model with two continuous predictor variables."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#continuous-continuous-1",
+    "href": "Day05_2026-09-29_linear-models.html#continuous-continuous-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Continuous + Continuous",
+    "text": "Continuous + Continuous\nWe can make predictions and visualize the results as before."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html#your-turn-1",
+    "href": "Day05_2026-09-29_linear-models.html#your-turn-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 2\n\n\nUsing your own data:\n\nFit at least one multiple regression with additive terms of two predictor variables.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ResearchDesignLab",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1"
+  }
+]
