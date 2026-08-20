@@ -1,0 +1,34 @@
+---
+title: "WILD 541 — Research Design Lab"
+subtitle: ""
+format:
+  html:
+    toc: false
+    theme: cosmo
+    css: styles.css
+lang: en-US
+---
+
+## About these lessons
+
+Each lesson is a set of slides with **live R code**. The code runs in your own browser using [webR](https://docs.r-wasm.org/webr/latest/) — you do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the result.
+
+The first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant.
+
+::: callout-tip
+## Navigating the slides
+
+Use the arrow keys or the on-screen controls to move between slides. Press <kbd>S</kbd> for speaker notes, <kbd>F</kbd> for full screen, and <kbd>Esc</kbd> for a slide overview.
+:::
+
+## Lessons
+
+| Lesson | Topic | Date |
+|:-----------------------|:-----------------------|:-----------------------|
+| 5 | [Lesson 5 slides: Linear models and multiple regression](Day05_2026-09-29_linear-models.qmd) | September 29, 2026 |
+
+: Course lessons, with links to the interactive slide decks. {tbl-colwidths="\[10,60,30\]"}
+
+## Getting help
+
+Questions about the material go to the course instructor. If a code block will not run, try reloading the page — the browser occasionally drops the R engine after a long idle period.

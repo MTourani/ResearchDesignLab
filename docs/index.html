@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ResearchDesignLab – Research Design Lab</title>
+<title>WILD 541 — Research Design Lab – Research Design Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,7 +39,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-991b1886d3c685c7aa2b62b80640c7af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,9 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,15 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.html"><i class="bi bi-file-slides"></i>RevealJS (live)</a></li></ul></div></div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ResearchDesignLab</h1>
+<h1 class="title">WILD 541 — Research Design Lab</h1>
 </div>
 
 
@@ -163,91 +127,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="about-these-lessons" class="level2">
+<h2 class="anchored" data-anchor-id="about-these-lessons">About these lessons</h2>
+<p>Each lesson is a set of slides with <strong>live R code</strong>. The code runs in your own browser using <a href="https://docs.r-wasm.org/webr/latest/">webR</a> — you do not need R or RStudio installed to try the examples. Edit any code block and press <strong>Run Code</strong> to see the result.</p>
+<p>The first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+Navigating the slides
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the arrow keys or the on-screen controls to move between slides. Press <kbd>S</kbd> for speaker notes, <kbd>F</kbd> for full screen, and <kbd>Esc</kbd> for a slide overview.</p>
+</div>
+</div>
+</section>
+<section id="lessons" class="level2">
+<h2 class="anchored" data-anchor-id="lessons">Lessons</h2>
+<table class="caption-top table">
+<caption>Course lessons, with links to the interactive slide decks.</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 60%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Lesson</th>
+<th style="text-align: left;">Topic</th>
+<th style="text-align: left;">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><a href="./Day05_2026-09-29_linear-models.html">Lesson 5 slides: Linear models and multiple regression</a></td>
+<td style="text-align: left;">September 29, 2026</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="getting-help" class="level2">
+<h2 class="anchored" data-anchor-id="getting-help">Getting help</h2>
+<p>Questions about the material go to the course instructor. If a code block will not run, try reloading the page — the browser occasionally drops the R engine after a long idle period.</p>
 
 
+</section>
 
 </main> <!-- /main -->
-
-
-<script>
-
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-  // slide changes (different for each slide format).
-
-  (function () {
-
-    // dispatch for htmlwidgets
-
-    function fireSlideEnter() {
-
-      const event = window.document.createEvent("Event");
-
-      event.initEvent("slideenter", true, true);
-
-      window.document.dispatchEvent(event);
-
-    }
-
-
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-
-      fireSlideEnter();
-
-
-
-      // dispatch for shiny
-
-      if (window.jQuery) {
-
-        if (previousSlide) {
-
-          window.jQuery(previousSlide).trigger("hidden");
-
-        }
-
-        if (currentSlide) {
-
-          window.jQuery(currentSlide).trigger("shown");
-
-        }
-
-      }
-
-    }
-
-
-
-    // hookup for slidy
-
-    if (window.w3c_slidy) {
-
-      window.w3c_slidy.add_observer(function (slide_num) {
-
-        // slide_num starts at position 1
-
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-      });
-
-    }
-
-
-
-  })();
-
-</script>
-
-
-
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
