@@ -200,7 +200,7 @@
     "href": "index.html",
     "title": "WILD 541 — Research Design Lab",
     "section": "",
-    "text": "Each lesson is a set of slides with live R code. The code runs in your own browser using webR — you do not need R or RStudio installed to try the examples. Edit any code block and press Run Code to see the result.\nThe first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant.\n\n\n\n\n\n\nNavigating the slides\n\n\n\nUse the arrow keys or the on-screen controls to move between slides. Press S for speaker notes, F for full screen, and Esc for a slide overview."
+    "text": "Each lesson is a set of slides with live R code. The code runs in your browser using webR .You do not need R or RStudio installed to try the examples. Edit any code block and press Run Code to see the results.\nThe first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant."
   },
   {
     "objectID": "index.html#about-these-lessons",
@@ -214,13 +214,13 @@
     "href": "index.html#lessons",
     "title": "WILD 541 — Research Design Lab",
     "section": "Lessons",
-    "text": "Lessons\n\nCourse lessons, with links to the interactive slide decks.\n\n\n\n\n\n\n\nLesson\nTopic\nDate\n\n\n\n\n5\nLesson 5 slides: Linear models and multiple regression\nSeptember 29, 2026"
+    "text": "Lessons\n\n\n\n\n\n\n\n\nLesson\nTopic\nDate\n\n\n\n\n5\nLesson 5 slides: Linear models and multiple regression\nSeptember 29, 2026"
   },
   {
     "objectID": "index.html#getting-help",
     "href": "index.html#getting-help",
     "title": "WILD 541 — Research Design Lab",
     "section": "Getting help",
-    "text": "Getting help\nQuestions about the material go to the course instructor. If a code block will not run, try reloading the page — the browser occasionally drops the R engine after a long idle period."
+    "text": "Getting help\nIf a code block will not run, try reloading the page since the browser occasionally drops the R engine after being idle for long."
   }
 ]

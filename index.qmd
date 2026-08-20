@@ -9,9 +9,7 @@ format:
 lang: en-US
 ---
 
-## About these lessons
-
-Each lesson is a set of slides with **live R code**. The code runs in your own browser using [webR](https://docs.r-wasm.org/webr/latest/) — you do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the result.
+Each lesson is a set of slides with **live R code**. The code runs in your browser using [webR](https://docs.r-wasm.org/webr/latest/) .You do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the results.
 
 The first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant.
 
@@ -27,8 +25,8 @@ Use the arrow keys or the on-screen controls to move between slides. Press <kbd>
 |:-----------------------|:-----------------------|:-----------------------|
 | 5 | [Lesson 5 slides: Linear models and multiple regression](Day05_2026-09-29_linear-models.qmd) | September 29, 2026 |
 
-: Course lessons, with links to the interactive slide decks. {tbl-colwidths="\[10,60,30\]"}
+:  {tbl-colwidths="\[10,60,30\]"}
 
 ## Getting help
 
-Questions about the material go to the course instructor. If a code block will not run, try reloading the page — the browser occasionally drops the R engine after a long idle period.
+If a code block will not run, try reloading the page since the browser occasionally drops the R engine after being idle for long.
