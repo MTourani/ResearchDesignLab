@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mahdieh Tourani">
-<meta name="dcterms.date" content="2026-09-01">
+<meta name="dcterms.date" content="2026-11-03">
 
 <title>WILD 541 – Research Design Lab – Research Design Lab</title>
 <style>
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -142,14 +107,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Day01_2026-09-01_intro.html"><i class="bi bi-file-slides"></i>RevealJS (live)</a></li></ul></div></div>
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Day10_2026-11-03_mixed-effects.html"><i class="bi bi-file-slides"></i>RevealJS (live)</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">WILD 541 – Research Design Lab</h1>
-<p class="subtitle lead">Lesson 1: Introduction to R and Reproducibility</p>
+<p class="subtitle lead">Lesson 9: Mixed Effects Models</p>
 </div>
 
 
@@ -166,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 1, 2026</p>
+      <p class="date">November 3, 2026</p>
     </div>
   </div>
   
@@ -180,290 +145,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
-<div class="incremental">
-<ol class="incremental" type="1">
-<li>Introduction and course overview</li>
-<li>Reproducibility and human error</li>
-<li>Introduction to R/RStudio</li>
-<li>AI policy</li>
-</ol>
-</div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course overview</h2>
-<p><strong>Objectives &amp; Approach</strong></p>
-<ul>
-<li><p>Hands-on data exploration and visualization</p></li>
-<li><p>A mix of lessons and exercises on basic analysis</p></li>
-<li><p>Learning one tool for all tasks: <strong>R</strong></p></li>
-</ul>
-</section>
-<section id="your-job" class="level2">
-<h2 class="anchored" data-anchor-id="your-job">Your job</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><strong>Explore.</strong></li>
-<li>Work together.</li>
-<li>Ask questions.</li>
-<li>Do the exercises.</li>
-<li>Work with your own data.</li>
-</ul>
-</div>
-</section>
-</section>
-<section id="reproducibility-and-human-error" class="level1">
-<h1>Reproducibility and human error</h1>
-<section id="spreadsheets" class="level2">
-<h2 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h2>
-<div style="display: flex; justify-content: center; gap: 20px; height: 60vh;">
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/HegoJaXOIqQ?si=TjKvOY6he-VDI_jM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="incremental">
-<blockquote class="blockquote">
-<p>Spreadsheets are ubiquitous, but they come with hidden risks in scientific research.</p>
-</blockquote>
-</div>
-</section>
-<section id="auto-correct" class="level2">
-<h2 class="anchored" data-anchor-id="auto-correct">Auto-‘correct’</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/date.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%"></p>
-</figure>
-</div>
-</section>
-<section id="auto-correct-gone-wrong" class="level2">
-<h2 class="anchored" data-anchor-id="auto-correct-gone-wrong">Auto-‘correct’ gone wrong</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Example 1:</strong></p>
-<ul>
-<li>Excel converted human genes and protein names to dates</li>
-<li>Still used and causing errors in published research</li>
-</ul>
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/autocorrect.PNG" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="why-not-excel" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-excel">Why not Excel?</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Example 2 — The Reinhart-Rogoff error</strong></p>
-<ul>
-<li>Claimed average real economic growth <strong>increases</strong> when debt &gt; 90% of GDP</li>
-<li>Mistakenly excluding 5 data points flipped the conclusion to a <strong>0.1% decline</strong></li>
-<li>A spreadsheet formula error; reviewed by thousands before discovery</li>
-</ul>
-<blockquote class="blockquote">
-<p>Errors in spreadsheets are invisible as you cannot audit a click.</p>
-</blockquote>
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/humblepi.png" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="king-of-spreadsheets" class="level2">
-<h2 class="anchored" data-anchor-id="king-of-spreadsheets">King of spreadsheets</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/xlking.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:30.0%"></p>
-</figure>
-</div>
-</section>
-</section>
-<section id="introduction-to-rrstudio" class="level1">
-<h1>Introduction to R/RStudio</h1>
-<section id="better-tools-are-available" class="level2">
-<h2 class="anchored" data-anchor-id="better-tools-are-available">Better tools are available</h2>
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/latch.png" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-<blockquote class="blockquote">
-<p>Using a better tool produces <strong>reproducible</strong>, <strong>auditable</strong>, <strong>sharable</strong> work.</p>
-</blockquote>
-</section>
-<section id="use-r" class="level2">
-<h2 class="anchored" data-anchor-id="use-r">Use R</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Five steps for today:</p>
 <ol type="1">
-<li>Install <a href="https://cran.r-project.org/">R</a></li>
-<li>Install <a href="https://posit.co/products/open-source/rstudio">RStudio</a></li>
-<li>Create a <a href="https://docs.posit.co/ide/user/ide/get-started/#hello-rstudio-projects">new project</a> for “WILD541”</li>
-<li>Create a <a href="https://docs.posit.co/ide/user/ide/get-started/#hello-rstudio-projects">new R script</a> for today’s class <code>Day01.R</code></li>
-<li><a href="https://rstudio.github.io/cheatsheets/html/rstudio-ide.html#tab-panes">Use R</a> for basic operations</li>
+<li>Model assumptions — continued (independence)</li>
+<li>Mixed effects regression</li>
+<li>Practice</li>
 </ol>
-<p><img src="images/RStudio.png" class="img-fluid"></p>
-</div><div class="column" style="width:30%;">
-<p><img src="images/R.png" class="img-fluid" style="margin-top: 105px;"></p>
-</div>
-</div>
 </section>
-<section id="some-r-benefits" class="level2">
-<h2 class="anchored" data-anchor-id="some-r-benefits">Some R benefits</h2>
-<div class="incremental">
-<ul class="incremental">
-<li>Environment for statistical computing <strong>and</strong> graphics</li>
-<li><strong>Free</strong> (open-source)</li>
-<li>Used by many researchers worldwide</li>
-<li>Good documentation and community</li>
-<li>Continuously updated and expanded</li>
-<li>Can reuse existing scripts</li>
-<li><strong>Runs the same each time</strong> ← this is reproducibility</li>
-</ul>
-</div>
-</section>
+<section id="independence-assumption" class="level1">
+<h1>Independence assumption</h1>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/rstudio-panes-labeled.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
-</figure>
-</div>
-</section>
-<section id="use-r-as-a-calculator" class="level2">
-<h2 class="anchored" data-anchor-id="use-r-as-a-calculator">Use R as a calculator</h2>
-<p>You can use R for simple and complex calculations using mathematical operators:</p>
-<div class="cell">
-<pre class="webr cell-code"><code># R as a calculator
-(35 + 55 * 10) / sqrt(99)</code></pre>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can use a hash mark <code>#</code> to include comments, e.g., ”R as a calculator” in the above code. Any text after <code>#</code> is ignored by R. Comment liberally: it helps you remember and others understand your code.</p>
-</div>
-</div>
-</section>
-<section id="use-r-for-summaries" class="level2">
-<h2 class="anchored" data-anchor-id="use-r-for-summaries">Use R for summaries</h2>
-<p>You can use R built-in functions, e.g., summary(), to find summary statistics.</p>
-<div class="cell">
-<pre class="webr cell-code"><code># Create a sequence of numbers
-x &lt;- 1:15
-
-# Display basic statistical measures
-summary(x)</code></pre>
-</div>
-<blockquote class="blockquote">
-<p>So, the mean of these data is 8.</p>
-</blockquote>
-</section>
-<section id="cite-r" class="level2">
-<h2 class="anchored" data-anchor-id="cite-r">Cite R</h2>
-<div class="cell">
-<pre class="webr cell-code"><code># Find the citation for R itself
-citation()</code></pre>
-</div>
-<div class="cell">
-<pre class="webr cell-code"><code># Find your R version
-R.version</code></pre>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Citing software used in your analysis is good scientific practice.</p>
-<p>Likewise, if you ever have a question about what version of R you are using, you could type the above in the R prompt and find the details.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="generative-ai" class="level1">
-<h1>Generative AI</h1>
-<section id="ai-for-coding" class="level2">
-<h2 class="anchored" data-anchor-id="ai-for-coding">AI for coding</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Elephant.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p><a href="https://en.wikipedia.org/wiki/Elephant_in_the_room">The elephant in the room</a></p>
-<blockquote class="blockquote">
-<p>Per university guidelines, use of <a href="https://libguides.lib.umt.edu/ai">generative artificial intelligence</a> is <strong>not</strong> prohibited. However, instructors set the terms for their course.</p>
-</blockquote>
-</section>
-<section id="course-ai-policy" class="level2">
-<h2 class="anchored" data-anchor-id="course-ai-policy">Course AI policy</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Understanding concepts, debugging error messages, learning a package</td>
-<td><span class="chip go">🟢 Encouraged</span></td>
-<td>No disclosure needed for incidental use</td>
-</tr>
-<tr class="even">
-<td>Boilerplate &amp; scaffolding (plot themes, cleaning templates)</td>
-<td><span class="chip go">🟢 Allowed</span></td>
-<td>Note it in a code comment</td>
-</tr>
-<tr class="odd">
-<td>Choosing a model or test, study-design decisions</td>
-<td><span class="chip wait">🟡 Case-by-case</span></td>
-<td>AI can help you brainstorm; the justification must be yours</td>
-</tr>
-<tr class="even">
-<td>Writing a full analysis script or its interpretation</td>
-<td><span class="chip stop">🔴 Not permitted</span></td>
-<td>This is the competency being graded</td>
-</tr>
-<tr class="odd">
-<td>Exams &amp; independent problem sets</td>
-<td><span class="chip stop">🔴 Not permitted</span></td>
-<td>Unless the assignment says otherwise</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="step-1-understand-before-you-prompt" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-understand-before-you-prompt">Step 1: Understand Before You Prompt</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Know your question and your data <strong>before</strong> you open the chat window.</p></li>
-<li><p>Separate two different jobs: deciding <em>what the analysis should do</em> (your job) from <em>typing the syntax</em> (AI can help with this job).</p></li>
-<li><p>Use AI to learn field conventions and relevant tools, not only to generate the final answer.</p></li>
-<li><p>Sanity check: could you defend this line of code to your committee?</p></li>
+<p>Sometimes observations within a group share more in common with each other than with observations from other groups — violating the <strong>independence</strong> assumption.</p>
+<ul>
+<li>Group membership can be modeled as a <strong>random effect</strong></li>
+<li>Today: compare fixed-effect approach vs.&nbsp;mixed-effects approach</li>
 </ul>
+</section>
+<section id="the-tick-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-tick-dataset">The tick dataset</h2>
+<p>A researcher studies blood-ingestion rate of ticks as a function of time spent on the host:</p>
+<ul>
+<li>Multiple ticks per dog → <strong>pseudoreplication</strong></li>
+<li>Response: blood volume ingested (ml)</li>
+<li>Predictor: hours since attachment</li>
+<li>Grouping: dog ID</li>
+</ul>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>rm(list = ls())
+library(lme4)
+library(stats)
+
+url_remote &lt;- "https://raw.githubusercontent.com/"
+path_git   &lt;- "MTourani/WILD541_F2025/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "ticks.RData")))
+str(ticks)</code></pre>
+</div>
+</section>
+<section id="explore-tick-data" class="level2">
+<h2 class="anchored" data-anchor-id="explore-tick-data">Explore tick data</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>dog_colors &lt;- rainbow(length(levels(ticks$dog.id)))
+names(dog_colors) &lt;- levels(ticks$dog.id)
+
+plot(volume ~ hours, ticks,
+     col = dog_colors[ticks$dog.id],
+     pch = 1, cex = 1.2, lwd = 2,
+     xlab = "Hours spent feeding",
+     ylab = "Blood volume ingested (ml)")</code></pre>
+</div>
+</section>
+<section id="fixed-effects-model-naive" class="level2">
+<h2 class="anchored" data-anchor-id="fixed-effects-model-naive">Fixed effects model (naive)</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>my_lm &lt;- stats::lm(volume ~ scale(hours) + factor(dog.id),
+                   data = ticks)
+summary(my_lm)</code></pre>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -475,153 +214,113 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Watch out for <a href="https://arxiv.org/html/2510.22254v1">vibe coding</a>: accepting AI output you cannot <strong>evaluate</strong>, <strong>debug</strong>, or <strong>explain</strong> yourself.</p>
+<p>This uses many degrees of freedom on dog IDs — impractical with many groups or sparse data.</p>
 </div>
 </div>
 </section>
-<section id="step-2-choose-your-tool" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-choose-your-tool">Step 2: Choose Your Tool</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tool</th>
-<th>Best for</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Conversational (Claude, ChatGPT)</td>
-<td>Architecture questions, debugging, learning a new package</td>
-</tr>
-<tr class="even">
-<td>IDE assistant (Copilot-style)</td>
-<td>Autocompletion, staying in flow</td>
-</tr>
-<tr class="odd">
-<td>Autonomous agent (Claude Code, Cursor)</td>
-<td>Multi-file edits, rapid prototyping</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Check university guidelines for <a href="https://umontana.ai/guidelines/approved-tools/">approved AI tools</a></li>
-<li>Check AI <a href="https://umontana.ai/guidelines/model-comparison">model comparisons</a></li>
-<li>Restate key constraints in long sessions as most tools don’t remember perfectly</li>
-<li>Commit working code before a big AI-driven change, so you can always roll back</li>
-</ul>
-</div>
-</div>
 </section>
-<section id="step-3-test-everything-trust-nothing" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-test-everything-trust-nothing">Step 3: Test Everything, Trust Nothing</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Ask for tests before or during implementation.</p></li>
-<li><p>Verify the test outputs.</p></li>
-<li><p>Verify the results against something you understand, e.g., a plot or summary statistics.</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Despite AI doesn’t know your data, i.e., if samples are paired, clustered, or spatially autocorrelated unless you tell it, it will still confidently hand you a test.</p>
-<p>If the code ran without errors, it does <em>not</em> mean it is correct.</p>
-</div>
-</div>
-</section>
-<section id="step-4-you-are-still-the-scientist" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-you-are-still-the-scientist">Step 4: You Are Still the Scientist</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>The responsibility for AI-assisted code <strong>always</strong> belongs to the person who submits it.</p></li>
-<li><p><em>“The AI wrote it”</em> is not a defense for a mis-specified model, or results nobody else can reproduce.</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Rule of thumb: <strong>if you can’t explain a line at your defense, don’t turn it in</strong></p>
-</div>
-</div>
-</section>
-<section id="privacy-data-sharing" class="level2">
-<h2 class="anchored" data-anchor-id="privacy-data-sharing">Privacy &amp; data sharing</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Never paste into a public AI tool: unpublished results, embargoed or data subject to data-sharing agreement.</p></li>
-<li><p>Data from Tribal lands, communities, or partnerships: additional authorization applies, regardless of a public tool’s terms of service</p></li>
-<li><p>Precise locations of sensitive, threatened, or poaching-vulnerable species are often legally restricted and the coordinates should be treated as any other confidential data.</p></li>
-<li><p>When unsure: troubleshoot with a simulated or anonymized subset, and ask before uploading anything real</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you can’t anonymize data meaningfully, don’t paste it into a public AI tool.</p>
-</div>
-</div>
-</section>
-<section id="disclosure-and-citation-are-mandatory" class="level2">
-<h2 class="anchored" data-anchor-id="disclosure-and-citation-are-mandatory">Disclosure and citation are mandatory</h2>
-<p>Every university policy agrees on disclosing AI use.</p>
-<p>In code, use a header comment as below:</p>
+<section id="mixed-effects-regression" class="level1">
+<h1>Mixed effects regression</h1>
+<section id="random-intercepts-model-frequentist" class="level2">
+<h2 class="anchored" data-anchor-id="random-intercepts-model-frequentist">Random intercepts model: frequentist</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debugging help from Claude (Anthropic), 5 Jul 2026:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fixed a factor-level mismatch in the random-effects term below</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mass <span class="sc">~</span> treatment <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site), <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="webr cell-code"><code>my_lmer &lt;- lme4::lmer(
+  volume ~ scale(hours) + (1 | dog.id),
+  data = ticks
+)
+summary(my_lmer)</code></pre>
 </div>
-<blockquote class="blockquote">
-<p>In a report, one sentence is enough. For the above example, you could write: “I used Claude (Anthropic) to debug syntax errors in my mixed-model code; model specification and interpretation are my own.”</p>
-</blockquote>
 </section>
-<section id="do-vs-dont" class="level2">
-<h2 class="anchored" data-anchor-id="do-vs-dont">Do vs Don’t</h2>
-<div class="incremental">
-<p>✔ Ask it to explain an error or an unfamiliar function</p>
-<p>✔ Use it to learn a new package syntax</p>
-<p>✔ Get a first draft of code structure</p>
-<p>✔ Brainstorm modeling approaches, then justify your own choice</p>
-<p>✔ Ask it to generate edge cases you might miss</p>
-<p>✘ Submit code you can’t explain line by line</p>
-<p>✘ Let it pick your statistical test without knowing why</p>
-<p>✘ Paste/import unpublished data or sensitive coordinates into a public tool</p>
-<p>✘ Skip verifying AI-cited functions or references</p>
-<p>✘ Treat “it ran without error” as proof it’s correct</p>
+<section id="plot-with-fixed-effect-line" class="level2">
+<h2 class="anchored" data-anchor-id="plot-with-fixed-effect-line">Plot with fixed-effect line</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>plot(volume ~ hours, ticks,
+     col = dog_colors[ticks$dog.id],
+     pch = 1, cex = 1.2, lwd = 2,
+     xlab = "Hours spent feeding",
+     ylab = "Blood volume ingested (ml)")
+abline(lme4::fixef(my_lmer), lwd = 3)</code></pre>
+</div>
+</section>
+<section id="random-intercepts-bayesian-nimble" class="level2">
+<h2 class="anchored" data-anchor-id="random-intercepts-bayesian-nimble">Random intercepts: Bayesian (nimble)</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>library(nimble)
+library(coda)
+
+list_data &lt;- list(
+  volume  = as.numeric(ticks$volume),
+  n       = nrow(ticks),
+  dog.id  = as.numeric(ticks$dog.id),
+  ndog    = length(unique(ticks$dog.id)),
+  hours   = as.numeric(scale(ticks$hours))
+)
+
+model_1 &lt;- nimbleCode({
+  for (i in 1:n) {
+    volume[i] ~ dnorm(mu[i], sd = sd)
+    mu[i]     &lt;- a[dog.id[i]] + b_hour * hours[i]
+  }
+  for (i in 1:ndog) {
+    a[i] ~ dnorm(mean.a, sd = sd.dog)
+  }
+  mean.a ~ dnorm(0, sd = 100)
+  sd.dog ~ dunif(0, 20)
+  b_hour ~ dnorm(0, sd = 100)
+  sd     ~ dunif(0, 100)
+})
+
+inits  &lt;- list(mean.a = rnorm(1), b_hour = rnorm(1),
+               sd = rlnorm(1),    sd.dog = rlnorm(1))
+params &lt;- c("mean.a", "b_hour", "sd", "sd.dog")
+ni &lt;- 4000; nb &lt;- 2000; nc &lt;- 4; nt &lt;- 1
+
+out &lt;- nimbleMCMC(
+  code = model_1, constants = list_data,
+  inits = inits, monitors = params,
+  nburnin = nb, niter = ni, thin = nt, nchains = nc,
+  samplesAsCodaMCMC = TRUE, summary = TRUE
+)
+out$summary$all.chains</code></pre>
+</div>
+</section>
+<section id="traceplots" class="level2">
+<h2 class="anchored" data-anchor-id="traceplots">Traceplots</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>coda::traceplot(out$samples)</code></pre>
+</div>
+</section>
+<section id="your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn">Your turn</h2>
+</section>
+<section id="practice-mixed-effects" class="level2">
+<h2 class="anchored" data-anchor-id="practice-mixed-effects">Practice: mixed effects</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Practice 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Practice 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the invasive snake <strong>prey</strong> dataset (load from GitHub):</p>
+<ol type="1">
+<li>Fit a simple LM with <code>snake.id</code> as a fixed effect.</li>
+<li>Fit a mixed LM with <code>snake.id</code> as a random effect and SVL as a fixed effect.</li>
+<li>Compare and interpret both outputs.</li>
+<li>Explore your <strong>own data</strong> for dependent structures and repeat.</li>
+</ol>
+</div>
+</div>
+<div class="cell">
+<pre class="webr cell-code"><code>url_remote &lt;- "https://raw.githubusercontent.com/"
+path_git   &lt;- "MTourani/WILD541_F2025/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "prey.RData")))
+
+# Your code here
+</code></pre>
 </div>
 
 

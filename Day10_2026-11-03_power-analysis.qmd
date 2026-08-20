@@ -1,0 +1,140 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 9: Power Analysis"
+author: "Mahdieh Tourani"
+date: "November 3, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover10.jpg"
+  data-background-size: "40%"
+  data-background-position: "right -20px bottom 1px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Power analysis with simulations
+2.  Practice
+
+# Power analysis with simulations
+
+## Why power analysis?
+
+Funding agencies, dissertation committees, and journals often require power calculations for primary analyses.
+
+**Power** = probability of detecting a true effect given the effect exists.
+
+Conventional threshold: **power ≥ 0.8**
+
+## Scenario: two groups
+
+$$y_{ic} \sim   ext{Normal}(0, 1)$$ $$y_{it} \sim   ext{Normal}(0.5, 1)$$
+
+A medium standardized effect size (Cohen's d = 0.5).
+
+## Visualize the two distributions
+
+```{webr}
+mu_c <- 0; mu_t <- 0.5
+x   <- seq(-4, 5, by = 0.01)
+c_d <- dnorm(x, mu_c, 1)
+t_d <- dnorm(x, mu_t, 1)
+
+plot(x, c_d, type = "l", lwd = 2, col = "grey40",
+     ylab = "Density", xlab = "y")
+lines(x, t_d, lwd = 2, col = "blue")
+legend("topright", legend = c("control", "treatment"),
+       col = c("grey40", "blue"), lwd = 2, bty = "n")
+```
+
+## Simulate one dataset
+
+```{webr}
+set.seed(2)
+n   <- 50
+mu_c <- 0; mu_t <- 0.5
+
+group     <- rep(c("control", "treatment"), each = n)
+treatment <- ifelse(group == "control", 0, 1)
+y         <- ifelse(group == "control",
+                    rnorm(n, mu_c, 1),
+                    rnorm(n, mu_t, 1))
+
+sim_data  <- data.frame(group, treatment, y)
+head(sim_data)
+```
+
+## Frequentist power simulation
+
+```{webr}
+simulate_and_test <- function(seed, n, mu_t = 0.5, mu_c = 0) {
+  set.seed(seed)
+  group     <- rep(c("control", "treatment"), each = n)
+  treatment <- ifelse(group == "control", 0, 1)
+  y         <- ifelse(group == "control",
+                      rnorm(n, mu_c, 1),
+                      rnorm(n, mu_t, 1))
+  m <- lm(y ~ treatment)
+  coef(summary(m))["treatment", "Pr(>|t|)"]
+}
+
+# Simulate 200 datasets with n=50
+set.seed(99)
+n_sim  <- 200
+pvals  <- sapply(1:n_sim, simulate_and_test, n = 50)
+power  <- mean(pvals < 0.05)
+cat("Power with n = 50 per group:", round(power, 3))
+```
+
+## Power curve
+
+```{webr}
+sample_sizes <- c(30, 50, 75, 100, 150)
+power_curve  <- sapply(sample_sizes, function(n) {
+  ps <- sapply(1:200, simulate_and_test, n = n)
+  mean(ps < 0.05)
+})
+
+plot(sample_sizes, power_curve, type = "b",
+     pch = 19, col = "steelblue", lwd = 2,
+     xlab = "n per group", ylab = "Power",
+     ylim = c(0, 1))
+abline(h = 0.8, col = "red", lty = 2)
+```
+
+## Bayesian power analysis (brms)
+
+```{webr}
+#| eval: false
+#| cache: true
+library(brms)
+
+# Fit initial model
+fit <- brms::brm(
+  data  = sim_data, family = gaussian,
+  y ~ 0 + Intercept + treatment,
+  prior = c(prior(normal(0, 2),          class = b),
+            prior(student_t(3, 1, 1),    class = sigma)),
+  seed = 1
+)
+brms::fixef(fit)
+```
+
+::: callout-note
+The `brms` model above requires a C++ toolchain and Stan. Run it on your own machine. The frequentist simulation above is fully runnable here.
+:::
+
+# Practice
+
+## Practice: power analysis
+
+::: {.callout-tip title="Practice 2"}
+1.  Increase sample size to **n = 65** per group. Does power exceed 0.8?
+2.  To detect a smaller effect size of **0.3**, how many samples are needed? *(Hint: modify the `simulate_and_test()` function.)*
+:::
+
+```{webr}
+# Power with n = 65
+pvals_65 <- sapply(1:200, simulate_and_test, n = 65)
+cat("Power with n = 65:", round(mean(pvals_65 < 0.05), 3))
+```

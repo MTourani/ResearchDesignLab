@@ -1,0 +1,231 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 10: Model Assumptions and Diagnostics"
+author: "Mahdieh Tourani"
+date: "November 10, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover09.JPG"
+  data-background-size: "40%"
+  data-background-position: "right 1px bottom 10px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Model assumptions, simulations, and diagnostics
+2.  Practice
+
+# Model assumptions
+
+## Overview
+
+Linear regression assumes:
+
+-   **Linearity** — the relationship between predictors and response is linear
+-   **Independence** — errors are independent of each other
+-   **Homoscedasticity** — constant error variance
+-   **Normality** — residuals are normally distributed
+
+::: callout-note
+Assumptions are often violated by real data. Here we simulate violations and learn to detect and address them.
+:::
+
+## Setup
+
+```{webr}
+rm(list = ls())
+library(stats)
+library(nlme)
+library(splines)
+```
+
+## When assumptions are met
+
+```{webr}
+set.seed(541)
+x <- runif(200, 1, 10)
+y <- 50 + 3 * x + rnorm(length(x), 0, 4)
+plot(y ~ x)
+```
+
+## Diagnostics: met assumptions
+
+```{webr}
+set.seed(541)
+x    <- runif(200, 1, 10)
+y    <- 50 + 3 * x + rnorm(length(x), 0, 4)
+my_lm <- lm(y ~ x)
+
+par(mfrow = c(2, 2))
+plot(my_lm)
+par(mfrow = c(1, 1))
+```
+
+## Predictions: met assumptions
+
+```{webr}
+set.seed(541)
+x    <- runif(200, 1, 10)
+y    <- 50 + 3 * x + rnorm(length(x), 0, 4)
+my_lm <- lm(y ~ x)
+
+prediction <- data.frame(x = seq(min(x), max(x), length.out = 100))
+prediction$fit <- predict(my_lm, newdata = prediction)
+
+plot(y ~ x)
+lines(fit ~ x, prediction, col = "red", lwd = 2)
+```
+
+## Violating linearity: simulate
+
+```{webr}
+set.seed(541)
+x <- runif(200, 1, 10)
+y <- 50 + 3 * x - 0.5 * x^2 + rnorm(length(x), 0, 2)
+plot(y ~ x)
+```
+
+## Violating linearity: diagnostics
+
+```{webr}
+set.seed(541)
+x     <- runif(200, 1, 10)
+y     <- 50 + 3 * x - 0.5 * x^2 + rnorm(length(x), 0, 2)
+my_lm <- lm(y ~ x)
+
+par(mfrow = c(2, 2))
+plot(my_lm)
+par(mfrow = c(1, 1))
+```
+
+## Fix: polynomial term
+
+```{webr}
+set.seed(541)
+x     <- runif(200, 1, 10)
+y     <- 50 + 3 * x - 0.5 * x^2 + rnorm(length(x), 0, 2)
+my_lm <- lm(y ~ x + I(x^2))    # include quadratic term
+
+prediction      <- data.frame(x = seq(min(x), max(x), length.out = 100))
+prediction$fit  <- predict(my_lm, newdata = prediction)
+
+plot(y ~ x)
+lines(fit ~ x, prediction, col = "red", lwd = 2)
+```
+
+## Violating homoscedasticity
+
+```{webr}
+set.seed(541)
+x     <- runif(200, 1, 10)
+y     <- 1.5 + 0.75 * x + rnorm(length(x), 0, 0.15 * x)
+my_lm <- lm(y ~ x)
+
+par(mfrow = c(2, 2))
+plot(my_lm)
+par(mfrow = c(1, 1))
+```
+
+## Fix: GLS with variance structure
+
+```{webr}
+set.seed(541)
+x      <- runif(200, 1, 10)
+y      <- 1.5 + 0.75 * x + rnorm(length(x), 0, 0.15 * x)
+my_gls <- nlme::gls(y ~ x, weights = nlme::varFixed(~x))
+
+# Predictions using delta method from vcov()
+new_data       <- data.frame(x = seq(min(x), max(x), length.out = 100))
+X_mat          <- model.matrix(~ x, data = new_data)
+new_data$fit   <- as.numeric(X_mat %*% coef(my_gls))
+vcov_mat       <- vcov(my_gls)
+se_pred        <- sqrt(diag(X_mat %*% vcov_mat %*% t(X_mat)))
+new_data$uci   <- new_data$fit + 1.96 * se_pred
+new_data$lci   <- new_data$fit - 1.96 * se_pred
+
+plot(y ~ x)
+lines(fit ~ x, new_data, col = "red",    lwd = 2)
+lines(uci ~ x, new_data, col = "red",    lwd = 1, lty = 2)
+lines(lci ~ x, new_data, col = "red",    lwd = 1, lty = 2)
+```
+
+## Violating normality
+
+```{webr}
+set.seed(541)
+x     <- runif(200, 5, 15)
+y     <- log(1.5 + 1 * x + rnorm(length(x), 0, 2))
+my_lm <- lm(y ~ x)
+
+par(mfrow = c(2, 2))
+plot(my_lm)
+par(mfrow = c(1, 1))
+```
+
+::: callout-tip
+Can you think of a solution from a previous lesson? (Hint: link functions)
+:::
+
+## Outliers: simulate
+
+```{webr}
+set.seed(123)
+x <- sample(2:5, 10, replace = TRUE)
+set.seed(124)
+y <- 1.5 - 0.1 * x + rnorm(length(x), 0, 1)
+
+# Add one outlier
+y <- c(10, y)
+x <- c(1,  x)
+
+my_lm <- lm(y ~ x)
+plot(y ~ x)
+abline(my_lm, col = "red")
+```
+
+## Outlier diagnostics
+
+```{webr}
+par(mfrow = c(2, 2))
+plot(my_lm)
+par(mfrow = c(1, 1))
+```
+
+# Practice
+
+## Practice 1: simulations
+
+::: {.callout-tip title="Practice 1"}
+1.  Use `ns()` from the `splines` package to fit a model with a non-linear relationship.
+2.  Simulate **decreasing** residual variance with increasing x. Plot to confirm.
+3.  Plot residual density vs. a normal curve for the normality-violating data. Suggest a model fix.
+4.  Remove the outlier and re-run diagnostics. Does it change conclusions?
+:::
+
+```{webr}
+library(splines)
+# Spline-based fit
+set.seed(541)
+x     <- runif(200, 1, 10)
+y     <- 50 + 3 * x - 0.5 * x^2 + rnorm(length(x), 0, 2)
+my_ns <- lm(y ~ ns(x, df = 3))
+
+prediction     <- data.frame(x = seq(min(x), max(x), length.out = 100))
+prediction$fit <- predict(my_ns, newdata = prediction)
+plot(y ~ x)
+lines(fit ~ x, prediction, col = "blue", lwd = 2)
+```
+
+## Practice 2: your data
+
+::: {.callout-tip title="Practice 2"}
+1.  Run `plot(lm(...))` on a linear regression model for your own data.
+2.  Which assumptions, if any, appear to be violated?
+3.  Demonstrate how you would address the violation(s).
+:::
+
+```{webr}
+# Your code here
+
+```

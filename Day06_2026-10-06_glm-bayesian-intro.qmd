@@ -4,7 +4,7 @@ subtitle: "Lesson 6: Generalized Linear Models"
 author: "Mahdieh Tourani"
 date: "October 6, 2026"
 title-slide-attributes:
-  data-background-image: "images/cover06.PNG"
+  data-background-image: "images/cover06.png"
   data-background-size: "32%"
   data-background-position: "right 0px bottom 0px"
 ---

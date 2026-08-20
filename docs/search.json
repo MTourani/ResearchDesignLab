@@ -500,8 +500,8 @@
     "objectID": "Day01_2026-09-01_intro.html#outline",
     "href": "Day01_2026-09-01_intro.html#outline",
     "title": "WILD 541 – Research Design Lab",
-    "section": "Outline",
-    "text": "Outline\n\nIntroduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
+    "section": "",
+    "text": "Introduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#course-overview",
@@ -515,14 +515,14 @@
     "href": "Day01_2026-09-01_intro.html#your-job",
     "title": "WILD 541 – Research Design Lab",
     "section": "Your job",
-    "text": "Your job\n\nExplore.\nWork together.\nAsk questions.\nDo the exercises.\nWork with your own data."
+    "text": "Your job\n\n\nExplore.\nWork together.\nAsk questions.\nDo the exercises.\nWork with your own data."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#spreadsheets",
     "href": "Day01_2026-09-01_intro.html#spreadsheets",
     "title": "WILD 541 – Research Design Lab",
     "section": "Spreadsheets",
-    "text": "Spreadsheets\n\n\n\n\nSpreadsheets are ubiquitous, but they come with hidden risks in scientific research."
+    "text": "Spreadsheets\n\n\n\n\n\nSpreadsheets are ubiquitous, but they come with hidden risks in scientific research."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#auto-correct",
@@ -557,7 +557,7 @@
     "href": "Day01_2026-09-01_intro.html#better-tools-are-available",
     "title": "WILD 541 – Research Design Lab",
     "section": "Better tools are available",
-    "text": "Better tools are available\n\n\nUsing a better tool produces reproducible, auditable, sharable work."
+    "text": "Better tools are available\n\n\n\n\n\n\nUsing a better tool produces reproducible, auditable, sharable work."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#use-r",
@@ -571,7 +571,7 @@
     "href": "Day01_2026-09-01_intro.html#some-r-benefits",
     "title": "WILD 541 – Research Design Lab",
     "section": "Some R benefits",
-    "text": "Some R benefits\n\nEnvironment for statistical computing and graphics\nFree (open-source)\nUsed by many researchers worldwide\nGood documentation and community\nContinuously updated and expanded\nCan reuse existing scripts\nRuns the same each time ← this is reproducibility"
+    "text": "Some R benefits\n\n\nEnvironment for statistical computing and graphics\nFree (open-source)\nUsed by many researchers worldwide\nGood documentation and community\nContinuously updated and expanded\nCan reuse existing scripts\nRuns the same each time ← this is reproducibility"
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#overview",
@@ -585,28 +585,28 @@
     "href": "Day01_2026-09-01_intro.html#use-r-as-a-calculator",
     "title": "WILD 541 – Research Design Lab",
     "section": "Use R as a calculator",
-    "text": "Use R as a calculator\nYou can use R for simple and complex calculations using mathematical operators:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nYou can use a hash mark # to include comments, e.g., ”R as a calculator” in the above code. Any text after # is ignored by R. Comment liberally: it helps you remember and others understand your code."
+    "text": "Use R as a calculator\nYou can use R for simple and complex calculations using mathematical operators:\n\n# R as a calculator\n(35 + 55 * 10) / sqrt(99)\n\n\n\n\n\n\n\nTip\n\n\n\nYou can use a hash mark # to include comments, e.g., ”R as a calculator” in the above code. Any text after # is ignored by R. Comment liberally: it helps you remember and others understand your code."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#use-r-for-summaries",
     "href": "Day01_2026-09-01_intro.html#use-r-for-summaries",
     "title": "WILD 541 – Research Design Lab",
     "section": "Use R for summaries",
-    "text": "Use R for summaries\nYou can use R built-in functions, e.g., summary(), to find summary statistics.\n\n\n\n\n\n\n\n\n\nSo, the mean of these data is 8."
+    "text": "Use R for summaries\nYou can use R built-in functions, e.g., summary(), to find summary statistics.\n\n# Create a sequence of numbers\nx &lt;- 1:15\n\n# Display basic statistical measures\nsummary(x)\n\n\nSo, the mean of these data is 8."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#cite-r",
     "href": "Day01_2026-09-01_intro.html#cite-r",
     "title": "WILD 541 – Research Design Lab",
     "section": "Cite R",
-    "text": "Cite R\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nCiting software used in your analysis is good scientific practice.\nLikewise, if you ever have a question about what version of R you are using, you could type the above in the R prompt and find the details."
+    "text": "Cite R\n\n# Find the citation for R itself\ncitation()\n\n\n# Find your R version\nR.version\n\n\n\n\n\n\n\nTip\n\n\n\nCiting software used in your analysis is good scientific practice.\nLikewise, if you ever have a question about what version of R you are using, you could type the above in the R prompt and find the details."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#ai-for-coding",
     "href": "Day01_2026-09-01_intro.html#ai-for-coding",
     "title": "WILD 541 – Research Design Lab",
     "section": "AI for coding",
-    "text": "AI for coding\n\nThe elephant in the room\n\nPer university guidelines, use of generative artificial intelligence is not prohibited. However, instructors set the terms for their course."
+    "text": "AI for coding\n\n\n\n\n\nThe elephant in the room\n\nPer university guidelines, use of generative artificial intelligence is not prohibited. However, instructors set the terms for their course."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#course-ai-policy",
@@ -620,35 +620,35 @@
     "href": "Day01_2026-09-01_intro.html#step-1-understand-before-you-prompt",
     "title": "WILD 541 – Research Design Lab",
     "section": "Step 1: Understand Before You Prompt",
-    "text": "Step 1: Understand Before You Prompt\n\nKnow your question and your data before you open the chat window.\nSeparate two different jobs: deciding what the analysis should do (your job) from typing the syntax (AI can help with this job).\nUse AI to learn field conventions and relevant tools, not only to generate the final answer.\nSanity check: could you defend this line of code to your committee?\n\n\n\n\n\n\n\nWarning\n\n\nWatch out for vibe coding: accepting AI output you cannot evaluate, debug, or explain yourself."
+    "text": "Step 1: Understand Before You Prompt\n\n\nKnow your question and your data before you open the chat window.\nSeparate two different jobs: deciding what the analysis should do (your job) from typing the syntax (AI can help with this job).\nUse AI to learn field conventions and relevant tools, not only to generate the final answer.\nSanity check: could you defend this line of code to your committee?\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWatch out for vibe coding: accepting AI output you cannot evaluate, debug, or explain yourself."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#step-2-choose-your-tool",
     "href": "Day01_2026-09-01_intro.html#step-2-choose-your-tool",
     "title": "WILD 541 – Research Design Lab",
     "section": "Step 2: Choose Your Tool",
-    "text": "Step 2: Choose Your Tool\n\n\n\n\n\n\n\nTool\nBest for\n\n\n\n\nConversational (Claude, ChatGPT)\nArchitecture questions, debugging, learning a new package\n\n\nIDE assistant (Copilot-style)\nAutocompletion, staying in flow\n\n\nAutonomous agent (Claude Code, Cursor)\nMulti-file edits, rapid prototyping\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nCheck university guidelines for approved AI tools\nCheck AI model comparisons\nRestate key constraints in long sessions as most tools don’t remember perfectly\nCommit working code before a big AI-driven change, so you can always roll back"
+    "text": "Step 2: Choose Your Tool\n\n\n\n\n\n\n\nTool\nBest for\n\n\n\n\nConversational (Claude, ChatGPT)\nArchitecture questions, debugging, learning a new package\n\n\nIDE assistant (Copilot-style)\nAutocompletion, staying in flow\n\n\nAutonomous agent (Claude Code, Cursor)\nMulti-file edits, rapid prototyping\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\n\nCheck university guidelines for approved AI tools\nCheck AI model comparisons\nRestate key constraints in long sessions as most tools don’t remember perfectly\nCommit working code before a big AI-driven change, so you can always roll back"
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#step-3-test-everything-trust-nothing",
     "href": "Day01_2026-09-01_intro.html#step-3-test-everything-trust-nothing",
     "title": "WILD 541 – Research Design Lab",
     "section": "Step 3: Test Everything, Trust Nothing",
-    "text": "Step 3: Test Everything, Trust Nothing\n\nAsk for tests before or during implementation.\nVerify the test outputs.\nVerify the results against something you understand, e.g., a plot or summary statistics.\n\n\n\n\n\n\n\nNote\n\n\nDespite AI doesn’t know your data, i.e., if samples are paired, clustered, or spatially autocorrelated unless you tell it, it will still confidently hand you a test.\nIf the code ran without errors, it does not mean it is correct."
+    "text": "Step 3: Test Everything, Trust Nothing\n\n\nAsk for tests before or during implementation.\nVerify the test outputs.\nVerify the results against something you understand, e.g., a plot or summary statistics.\n\n\n\n\n\n\n\n\nNote\n\n\n\nDespite AI doesn’t know your data, i.e., if samples are paired, clustered, or spatially autocorrelated unless you tell it, it will still confidently hand you a test.\nIf the code ran without errors, it does not mean it is correct."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#step-4-you-are-still-the-scientist",
     "href": "Day01_2026-09-01_intro.html#step-4-you-are-still-the-scientist",
     "title": "WILD 541 – Research Design Lab",
     "section": "Step 4: You Are Still the Scientist",
-    "text": "Step 4: You Are Still the Scientist\n\nThe responsibility for AI-assisted code always belongs to the person who submits it.\n“The AI wrote it” is not a defense for a mis-specified model, or results nobody else can reproduce.\n\n\n\n\n\n\n\nImportant\n\n\nRule of thumb: if you can’t explain a line at your defense, don’t turn it in"
+    "text": "Step 4: You Are Still the Scientist\n\n\nThe responsibility for AI-assisted code always belongs to the person who submits it.\n“The AI wrote it” is not a defense for a mis-specified model, or results nobody else can reproduce.\n\n\n\n\n\n\n\n\nImportant\n\n\n\nRule of thumb: if you can’t explain a line at your defense, don’t turn it in"
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#privacy-data-sharing",
     "href": "Day01_2026-09-01_intro.html#privacy-data-sharing",
     "title": "WILD 541 – Research Design Lab",
     "section": "Privacy & data sharing",
-    "text": "Privacy & data sharing\n\nNever paste into a public AI tool: unpublished results, embargoed or data subject to data-sharing agreement.\nData from Tribal lands, communities, or partnerships: additional authorization applies, regardless of a public tool’s terms of service\nPrecise locations of sensitive, threatened, or poaching-vulnerable species are often legally restricted and the coordinates should be treated as any other confidential data.\nWhen unsure: troubleshoot with a simulated or anonymized subset, and ask before uploading anything real\n\n\n\n\n\n\n\nImportant\n\n\nIf you can’t anonymize data meaningfully, don’t paste it into a public AI tool."
+    "text": "Privacy & data sharing\n\n\nNever paste into a public AI tool: unpublished results, embargoed or data subject to data-sharing agreement.\nData from Tribal lands, communities, or partnerships: additional authorization applies, regardless of a public tool’s terms of service\nPrecise locations of sensitive, threatened, or poaching-vulnerable species are often legally restricted and the coordinates should be treated as any other confidential data.\nWhen unsure: troubleshoot with a simulated or anonymized subset, and ask before uploading anything real\n\n\n\n\n\n\n\n\nImportant\n\n\n\nIf you can’t anonymize data meaningfully, don’t paste it into a public AI tool."
   },
   {
     "objectID": "Day01_2026-09-01_intro.html#disclosure-and-citation-are-mandatory",
@@ -662,7 +662,7 @@
     "href": "Day01_2026-09-01_intro.html#do-vs-dont",
     "title": "WILD 541 – Research Design Lab",
     "section": "Do vs Don’t",
-    "text": "Do vs Don’t\n✔ Ask it to explain an error or an unfamiliar function\n✔ Use it to learn a new package syntax\n✔ Get a first draft of code structure\n✔ Brainstorm modeling approaches, then justify your own choice\n✔ Ask it to generate edge cases you might miss\n✘ Submit code you can’t explain line by line\n✘ Let it pick your statistical test without knowing why\n✘ Paste/import unpublished data or sensitive coordinates into a public tool\n✘ Skip verifying AI-cited functions or references\n✘ Treat “it ran without error” as proof it’s correct"
+    "text": "Do vs Don’t\n\n✔ Ask it to explain an error or an unfamiliar function\n✔ Use it to learn a new package syntax\n✔ Get a first draft of code structure\n✔ Brainstorm modeling approaches, then justify your own choice\n✔ Ask it to generate edge cases you might miss\n✘ Submit code you can’t explain line by line\n✘ Let it pick your statistical test without knowing why\n✘ Paste/import unpublished data or sensitive coordinates into a public tool\n✘ Skip verifying AI-cited functions or references\n✘ Treat “it ran without error” as proof it’s correct"
   },
   {
     "objectID": "index.html",
@@ -676,7 +676,7 @@
     "href": "index.html#lessons",
     "title": "WILD 541 — Research Design Lab",
     "section": "Lessons",
-    "text": "Lessons\nLesson 1: Introduction to R and Reproducibility\nLesson 2: R Syntax and Data Exploration\nLesson 3: Data Visualization\nLesson 4: Random Sampling and Distributions\nLesson 5: Linear Models and Multiple Regression\nLesson 6: Generalized Linear Models\nLesson 7: Model Comparison and Selection\n\n\n\n\n\n\nNavigating the slides\n\n\n\nUse the arrow keys or the on-screen controls to move between slides."
+    "text": "Lessons\nLesson 1: Introduction to R and Reproducibility\nLesson 2: R Syntax and Data Exploration\nLesson 3: Data Visualization\nLesson 4: Random Sampling and Distributions\nLesson 5: Linear Models and Multiple Regression\nLesson 6: Generalized Linear Models\nLesson 7: Model Comparison and Selection\nLesson 8: Predictions and visualization with ‘ggplot2’\nLesson 9: Power Analysis\nLesson 10: Model Assumptions and Diagnostics\nLesson 11: Mixed Effects Models\nLesson 12: Logistic Regression and Occupancy Models\n\n\n\n\n\n\nNavigating the slides\n\n\n\nUse the arrow keys or the on-screen controls to move between slides."
   },
   {
     "objectID": "index.html#getting-help",
@@ -1216,5 +1216,887 @@
     "title": "WILD 541 – Research Design Lab",
     "section": "Your turn",
     "text": "Your turn\n\n\n\n\n\n\n\nPractice\n\n\nYou should now be able to identify what kind of data (response variable) you have and specify an appropriate regression model to describe the relationship between response and explanatory variables.\n\nWhat biological process underlies the pattern in your data?\nWhat probabilistic process produces the values of your data?\nFit an appropriate model (Gaussian, Poisson, or Binomial) to your own data using stats::glm()or nimble package."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html",
+    "href": "Day01_2026-09-01_intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Introduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "General Linear regression\nGeneralized Linear regression\nPractice"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html",
+    "href": "Day07_2026-10-13_model-comparison.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model comparison\nAIC-based model selection\nPractice"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html",
+    "href": "Day09_2026-10-27_predictions-ggplot.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Predictions revisited\nData visualization with ggplot2\nPractice"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#outline",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nPredictions revisited\nData visualization with ggplot2\nPractice"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#overview",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nToday, we will try to make predictions a bit clearer, so that you become more comfortable using this aspect of analysis. We will use the invasive snake datasets from last week to explain things."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#setup",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup\nAs always, clear workspace and load the required packages and the input data into R environment. You can check the midterm recap for a description of the hypothetical study and these data."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#aggregate-prey-data",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#aggregate-prey-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Aggregate prey data",
+    "text": "Aggregate prey data\nIn the first example, we use the object ”prey” and showcase a linear regression with a continuous predictor variable. The object ”prey” contains multiple entries (prey items) per snake. We have to aggregate the data to get only one record (row of data) per snake, which then contains the average weight of prey items consumed by that snake."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#explore-data",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#explore-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore data",
+    "text": "Explore data\nAs always, we plot the data to visually explore the relationship we are interested in, i.e., the effect of snake snout-vent-length (SVL) on the weight of prey consumed."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#fit-a-simple-linear-regression-model",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#fit-a-simple-linear-regression-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fit a simple linear regression model",
+    "text": "Fit a simple linear regression model\nNow we are ready to fit the regression model. We are dealing with continuous data and an apparently linear relationship, so we use R’s most basic regression model function lm(). Alternatively, you could use glm() with identity link to fit the same model.\n\n\n\n\n\n\n\n\n\nEven without the predict() function, we can use information from the model to calculate the expected weight of prey for a given snake size (SVL). We simply have to pick a snake length (e.g., 100 cm) and calculate the result of the regression equation using the coefficients (intercept and slope) provided in the model output. Can you find the coefficients?"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nThis tells us that a 1 meter long snake will on average eat prey that weighs approximately 46g.\nWe can add the prediction as a single point to the plot.\n\n\n\n\n\n\n\n\n\nCan you modify the code above to show points for the predicted prey weights for 3 snake SVLs: 50 cm, 175 cm, and 225 cm?"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-1",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nWe can also calculate the expected prey weight for a sequence of different snake lengths, for example from 100 cm to 250 cm.\n\n\n\n\n\n\n\n\n\nThis looks like a line, but is really just a tight sequence of overlapping points."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-2",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nIf we do not want to create predictions for every cm within a range, we can use the seq() function to get values in equal intervals within a range of values. Then we use that sequence of values (snake lengths) to calculate the corresponding expected prey weight."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-3",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nIn seq(), we can also specify the exact range of snake sizes as starting and ending values of the sequence, by using the min() and max() functions. This works for numerical variables but not for categorical ones. Here, we first calculate the minimum and maximum snake SVL in our sample and then provide them to seq()."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-4",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-4",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nWhy are we creating ordered and equally-spaced values of snake lengths? &gt; Because then the geom line() function can connect the dots and draw smooth lines instead of points.\nWe can also calculate the predicted prey weight for every snake in our dataset, based on each snake’s actual SVL."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-5",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-5",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nThis is also an opportunity to illustrate what the residuals are: the difference between the predicted (fitted) prey weight and the actual prey weight measured for that snake.\n\n\n\n\n\n\n\n\nWe add the residuals to the plot as line segments, using the function geom segment()."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-6",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-6",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nThis was relatively easy, but what if there are many predictor variables? And, what about the uncertainty (e.g., confidence intervals)? The predict() function makes our job easier. At its core, it simply does what we just did: calculate the expected value of the response variable (e.g., prey weight) given one or more predictor variable (e.g., snake SVL). But it can do so for huge and complicated regression models, and it also calculates the uncertainty (confidence interval or standard error).\nFor example, instead of calculating the expected prey weights for all snakes in the dataset “by hand”, as we did above, we can simply provide the model object my lm to the predict() function - it already contains the regression equation and coefficients! This produces the same estimates we generated above (slight differences due to rounding of the hand-calculated predictions)."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-7",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-7",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nEven better, we can get the 95% confidence interval with the predict() function. This just requires a bit of code to get the snake SVLs and the corresponding predictions and confidence limits configured in a data frame.\n\n\n\n\n\n\n\n\n\nRemember these are still predictions for expected prey weights for the actual snake lengths in our dataset.\n\nWe plot the regression results as points (fitted values) and line segments (pointwise 95% confidence intervals).\n\n\n\n\n\n\n\n\n\nWhy did this work?"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-8",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-8",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nThe model object contains, among other things:\n▶ the model formula (so the predict() function knows which variables to use and how)\n▶ the parameter estimates from the fit (i.e., the estimated value of the intercept and the slope, together with the uncertainty)\n▶ the relevant input data (the snake SVLs in our dataset)."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-9",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-9",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nTo plot smooth regression lines and confidence bands, we predict at regular intervals for a range of values of input variables (in this case just snake SVL). Here we store this new range of values in the new data object, created as a dataframe because that is one of the formats that the predict() function accepts. Again, the seq() function works great for creating a sequence of values in regular intervals between an upper and a lower limit."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-10",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-10",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nThen we make predictions for the new data (our newly created sequence of snake SVLs), together with upper and lower confidence limits."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-11",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-11",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions",
+    "text": "Predictions\nWe can now plot the regression results. We add the regression line (fitted values) with geom line() and the 95% confidence band (upper and lower confidence limits) with the geom ribbon()."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: GLM",
+    "text": "Predictions: GLM\nWith a few minor changes, we can use the same approach for making predictions for any of the regressions we worked with, including regressions with more than one predictor variable and with different link functions (Poisson or logistic regression). In this second example, we use the object ”repro”, which we loaded at the start of the script, and make predictions from a Poisson regression model. You can check the midterm recap for a description of the hypothetical study and these data."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm-1",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: GLM",
+    "text": "Predictions: GLM\nAs always, first, we plot the relationship we are interested in."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm-2",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-glm-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: GLM",
+    "text": "Predictions: GLM\nNext, we fit the regression model, with the log-link. The log-link makes this a Poisson model, suitable especially for modeling the effect of predictor variables on count data (which cannot be lower than 0)."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nAs before, we write out the regression equation using the coefficient from the model. Here, you notice that we have an additional component, the one that specifies the difference between forest habitat and the intercept habitat (grassland). We pick some values for snake SVL (in this case 200 cm) and habitat (in this case “forest”) that we want to calculate the expected clutch size for.\n\n\n\n\n\n\n\n\nNotice how we used the categorical predictor variable: habitat==“forest”. This produces a true or false (1 or 0) and either adds 0.5848332 g to prey weight (if habitat is “forest”) or does not (if habitat is not “forest”). We add the prediction to the plot:\n\n\n\n\n\n\n\n\n\nDoes it look correct?"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-1",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nThe blue dot should be much higher, given where the point cloud associated with forest habitat is located in the plot. The problem is that we calculated the expected clutch size on the scale of the linear predictor, meaning it is on the log-scale. To get the actual clutch size as the number of eggs (the original scale of the response), we have to back-transform the predicted value.\n\n\n\n\n\n\n\n\nThe inverse of the log is the exponent; we use it to convert y to y count. &gt;The resulting plot of the prediction makes a lot more sense."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-2",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nWe can also predict the clutch size for a sequence of weights and for grassland habitat.\n\n\n\n\n\n\n\n\n\nNotice how this time we did the exponential transformation directly to the regression equation instead of another line of code. Makes no difference."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-3",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nNow, let’s see what we can do with the predict() function. Ultimately, we would like predictions that allow us to plot smooth regression lines for both habitats across a range of snake SVLs, together with smooth 95% confidence intervals.\nTo do this, we need to create different combinations of predictor variable values. We have two predictor variables (SVL and habitat), so we have to create an ordered and equally spaced sequence of SVLs for each habitat type.\n\n\n\n\n\n\n\n\nWe use the expand.grid() function: it creates all possible combinations of whatever items we give it. In this case, we ask it to produce combinations of 100 equally spaced SVLs between the smallest and largest snake length and the different levels of the variable habitat (“forest” and “grassland”)."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-4",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-4",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nWe place the result in a dataframe called prediction, which is where we will later add the fitted (predicted) values. But for now, object temp only contains the response variable combinations we want to make predictions for.\n\n\n\n\n\n\n\n\n\nThe new temp object we just created contains both the fit (predicted clutch sizes on the log scale) and the standard error around the fit (also on the log scale)."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-5",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-5",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nTo have our chosen response variable values and the predictions in the same table, we add the fitted values as a new column to the prediction table. We then calculate the lower and upper confidence interval (still on the log scale) as shown below and add them to the prediction table as well.\n\n\n\n\n\n\n\n\nNow we add the predictions (regression line and confidence intervals) to our plot.\n\n\n\n\n\n\n\n\n\nDoes it make any sense?"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-6",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-6",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nThere are two ways we can make this work. One solution is to plot everything, including the raw data (clutch size) on the log scale."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-7",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-7",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nThis looks fine, but it would be nicer to show everything (including the predictions) on the count scale, as most people will find that easier to interpret.\nWe can use the exp() function to back-transform the fit and the upper and lower confidence limits from the log scale to the original count scale."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-8",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#predictions-poisson-glm-8",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: Poisson GLM",
+    "text": "Predictions: Poisson GLM\nThis allows us to generate a plot showing both the raw data, the regression line, and the confidence intervals on the count scale."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#logistic-glm-predictions",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#logistic-glm-predictions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Logistic GLM: predictions",
+    "text": "Logistic GLM: predictions"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#load-trout-data",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#load-trout-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Load trout data",
+    "text": "Load trout data"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#ggplot-blank-canvas",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#ggplot-blank-canvas",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "ggplot: blank canvas",
+    "text": "ggplot: blank canvas"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#scatter-plot",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#scatter-plot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Scatter plot",
+    "text": "Scatter plot"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#color-by-sex",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#color-by-sex",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Color by sex",
+    "text": "Color by sex"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#add-labels-and-transparency",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#add-labels-and-transparency",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Add labels and transparency",
+    "text": "Add labels and transparency"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#bar-chart-total-biomass-by-year",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#bar-chart-total-biomass-by-year",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Bar chart: total biomass by year",
+    "text": "Bar chart: total biomass by year"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#bar-chart-counts-by-year-and-sex",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#bar-chart-counts-by-year-and-sex",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Bar chart: counts by year and sex",
+    "text": "Bar chart: counts by year and sex"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#histogram-weight-distribution",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#histogram-weight-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Histogram: weight distribution",
+    "text": "Histogram: weight distribution"
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#your-turn",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 1: ggplot\n\n\n\nPlot fish age vs. weight with color = year of capture. Include proper axis labels with units.\nPlot the number of fish per sex as a horizontal bar chart. Exclude fish with unknown sex (NA).\nHistogram of fish lengths with separate side-by-side bars per sex."
+  },
+  {
+    "objectID": "Day09_2026-10-27_predictions-ggplot.html#your-turn-1",
+    "href": "Day09_2026-10-27_predictions-ggplot.html#your-turn-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 2: predictions\n\n\n\nUsing the Poisson model (clutch size), find the expected clutch size for:\n\nA 180 cm snake in forest habitat\nA 250 cm snake in grassland habitat\nA 5-metre snake in grassland habitat\n\nFrom the logistic model, find the probability of snake infestation for:\n\nAn island 80 km away with 1500 inhabitants\nAn uninhabited island 100 km away\nAn island 50 miles away with 800 inhabitants (watch units!)"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html",
+    "href": "Day11_2026-11-10_power-analysis.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Power analysis with simulations\nPractice"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#outline",
+    "href": "Day11_2026-11-10_power-analysis.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Power analysis with simulations\nPractice"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#why-power-analysis",
+    "href": "Day11_2026-11-10_power-analysis.html#why-power-analysis",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Why power analysis?",
+    "text": "Why power analysis?\nFunding agencies, dissertation committees, and journals often require power calculations for primary analyses.\nPower = probability of detecting a true effect given the effect exists.\nConventional threshold: power ≥ 0.8"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#scenario-two-groups",
+    "href": "Day11_2026-11-10_power-analysis.html#scenario-two-groups",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Scenario: two groups",
+    "text": "Scenario: two groups\n\\[y_{ic} \\sim   ext{Normal}(0, 1)\\] \\[y_{it} \\sim   ext{Normal}(0.5, 1)\\]\nA medium standardized effect size (Cohen’s d = 0.5)."
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#visualize-the-two-distributions",
+    "href": "Day11_2026-11-10_power-analysis.html#visualize-the-two-distributions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualize the two distributions",
+    "text": "Visualize the two distributions\n\nmu_c &lt;- 0; mu_t &lt;- 0.5\nx   &lt;- seq(-4, 5, by = 0.01)\nc_d &lt;- dnorm(x, mu_c, 1)\nt_d &lt;- dnorm(x, mu_t, 1)\n\nplot(x, c_d, type = \"l\", lwd = 2, col = \"grey40\",\n     ylab = \"Density\", xlab = \"y\")\nlines(x, t_d, lwd = 2, col = \"blue\")\nlegend(\"topright\", legend = c(\"control\", \"treatment\"),\n       col = c(\"grey40\", \"blue\"), lwd = 2, bty = \"n\")"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#simulate-one-dataset",
+    "href": "Day11_2026-11-10_power-analysis.html#simulate-one-dataset",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simulate one dataset",
+    "text": "Simulate one dataset\n\nset.seed(2)\nn   &lt;- 50\nmu_c &lt;- 0; mu_t &lt;- 0.5\n\ngroup     &lt;- rep(c(\"control\", \"treatment\"), each = n)\ntreatment &lt;- ifelse(group == \"control\", 0, 1)\ny         &lt;- ifelse(group == \"control\",\n                    rnorm(n, mu_c, 1),\n                    rnorm(n, mu_t, 1))\n\nsim_data  &lt;- data.frame(group, treatment, y)\nhead(sim_data)"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#frequentist-power-simulation",
+    "href": "Day11_2026-11-10_power-analysis.html#frequentist-power-simulation",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Frequentist power simulation",
+    "text": "Frequentist power simulation\n\nsimulate_and_test &lt;- function(seed, n, mu_t = 0.5, mu_c = 0) {\n  set.seed(seed)\n  group     &lt;- rep(c(\"control\", \"treatment\"), each = n)\n  treatment &lt;- ifelse(group == \"control\", 0, 1)\n  y         &lt;- ifelse(group == \"control\",\n                      rnorm(n, mu_c, 1),\n                      rnorm(n, mu_t, 1))\n  m &lt;- lm(y ~ treatment)\n  coef(summary(m))[\"treatment\", \"Pr(&gt;|t|)\"]\n}\n\n# Simulate 200 datasets with n=50\nset.seed(99)\nn_sim  &lt;- 200\npvals  &lt;- sapply(1:n_sim, simulate_and_test, n = 50)\npower  &lt;- mean(pvals &lt; 0.05)\ncat(\"Power with n = 50 per group:\", round(power, 3))"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#power-curve",
+    "href": "Day11_2026-11-10_power-analysis.html#power-curve",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Power curve",
+    "text": "Power curve\n\nsample_sizes &lt;- c(30, 50, 75, 100, 150)\npower_curve  &lt;- sapply(sample_sizes, function(n) {\n  ps &lt;- sapply(1:200, simulate_and_test, n = n)\n  mean(ps &lt; 0.05)\n})\n\nplot(sample_sizes, power_curve, type = \"b\",\n     pch = 19, col = \"steelblue\", lwd = 2,\n     xlab = \"n per group\", ylab = \"Power\",\n     ylim = c(0, 1))\nabline(h = 0.8, col = \"red\", lty = 2)"
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#bayesian-power-analysis-brms",
+    "href": "Day11_2026-11-10_power-analysis.html#bayesian-power-analysis-brms",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Bayesian power analysis (brms)",
+    "text": "Bayesian power analysis (brms)\n\nlibrary(brms)\n\n# Fit initial model\nfit &lt;- brms::brm(\n  data  = sim_data, family = gaussian,\n  y ~ 0 + Intercept + treatment,\n  prior = c(prior(normal(0, 2),          class = b),\n            prior(student_t(3, 1, 1),    class = sigma)),\n  seed = 1\n)\nbrms::fixef(fit)\n\n\n\n\n\n\n\nNote\n\n\n\nThe brms model above requires a C++ toolchain and Stan. Run it on your own machine. The frequentist simulation above is fully runnable here."
+  },
+  {
+    "objectID": "Day11_2026-11-10_power-analysis.html#practice-power-analysis",
+    "href": "Day11_2026-11-10_power-analysis.html#practice-power-analysis",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice: power analysis",
+    "text": "Practice: power analysis\n\n\n\n\n\n\nPractice 2\n\n\n\n\nIncrease sample size to n = 65 per group. Does power exceed 0.8?\nTo detect a smaller effect size of 0.3, how many samples are needed? (Hint: modify the simulate_and_test() function.)\n\n\n\n\n# Power with n = 65\npvals_65 &lt;- sapply(1:200, simulate_and_test, n = 65)\ncat(\"Power with n = 65:\", round(mean(pvals_65 &lt; 0.05), 3))"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html",
+    "href": "Day10_2026-11-03_mixed-effects.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model assumptions — continued (independence)\nMixed effects regression\nPractice"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#outline",
+    "href": "Day10_2026-11-03_mixed-effects.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model assumptions — continued (independence)\nMixed effects regression\nPractice"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#overview",
+    "href": "Day10_2026-11-03_mixed-effects.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nSometimes observations within a group share more in common with each other than with observations from other groups — violating the independence assumption.\n\nGroup membership can be modeled as a random effect\nToday: compare fixed-effect approach vs. mixed-effects approach"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#the-tick-dataset",
+    "href": "Day10_2026-11-03_mixed-effects.html#the-tick-dataset",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "The tick dataset",
+    "text": "The tick dataset\nA researcher studies blood-ingestion rate of ticks as a function of time spent on the host:\n\nMultiple ticks per dog → pseudoreplication\nResponse: blood volume ingested (ml)\nPredictor: hours since attachment\nGrouping: dog ID"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#setup",
+    "href": "Day10_2026-11-03_mixed-effects.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup\n\nrm(list = ls())\nlibrary(lme4)\nlibrary(stats)\n\nurl_remote &lt;- \"https://raw.githubusercontent.com/\"\npath_git   &lt;- \"MTourani/WILD541_F2025/refs/heads/main/\"\nload(url(paste0(url_remote, path_git, \"ticks.RData\")))\nstr(ticks)"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#explore-tick-data",
+    "href": "Day10_2026-11-03_mixed-effects.html#explore-tick-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore tick data",
+    "text": "Explore tick data\n\ndog_colors &lt;- rainbow(length(levels(ticks$dog.id)))\nnames(dog_colors) &lt;- levels(ticks$dog.id)\n\nplot(volume ~ hours, ticks,\n     col = dog_colors[ticks$dog.id],\n     pch = 1, cex = 1.2, lwd = 2,\n     xlab = \"Hours spent feeding\",\n     ylab = \"Blood volume ingested (ml)\")"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#fixed-effects-model-naive",
+    "href": "Day10_2026-11-03_mixed-effects.html#fixed-effects-model-naive",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fixed effects model (naive)",
+    "text": "Fixed effects model (naive)\n\nmy_lm &lt;- stats::lm(volume ~ scale(hours) + factor(dog.id),\n                   data = ticks)\nsummary(my_lm)\n\n\n\n\n\n\n\nWarning\n\n\n\nThis uses many degrees of freedom on dog IDs — impractical with many groups or sparse data."
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#random-intercepts-model-frequentist",
+    "href": "Day10_2026-11-03_mixed-effects.html#random-intercepts-model-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Random intercepts model: frequentist",
+    "text": "Random intercepts model: frequentist\n\nmy_lmer &lt;- lme4::lmer(\n  volume ~ scale(hours) + (1 | dog.id),\n  data = ticks\n)\nsummary(my_lmer)"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#plot-with-fixed-effect-line",
+    "href": "Day10_2026-11-03_mixed-effects.html#plot-with-fixed-effect-line",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Plot with fixed-effect line",
+    "text": "Plot with fixed-effect line\n\nplot(volume ~ hours, ticks,\n     col = dog_colors[ticks$dog.id],\n     pch = 1, cex = 1.2, lwd = 2,\n     xlab = \"Hours spent feeding\",\n     ylab = \"Blood volume ingested (ml)\")\nabline(lme4::fixef(my_lmer), lwd = 3)"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#random-intercepts-bayesian-nimble",
+    "href": "Day10_2026-11-03_mixed-effects.html#random-intercepts-bayesian-nimble",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Random intercepts: Bayesian (nimble)",
+    "text": "Random intercepts: Bayesian (nimble)\n\nlibrary(nimble)\nlibrary(coda)\n\nlist_data &lt;- list(\n  volume  = as.numeric(ticks$volume),\n  n       = nrow(ticks),\n  dog.id  = as.numeric(ticks$dog.id),\n  ndog    = length(unique(ticks$dog.id)),\n  hours   = as.numeric(scale(ticks$hours))\n)\n\nmodel_1 &lt;- nimbleCode({\n  for (i in 1:n) {\n    volume[i] ~ dnorm(mu[i], sd = sd)\n    mu[i]     &lt;- a[dog.id[i]] + b_hour * hours[i]\n  }\n  for (i in 1:ndog) {\n    a[i] ~ dnorm(mean.a, sd = sd.dog)\n  }\n  mean.a ~ dnorm(0, sd = 100)\n  sd.dog ~ dunif(0, 20)\n  b_hour ~ dnorm(0, sd = 100)\n  sd     ~ dunif(0, 100)\n})\n\ninits  &lt;- list(mean.a = rnorm(1), b_hour = rnorm(1),\n               sd = rlnorm(1),    sd.dog = rlnorm(1))\nparams &lt;- c(\"mean.a\", \"b_hour\", \"sd\", \"sd.dog\")\nni &lt;- 4000; nb &lt;- 2000; nc &lt;- 4; nt &lt;- 1\n\nout &lt;- nimbleMCMC(\n  code = model_1, constants = list_data,\n  inits = inits, monitors = params,\n  nburnin = nb, niter = ni, thin = nt, nchains = nc,\n  samplesAsCodaMCMC = TRUE, summary = TRUE\n)\nout$summary$all.chains"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#traceplots",
+    "href": "Day10_2026-11-03_mixed-effects.html#traceplots",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Traceplots",
+    "text": "Traceplots\n\ncoda::traceplot(out$samples)"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#your-turn",
+    "href": "Day10_2026-11-03_mixed-effects.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn"
+  },
+  {
+    "objectID": "Day10_2026-11-03_mixed-effects.html#practice-mixed-effects",
+    "href": "Day10_2026-11-03_mixed-effects.html#practice-mixed-effects",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice: mixed effects",
+    "text": "Practice: mixed effects\n\n\n\n\n\n\nPractice 1\n\n\n\nUsing the invasive snake prey dataset (load from GitHub):\n\nFit a simple LM with snake.id as a fixed effect.\nFit a mixed LM with snake.id as a random effect and SVL as a fixed effect.\nCompare and interpret both outputs.\nExplore your own data for dependent structures and repeat.\n\n\n\n\nurl_remote &lt;- \"https://raw.githubusercontent.com/\"\npath_git   &lt;- \"MTourani/WILD541_F2025/refs/heads/main/\"\nload(url(paste0(url_remote, path_git, \"prey.RData\")))\n\n# Your code here"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html",
+    "href": "Day12_2026-11-17_mixed-effects.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model assumptions — continued (independence)\nMixed effects regression\nPractice"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#outline",
+    "href": "Day12_2026-11-17_mixed-effects.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nModel assumptions — continued (independence)\nMixed effects regression\nPractice"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#overview",
+    "href": "Day12_2026-11-17_mixed-effects.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nSometimes observations within a group share more in common with each other than with observations from other groups — violating the independence assumption.\n\nGroup membership can be modeled as a random effect\nToday: compare fixed-effect approach vs. mixed-effects approach"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#the-tick-dataset",
+    "href": "Day12_2026-11-17_mixed-effects.html#the-tick-dataset",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "The tick dataset",
+    "text": "The tick dataset\nA researcher studies blood-ingestion rate of ticks as a function of time spent on the host:\n\nMultiple ticks per dog → pseudoreplication\nResponse: blood volume ingested (ml)\nPredictor: hours since attachment\nGrouping: dog ID"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#setup",
+    "href": "Day12_2026-11-17_mixed-effects.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#explore-tick-data",
+    "href": "Day12_2026-11-17_mixed-effects.html#explore-tick-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore tick data",
+    "text": "Explore tick data"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#fixed-effects-model-naive",
+    "href": "Day12_2026-11-17_mixed-effects.html#fixed-effects-model-naive",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fixed effects model (naive)",
+    "text": "Fixed effects model (naive)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWarning\n\n\nThis uses many degrees of freedom on dog IDs — impractical with many groups or sparse data."
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#random-intercepts-model-frequentist",
+    "href": "Day12_2026-11-17_mixed-effects.html#random-intercepts-model-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Random intercepts model: frequentist",
+    "text": "Random intercepts model: frequentist"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#plot-with-fixed-effect-line",
+    "href": "Day12_2026-11-17_mixed-effects.html#plot-with-fixed-effect-line",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Plot with fixed-effect line",
+    "text": "Plot with fixed-effect line"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#random-intercepts-bayesian-nimble",
+    "href": "Day12_2026-11-17_mixed-effects.html#random-intercepts-bayesian-nimble",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Random intercepts: Bayesian (nimble)",
+    "text": "Random intercepts: Bayesian (nimble)"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#traceplots",
+    "href": "Day12_2026-11-17_mixed-effects.html#traceplots",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Traceplots",
+    "text": "Traceplots"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#your-turn",
+    "href": "Day12_2026-11-17_mixed-effects.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn"
+  },
+  {
+    "objectID": "Day12_2026-11-17_mixed-effects.html#practice-mixed-effects",
+    "href": "Day12_2026-11-17_mixed-effects.html#practice-mixed-effects",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice: mixed effects",
+    "text": "Practice: mixed effects\n\n\n\n\n\n\n\nPractice 1\n\n\nUsing the invasive snake prey dataset (load from GitHub):\n\nFit a simple LM with snake.id as a fixed effect.\nFit a mixed LM with snake.id as a random effect and SVL as a fixed effect.\nCompare and interpret both outputs.\nExplore your own data for dependent structures and repeat."
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html",
+    "href": "Day11_2026-11-10_model-assumptions.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model assumptions, simulations, and diagnostics\nPractice"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#outline",
+    "href": "Day11_2026-11-10_model-assumptions.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nModel assumptions, simulations, and diagnostics\nPractice"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#overview",
+    "href": "Day11_2026-11-10_model-assumptions.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nLinear regression assumes:\n\nLinearity — the relationship between predictors and response is linear\nIndependence — errors are independent of each other\nHomoscedasticity — constant error variance\nNormality — residuals are normally distributed\n\n\n\n\n\n\n\nNote\n\n\nAssumptions are often violated by real data. Here we simulate violations and learn to detect and address them."
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#setup",
+    "href": "Day11_2026-11-10_model-assumptions.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#when-assumptions-are-met",
+    "href": "Day11_2026-11-10_model-assumptions.html#when-assumptions-are-met",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "When assumptions are met",
+    "text": "When assumptions are met"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#diagnostics-met-assumptions",
+    "href": "Day11_2026-11-10_model-assumptions.html#diagnostics-met-assumptions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Diagnostics: met assumptions",
+    "text": "Diagnostics: met assumptions"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#predictions-met-assumptions",
+    "href": "Day11_2026-11-10_model-assumptions.html#predictions-met-assumptions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: met assumptions",
+    "text": "Predictions: met assumptions"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#violating-linearity-simulate",
+    "href": "Day11_2026-11-10_model-assumptions.html#violating-linearity-simulate",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Violating linearity: simulate",
+    "text": "Violating linearity: simulate"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#violating-linearity-diagnostics",
+    "href": "Day11_2026-11-10_model-assumptions.html#violating-linearity-diagnostics",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Violating linearity: diagnostics",
+    "text": "Violating linearity: diagnostics"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#fix-polynomial-term",
+    "href": "Day11_2026-11-10_model-assumptions.html#fix-polynomial-term",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fix: polynomial term",
+    "text": "Fix: polynomial term"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#violating-homoscedasticity",
+    "href": "Day11_2026-11-10_model-assumptions.html#violating-homoscedasticity",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Violating homoscedasticity",
+    "text": "Violating homoscedasticity"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#fix-gls-with-variance-structure",
+    "href": "Day11_2026-11-10_model-assumptions.html#fix-gls-with-variance-structure",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fix: GLS with variance structure",
+    "text": "Fix: GLS with variance structure"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#violating-normality",
+    "href": "Day11_2026-11-10_model-assumptions.html#violating-normality",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Violating normality",
+    "text": "Violating normality\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nCan you think of a solution from a previous lesson? (Hint: link functions)"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#outliers-simulate",
+    "href": "Day11_2026-11-10_model-assumptions.html#outliers-simulate",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outliers: simulate",
+    "text": "Outliers: simulate"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#outlier-diagnostics",
+    "href": "Day11_2026-11-10_model-assumptions.html#outlier-diagnostics",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outlier diagnostics",
+    "text": "Outlier diagnostics"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#practice-1-simulations",
+    "href": "Day11_2026-11-10_model-assumptions.html#practice-1-simulations",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice 1: simulations",
+    "text": "Practice 1: simulations\n\n\n\n\n\n\n\nPractice 1\n\n\n\nUse ns() from the splines package to fit a model with a non-linear relationship.\nSimulate decreasing residual variance with increasing x. Plot to confirm.\nPlot residual density vs. a normal curve for the normality-violating data. Suggest a model fix.\nRemove the outlier and re-run diagnostics. Does it change conclusions?"
+  },
+  {
+    "objectID": "Day11_2026-11-10_model-assumptions.html#practice-2-your-data",
+    "href": "Day11_2026-11-10_model-assumptions.html#practice-2-your-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice 2: your data",
+    "text": "Practice 2: your data\n\n\n\n\n\n\n\nPractice 2\n\n\n\nRun plot(lm(...)) on a linear regression model for your own data.\nWhich assumptions, if any, appear to be violated?\nDemonstrate how you would address the violation(s)."
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html",
+    "href": "Day10_2026-11-03_power-analysis.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Power analysis with simulations\nPractice"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#outline",
+    "href": "Day10_2026-11-03_power-analysis.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nPower analysis with simulations\nPractice"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#why-power-analysis",
+    "href": "Day10_2026-11-03_power-analysis.html#why-power-analysis",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Why power analysis?",
+    "text": "Why power analysis?\nFunding agencies, dissertation committees, and journals often require power calculations for primary analyses.\nPower = probability of detecting a true effect given the effect exists.\nConventional threshold: power ≥ 0.8"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#scenario-two-groups",
+    "href": "Day10_2026-11-03_power-analysis.html#scenario-two-groups",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Scenario: two groups",
+    "text": "Scenario: two groups\n\\[y_{ic} \\sim   ext{Normal}(0, 1)\\] \\[y_{it} \\sim   ext{Normal}(0.5, 1)\\]\nA medium standardized effect size (Cohen’s d = 0.5)."
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#visualize-the-two-distributions",
+    "href": "Day10_2026-11-03_power-analysis.html#visualize-the-two-distributions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualize the two distributions",
+    "text": "Visualize the two distributions"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#simulate-one-dataset",
+    "href": "Day10_2026-11-03_power-analysis.html#simulate-one-dataset",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simulate one dataset",
+    "text": "Simulate one dataset"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#frequentist-power-simulation",
+    "href": "Day10_2026-11-03_power-analysis.html#frequentist-power-simulation",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Frequentist power simulation",
+    "text": "Frequentist power simulation"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#power-curve",
+    "href": "Day10_2026-11-03_power-analysis.html#power-curve",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Power curve",
+    "text": "Power curve"
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#bayesian-power-analysis-brms",
+    "href": "Day10_2026-11-03_power-analysis.html#bayesian-power-analysis-brms",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Bayesian power analysis (brms)",
+    "text": "Bayesian power analysis (brms)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nThe brms model above requires a C++ toolchain and Stan. Run it on your own machine. The frequentist simulation above is fully runnable here."
+  },
+  {
+    "objectID": "Day10_2026-11-03_power-analysis.html#practice-power-analysis",
+    "href": "Day10_2026-11-03_power-analysis.html#practice-power-analysis",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Practice: power analysis",
+    "text": "Practice: power analysis\n\n\n\n\n\n\n\nPractice 2\n\n\n\nIncrease sample size to n = 65 per group. Does power exceed 0.8?\nTo detect a smaller effect size of 0.3, how many samples are needed? (Hint: modify the simulate_and_test() function.)"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html",
+    "href": "Day13_2026-12-01_occupancy-models.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Logistic regression — revisited\nOccupancy models"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#outline",
+    "href": "Day13_2026-12-01_occupancy-models.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nLogistic regression — revisited\nOccupancy models"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#binary-responses",
+    "href": "Day13_2026-12-01_occupancy-models.html#binary-responses",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Binary responses",
+    "text": "Binary responses\nLet \\(z_i\\) denote presence/absence at location \\(i\\), and \\(\\psi_i\\) = probability of occurrence:\n\\[z_i \\sim  ext{Bernoulli}(\\psi_i)\\]\n\\[  ext{logit}(\\psi_i) = \beta_0 + \beta_1    imes X_i\\]\n\n\\(\beta_0\\): intercept — log-odds of occurrence when \\(x = 0\\)\n\\(\beta_1\\): slope — change in log-odds per unit increase in \\(x\\)"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#setup",
+    "href": "Day13_2026-12-01_occupancy-models.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#simulate-presenceabsence-data",
+    "href": "Day13_2026-12-01_occupancy-models.html#simulate-presenceabsence-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simulate presence/absence data",
+    "text": "Simulate presence/absence data"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#fit-logistic-regression",
+    "href": "Day13_2026-12-01_occupancy-models.html#fit-logistic-regression",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fit logistic regression",
+    "text": "Fit logistic regression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nCompare with the true values: β₀ = 2, β₁ = −2"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#predictions-on-response-scale",
+    "href": "Day13_2026-12-01_occupancy-models.html#predictions-on-response-scale",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions on response scale",
+    "text": "Predictions on response scale"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#visualize-logistic-regression",
+    "href": "Day13_2026-12-01_occupancy-models.html#visualize-logistic-regression",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualize logistic regression",
+    "text": "Visualize logistic regression"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#the-detection-problem",
+    "href": "Day13_2026-12-01_occupancy-models.html#the-detection-problem",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "The detection problem",
+    "text": "The detection problem\n\n\n\n\n\n\n\nKey insight\n\n\nProbability of occurrence ≠ Probability of detection\nA species may be present but not detected. Failing to account for imperfect detection leads to underestimated occurrence.\n\n\n\n\nA simple logistic regression conflates the two processes."
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#hierarchical-model-structure",
+    "href": "Day13_2026-12-01_occupancy-models.html#hierarchical-model-structure",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Hierarchical model structure",
+    "text": "Hierarchical model structure\nState process (ecological):\n\\[z_i \\sim  ext{Bernoulli}(\\psi_i), \\qquad  ext{logit}(\\psi_i) = \beta_0 + \beta_1 X_i\\]\nObservation process (conditional on state):\n\\[y_{ij} \\sim   ext{Bernoulli}(z_i  imes p_{ij}), \\qquad    ext{logit}(p_{ij}) = \u0007lpha_0 + \u0007lpha_1 C_{ij}\\]\n\n\\(z_i\\) = true (partially observed) presence/absence at site \\(i\\)\n\\(y_{ij}\\) = observed detection at site \\(i\\), visit \\(j\\)\n\\(p_{ij}\\) = detection probability given the species is present"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#simple-occupancy-simulate-data",
+    "href": "Day13_2026-12-01_occupancy-models.html#simple-occupancy-simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simple occupancy: simulate data",
+    "text": "Simple occupancy: simulate data"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#naive-occupancy",
+    "href": "Day13_2026-12-01_occupancy-models.html#naive-occupancy",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Naive occupancy",
+    "text": "Naive occupancy"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#occupancy-model-with-covariates-simulate",
+    "href": "Day13_2026-12-01_occupancy-models.html#occupancy-model-with-covariates-simulate",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Occupancy model with covariates: simulate",
+    "text": "Occupancy model with covariates: simulate"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#fit-occupancy-model-nimble",
+    "href": "Day13_2026-12-01_occupancy-models.html#fit-occupancy-model-nimble",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Fit occupancy model (nimble)",
+    "text": "Fit occupancy model (nimble)"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#inspect-results",
+    "href": "Day13_2026-12-01_occupancy-models.html#inspect-results",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Inspect results",
+    "text": "Inspect results\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nCompare with true values: β₀ = 3, β₁ = −1, α₀ = −2, α₁ = 2"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#traceplots",
+    "href": "Day13_2026-12-01_occupancy-models.html#traceplots",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Traceplots",
+    "text": "Traceplots"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#predict-occupancy-across-elevations",
+    "href": "Day13_2026-12-01_occupancy-models.html#predict-occupancy-across-elevations",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predict occupancy across elevations",
+    "text": "Predict occupancy across elevations"
+  },
+  {
+    "objectID": "Day13_2026-12-01_occupancy-models.html#summary",
+    "href": "Day13_2026-12-01_occupancy-models.html#summary",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Summary",
+    "text": "Summary\n\n\n\n\n\n\n\nKey takeaways\n\n\n\nLogistic regression estimates occurrence probability but assumes perfect detection\nOccupancy models separate state and observation processes\nWith repeated visits, we can jointly estimate \\(\\psi\\) (occurrence) and \\(p\\) (detection)\nBayesian implementation in nimble provides full uncertainty quantification"
   }
 ]

@@ -4,7 +4,7 @@ subtitle: "Lesson 7: Model Comparison and Selection"
 author: "Mahdieh Tourani"
 date: "October 13, 2026"
 title-slide-attributes:
-  data-background-image: "images/cover08.JPG"
+  data-background-image: "images/cover08.jpg"
   data-background-size: "45%"
   data-background-position: "right -100px bottom 10px"
 ---

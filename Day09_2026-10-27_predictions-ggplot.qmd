@@ -1,0 +1,574 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 8: Predictions and visualization with 'ggplot2'"
+author: "Mahdieh Tourani"
+date: "October 27, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover07.jpg"
+  data-background-size: "40%"
+  data-background-position: "right 1px bottom 10px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Predictions revisited
+2.  Data visualization with ggplot2
+3.  Practice
+
+# Predictions revisited
+
+## Overview
+
+Today, we will try to make predictions a bit clearer, so that you become more comfortable using this aspect of analysis. We will use the invasive snake datasets from last week to explain things.
+
+## Setup
+
+As always, clear workspace and load the required packages and the input data into R environment. You can check the midterm recap for a description of the hypothetical study and these data.
+
+```{webr}
+rm(list = ls())              # Clear workspace
+library("ggplot2")           # Call the required library
+            
+url_remote <- "https://raw.githubusercontent.com/"
+path_git   <- "MTourani/WILD541_F2026/refs/heads/main/"
+file_names <- paste0(c("invasive", "repro", "prey"), ".RData")
+
+for (f in file_names) {
+  load(url(paste0(url_remote, path_git, f)))
+}
+```
+
+## Aggregate prey data
+
+In the first example, we use the object ”prey” and showcase a linear regression with a continuous predictor variable. The object ”prey” contains multiple entries (prey items) per snake. We have to aggregate the data to get only one record (row of data) per snake, which then contains the average weight of prey items consumed by that snake.
+
+```{webr}
+prey_agg <- aggregate(list(snake.SVL   = prey$snake.SVL,
+                           prey.weight = prey$prey.weight),
+                      list(snake.id = prey$snake.id),
+                      FUN = mean)
+```
+
+## Explore data
+
+As always, we plot the data to visually explore the relationship we are interested in, i.e., the effect of snake snout-vent-length (SVL) on the weight of prey consumed.
+
+```{webr}
+prey_plot <- ggplot() +
+             geom_point(data = prey_agg, aes(x = snake.SVL, y = prey.weight)) +
+             ylab("Prey weight (g)") +
+             xlab("Snake snout-vent-length (cm)")
+```
+
+## Fit a simple linear regression model
+
+Now we are ready to fit the regression model. We are dealing with continuous data and an apparently linear relationship, so we use R’s most basic regression model function lm(). Alternatively, you could use glm() with identity link to fit the same model.
+
+```{webr}
+my_lm <- stats::lm(prey.weight ~ snake.SVL, data = prey_agg)
+summary(my_lm)
+```
+
+> Even without the predict() function, we can use information from the model to calculate the expected weight of prey for a given snake size (SVL). We simply have to pick a snake length (e.g., 100 cm) and calculate the result of the regression equation using the coefficients (intercept and slope) provided in the model output. Can you find the coefficients?
+
+## Predictions
+
+This tells us that a 1 meter long snake will on average eat prey that weighs approximately 46g.
+
+We can add the prediction as a single point to the plot.
+
+```{webr}
+x <- 100
+y <- 14.64769 + 0.31099 * x
+cat("Predicted prey weight for SVL =", x, "cm:", round(y, 2), "g")
+
+prey_plot + 
+  geom_point(aes(x = x, y = y), col = "red", size = 4)
+```
+
+> Can you modify the code above to show points for the predicted prey weights for 3 snake SVLs: 50 cm, 175 cm, and 225 cm?
+
+## Predictions
+
+We can also calculate the expected prey weight for a sequence of different snake lengths, for example from 100 cm to 250 cm.
+
+```{webr}
+x <- 100 : 250
+y <- 14.64769 + 0.31099 * x
+
+prey_plot + geom_line(aes(x = x, y = y), col = "orange")
+```
+
+> This looks like a line, but is really just a tight sequence of overlapping points.
+
+## Predictions
+
+If we do not want to create predictions for every cm within a range, we can use the seq() function to get values in equal intervals within a range of values. Then we use that sequence of values (snake lengths) to calculate the corresponding expected prey weight.
+
+```{webr}
+x <- seq(100, 250, length.out = 10)
+y <- 14.64769 + 0.31099 * x
+prey_plot + geom_point(aes(x = x, y = y), col = "red")
+```
+
+## Predictions
+
+In seq(), we can also specify the exact range of snake sizes as starting and ending values of the sequence, by using the min() and max() functions. This works for numerical variables but not for categorical ones. Here, we first calculate the minimum and maximum snake SVL in our sample and then provide them to seq().
+
+```{webr}
+min_SVL <- min(prey_agg$snake.SVL)
+max_SVL <- max(prey_agg$snake.SVL)
+x <- seq(min_SVL, max_SVL, length.out = 30)
+y <- 14.64769 + 0.31099 * x
+# plot
+prey_plot + geom_point(aes(x = x, y = y), col = "red")
+
+```
+
+## Predictions
+
+Why are we creating ordered and equally-spaced values of snake lengths? \> Because then the geom line() function can connect the dots and draw smooth lines instead of points.
+
+We can also calculate the predicted prey weight for every snake in our dataset, based on each snake’s actual SVL.
+
+```{webr}
+min_SVL <- min(prey_agg$snake.SVL)
+max_SVL <- max(prey_agg$snake.SVL)
+x <- seq(min_SVL, max_SVL, length.out = 30)
+y <- 14.64769 + 0.31099 * x
+# plot
+prey_plot + geom_point(aes(x = x, y = y), col = "red")
+
+
+```
+
+## Predictions
+
+This is also an opportunity to illustrate what the residuals are: the difference between the predicted (fitted) prey weight and the actual prey weight measured for that snake.
+
+```{webr}
+x <- prey_agg$snake.SVL
+y <- 14.64769 + 0.31099 * x
+# plot
+prey_plot + geom_point(aes(x = x, y = y), col = "red")
+
+```
+
+We add the residuals to the plot as line segments, using the function geom segment().
+
+```{webr}
+prey_plot +
+  geom_point(aes(x = x, y = y), col = "red") +
+  geom_segment(aes(x = x, y = prey_agg$prey.weight, xend = x, yend = y),
+               col = "black")
+
+```
+
+## Predictions
+
+This was relatively easy, but what if there are many predictor variables? And, what about the uncertainty (e.g., confidence intervals)? The predict() function makes our job easier. At its core, it simply does what we just did: calculate the expected value of the response variable (e.g., prey weight) given one or more predictor variable (e.g., snake SVL). But it can do so for huge and complicated regression models, and it also calculates the uncertainty (confidence interval or standard error).
+
+For example, instead of calculating the expected prey weights for all snakes in the dataset “by hand”, as we did above, we can simply provide the model object my lm to the predict() function - it already contains the regression equation and coefficients! This produces the same estimates we generated above (slight differences due to rounding of the hand-calculated predictions).
+
+```{webr}
+y # hand-calculated
+predict(my_lm) # predict() function
+
+```
+
+## Predictions
+
+Even better, we can get the 95% confidence interval with the predict() function. This just requires a bit of code to get the snake SVLs and the corresponding predictions and confidence limits configured in a data frame.
+
+```{webr}
+prediction <- predict(my_lm, interval = "confidence", level = 0.95)
+prediction <- data.frame(prediction, snake.SVL = prey_agg$snake.SVL)
+
+```
+
+> Remember these are still predictions for expected prey weights for the actual snake lengths in our dataset.
+
+We plot the regression results as points (fitted values) and line segments (pointwise 95% confidence intervals).
+
+```{webr}
+prey_plot +
+  geom_point(data = prediction, aes(x = snake.SVL, y = fit), col = "red") +
+  geom_segment(data = prediction, aes(x = snake.SVL, y = lwr, xend = snake.SVL, yend = upr),
+               col = "red")
+
+```
+
+> Why did this work?
+
+## Predictions
+
+The model object contains, among other things:
+
+▶ the model formula (so the predict() function knows which variables to use and how)
+
+▶ the parameter estimates from the fit (i.e., the estimated value of the intercept and the slope, together with the uncertainty)
+
+▶ the relevant input data (the snake SVLs in our dataset).
+
+```{webr}
+my_lm$model # the data
+my_lm$call # the model formula
+my_lm$coefficients # the model coefficients
+```
+
+## Predictions
+
+To plot smooth regression lines and confidence bands, we predict at regular intervals for a range of values of input variables (in this case just snake SVL). Here we store this new range of values in the new data object, created as a dataframe because that is one of the formats that the predict() function accepts. Again, the seq() function works great for creating a sequence of values in regular intervals between an upper and a lower limit.
+
+```{webr}
+min_SVL <- min(prey_agg$snake.SVL)
+max_SVL <- max(prey_agg$snake.SVL)
+new_data <- data.frame(snake.SVL = seq(min_SVL,
+                                       max_SVL,
+                                       length.out = 100))
+```
+
+## Predictions
+
+Then we make predictions for the new data (our newly created sequence of snake SVLs), together with upper and lower confidence limits.
+
+```{webr}
+prediction <- predict(my_lm,
+                      newdata = new_data,
+                      interval = "confidence",
+                      level = 0.95)
+# Bind columns into a table
+prediction <- cbind(prediction, new_data)
+```
+
+## Predictions
+
+We can now plot the regression results. We add the regression line (fitted values) with geom line() and the 95% confidence band (upper and lower confidence limits) with the geom ribbon().
+
+```{webr}
+prey_plot +
+  geom_line(data = prediction,
+            aes(x = snake.SVL, y = fit),
+            color = "red") +
+  geom_ribbon(data = prediction,
+              aes(x = snake.SVL, ymin = lwr, ymax = upr),
+              fill = "red",
+              alpha = 0.3)
+```
+
+## Predictions: GLM
+
+With a few minor changes, we can use the same approach for making predictions for any of the regressions we worked with, including regressions with more than one predictor variable and with different link functions (Poisson or logistic regression). In this second example, we use the object ”repro”, which we loaded at the start of the script, and make predictions from a Poisson regression model. You can check the midterm recap for a description of the hypothetical study and these data.
+
+## Predictions: GLM
+
+As always, first, we plot the relationship we are interested in.
+
+```{webr}
+clutch_plot <- ggplot() +
+  geom_point(data = repro,
+             aes(x = SVL, y = clutch.size, color = habitat)) +
+  ylab("Clutch size (number of eggs)") +
+  xlab("Snake snout-vent-length (cm)")
+
+```
+
+## Predictions: GLM
+
+Next, we fit the regression model, with the log-link. The log-link makes this a Poisson model, suitable especially for modeling the effect of predictor variables on count data (which cannot be lower than 0).
+
+```{webr}
+my_glm <- stats::glm(clutch.size ~ SVL + habitat,
+                     data = repro,
+                     family = "poisson")
+summary(my_glm)
+```
+
+## Predictions: Poisson GLM
+
+As before, we write out the regression equation using the coefficient from the model. Here, you notice that we have an additional component, the one that specifies the difference between forest habitat and the intercept habitat (grassland). We pick some values for snake SVL (in this case 200 cm) and habitat (in this case “forest”) that we want to calculate the expected clutch size for.
+
+```{webr}
+x <- 200
+habitat <- "forest"
+y <- 1.3583846 +
+     0.0045185 * x +
+     0.5848332 * (habitat == "forest")
+```
+
+Notice how we used the categorical predictor variable: habitat==“forest”. This produces a true or false (1 or 0) and either adds 0.5848332 g to prey weight (if habitat is “forest”) or does not (if habitat is not “forest”). We add the prediction to the plot:
+
+```{webr}
+clutch_plot +
+  geom_point(aes(x = x, y = y),
+             col = "blue")
+```
+
+> Does it look correct?
+
+## Predictions: Poisson GLM
+
+The blue dot should be much higher, given where the point cloud associated with forest habitat is located in the plot. The problem is that we calculated the expected clutch size on the scale of the linear predictor, meaning it is on the log-scale. To get the actual clutch size as the number of eggs (the original scale of the response), we have to back-transform the predicted value.
+
+```{webr}
+y_count <- exp(y)
+clutch_plot +
+  geom_point(aes(x = x, y = y_count),
+             col = "blue")
+```
+
+The inverse of the log is the exponent; we use it to convert y to y count. \>The resulting plot of the prediction makes a lot more sense.
+
+## Predictions: Poisson GLM
+
+We can also predict the clutch size for a sequence of weights and for grassland habitat.
+
+```{webr}
+x <- seq(100, 300, length.out = 10)
+habitat <- "grassland"
+y <- exp(1.3583846 +
+           0.0045185 * x +
+           0.5848332 * (habitat == "forest"))
+#Plot
+clutch.plot +
+  geom_point(aes(x = x, y = y), col = "red")
+```
+
+> Notice how this time we did the exponential transformation directly to the regression equation instead of another line of code. Makes no difference.
+
+## Predictions: Poisson GLM
+
+Now, let’s see what we can do with the predict() function. Ultimately, we would like predictions that allow us to plot smooth regression lines for both habitats across a range of snake SVLs, together with smooth 95% confidence intervals.
+
+To do this, we need to create different combinations of predictor variable values. We have two predictor variables (SVL and habitat), so we have to create an ordered and equally spaced sequence of SVLs for each habitat type.
+
+```{webr}
+min_SVL <- min(repro$SVL)
+max_SVL <- max(repro$SVL)
+prediction <- expand.grid(SVL = seq(min_SVL,
+                                    max_SVL,
+                                    length.out = 100),
+                          habitat = levels(repro$habitat))
+```
+
+We use the expand.grid() function: it creates all possible combinations of whatever items we give it. In this case, we ask it to produce combinations of 100 equally spaced SVLs between the smallest and largest snake length and the different levels of the variable habitat (“forest” and “grassland”).
+
+## Predictions: Poisson GLM
+
+We place the result in a dataframe called prediction, which is where we will later add the fitted (predicted) values. But for now, object temp only contains the response variable combinations we want to make predictions for.
+
+```{webr}
+temp <- predict(my_glm, newdata = prediction, se.fit = TRUE)
+```
+
+> The new temp object we just created contains both the fit (predicted clutch sizes on the log scale) and the standard error around the fit (also on the log scale).
+
+## Predictions: Poisson GLM
+
+To have our chosen response variable values and the predictions in the same table, we add the fitted values as a new column to the prediction table. We then calculate the lower and upper confidence interval (still on the log scale) as shown below and add them to the prediction table as well.
+
+```{webr}
+prediction$fit <- exp(temp$fit)
+prediction$upr <- exp(temp$fit + 1.96 * temp$se.fit)
+prediction$lwr <- exp(temp$fit - 1.96 * temp$se.fit)
+```
+
+Now we add the predictions (regression line and confidence intervals) to our plot.
+
+```{webr}
+ggplot() +
+  geom_point(data = repro,
+             aes(x = SVL, y = clutch.size, color = habitat)) +
+  geom_line(data = prediction,
+            aes(x = SVL, y = fit, color = habitat)) +
+  geom_ribbon(data = prediction,
+              aes(x = SVL, ymin = lwr, ymax = upr,
+                  fill = habitat), alpha = 0.3) +
+  ylab("Clutch size") + xlab("Snout-vent-length (cm)")
+```
+
+> Does it make any sense?
+
+## Predictions: Poisson GLM
+
+There are two ways we can make this work. One solution is to plot everything, including the raw data (clutch size) on the log scale.
+
+```{webr}
+ggplot() +
+  geom_point(data = repro,
+             aes(x = SVL, y = log(clutch.size), color = habitat)) +
+  geom_line(data = prediction,
+            aes(x = SVL, y = fit, color = habitat)) +
+  geom_ribbon(data = prediction,
+              aes(x = SVL, ymin = lwr, ymax = upr, fill = habitat), alpha = 0.3) +
+  ylab("log(Clutch size)") +
+  xlab("Snout-vent-length (cm)")
+```
+
+## Predictions: Poisson GLM
+
+This looks fine, but it would be nicer to show everything (including the predictions) on the count scale, as most people will find that easier to interpret.
+
+We can use the exp() function to back-transform the fit and the upper and lower confidence limits from the log scale to the original count scale.
+
+```{webr}
+prediction$fit <- exp(prediction$fit)
+prediction$upr <- exp(temp$fit + 1.96 * temp$se.fit)
+prediction$lwr <- exp(temp$fit - 1.96 * temp$se.fit)
+```
+
+## Predictions: Poisson GLM
+
+This allows us to generate a plot showing both the raw data, the regression line, and the confidence intervals on the count scale.
+
+```{webr}
+ggplot() +
+  geom_point(data = repro,
+             aes(x = SVL, y = clutch.size, color = habitat)) +
+  geom_line(data = prediction,
+            aes(x = SVL, y = fit, color = habitat)) +
+  geom_ribbon(data = prediction,
+              aes(x = SVL, ymin = lwr, ymax = upr, fill = habitat),
+              alpha = 0.3) +
+  ylab("Clutch size") +
+  xlab("Snout-vent-length (cm)")
+```
+
+## Logistic GLM: predictions
+
+```{webr}
+my_glm2 <- glm(snakes ~ distance + pop,
+               data = invasive, family = "binomial")
+
+min_d      <- min(invasive$distance); max_d <- max(invasive$distance)
+prediction <- expand.grid(
+  distance = seq(min_d, max_d, length.out = 100),
+  pop      = c(500, 1000, 1500)
+)
+temp <- predict(my_glm2, newdata = prediction, se.fit = TRUE)
+prediction$fit <- plogis(temp$fit)
+prediction$upr <- plogis(temp$fit + 1.96 * temp$se.fit)
+prediction$lwr <- plogis(temp$fit - 1.96 * temp$se.fit)
+
+ggplot() +
+  geom_line(data = prediction,
+            aes(x = distance, y = fit, color = factor(pop))) +
+  geom_ribbon(data = prediction,
+              aes(x = distance, ymin = lwr, ymax = upr,
+                  fill = factor(pop)), alpha = 0.3) +
+  ylab("Probability of snake infestation") +
+  xlab("Distance from island A (km)") +
+  labs(color = "Population", fill = "Population")
+```
+
+# Data visualization with ggplot2
+
+## Load trout data
+
+```{webr}
+rm(list = ls())
+library(ggplot2)
+
+url_remote <- "https://raw.githubusercontent.com/"
+path_git   <- "MTourani/WILD541_F2025/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "trout.RData")))
+head(trout)
+```
+
+## ggplot: blank canvas
+
+```{webr}
+ggplot(data = trout, aes(x = length, y = weight))
+```
+
+## Scatter plot
+
+```{webr}
+ggplot(data = trout, aes(x = length, y = weight)) +
+  geom_point()
+```
+
+## Color by sex
+
+```{webr}
+ggplot(data = trout, aes(x = length, y = weight, color = sex)) +
+  geom_point()
+```
+
+## Add labels and transparency
+
+```{webr}
+ggplot(data = trout, aes(x = length, y = weight, color = sex)) +
+  geom_point(alpha = 0.6) +
+  ggtitle("Trout measurements in the Kootenai River") +
+  xlab("Length (cm)") +
+  ylab("Weight (g)")
+```
+
+## Bar chart: total biomass by year
+
+```{webr}
+ggplot(data = trout, aes(x = year, y = weight)) +
+  geom_col()
+```
+
+## Bar chart: counts by year and sex
+
+```{webr}
+ggplot(data = trout, aes(x = year, fill = sex)) +
+  geom_bar(position = "dodge") +
+  ggtitle("Trout captures in the Kootenai River") +
+  xlab("Year") + ylab("Number captured")
+```
+
+## Histogram: weight distribution
+
+```{webr}
+ggplot(data = trout, aes(x = weight)) +
+  geom_histogram(bins = 20) +
+  xlab("Weight (g)")
+```
+
+# Practice
+
+## Your turn
+
+::: {.callout-tip title="Practice 1: ggplot"}
+1.  Plot fish **age vs. weight** with color = year of capture. Include proper axis labels with units.
+2.  Plot the number of fish per **sex** as a horizontal bar chart. Exclude fish with unknown sex (NA).
+3.  Histogram of fish **lengths** with separate side-by-side bars per sex.
+:::
+
+```{webr}
+# Your code here
+
+```
+
+## Your turn
+
+::: {.callout-tip title="Practice 2: predictions"}
+1.  Using the Poisson model (clutch size), find the expected clutch size for:
+
+    a.  A 180 cm snake in **forest** habitat
+    b.  A 250 cm snake in **grassland** habitat
+    c.  A 5-metre snake in **grassland** habitat
+    
+2.  From the logistic model, find the probability of snake infestation for:
+
+    a.  An island 80 km away with 1500 inhabitants
+    b.  An uninhabited island 100 km away
+    c.  An island 50 miles away with 800 inhabitants *(watch units!)*
+
+:::
+
+```{webr}
+# Clutch size predictions
+
+```
+
+```{webr}
+# Infestation probability predictions
+
+```

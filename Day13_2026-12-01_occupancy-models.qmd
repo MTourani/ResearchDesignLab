@@ -1,0 +1,285 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 12: Logistic Regression and Occupancy Models"
+author: "Mahdieh Tourani"
+date: "December 1, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover11.png"
+  data-background-size: "30%"
+  data-background-position: "right 0px bottom 32px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Logistic regression — revisited
+2.  Occupancy models
+
+# Logistic regression — revisited
+
+## Binary responses
+
+Let $z_i$ denote presence/absence at location $i$, and $\psi_i$ = probability of occurrence:
+
+$$z_i \sim  ext{Bernoulli}(\psi_i)$$
+
+$$  ext{logit}(\psi_i) = eta_0 + eta_1    imes X_i$$
+
+-   $eta_0$: intercept — log-odds of occurrence when $x = 0$
+-   $eta_1$: slope — change in log-odds per unit increase in $x$
+
+## Setup
+
+```{webr}
+rm(list = ls())
+library(stats)
+```
+
+## Simulate presence/absence data
+
+```{webr}
+set.seed(541)
+n_site    <- 100
+elevation <- rnorm(n_site, mean = 0, sd = 1)
+
+# True parameters
+beta0 <- 2
+beta1 <- -2
+
+# True occurrence probability
+psi     <- plogis(beta0 + beta1 * elevation)
+z_lion  <- rbinom(n_site, size = 1, prob = psi)
+
+sim_data <- data.frame(z_lion, elevation)
+head(sim_data)
+```
+
+## Fit logistic regression
+
+```{webr}
+glm_1 <- stats::glm(z_lion ~ elevation,
+                    family = binomial, data = sim_data)
+coef(glm_1)
+```
+
+::: callout-note
+Compare with the true values: β₀ = 2, β₁ = −2
+:::
+
+## Predictions on response scale
+
+```{webr}
+new_data       <- data.frame(
+  elevation = seq(min(elevation), max(elevation), length.out = 100)
+)
+prediction <- predict(glm_1, newdata = new_data,
+                      type = "response", se.fit = TRUE)
+new_data$fit <- prediction$fit
+new_data$upr <- plogis(predict(glm_1, newdata = new_data, type = "link")$fit +
+                       1.96 * prediction$se.fit)
+new_data$lwr <- plogis(predict(glm_1, newdata = new_data, type = "link")$fit -
+                       1.96 * prediction$se.fit)
+```
+
+## Visualize logistic regression
+
+```{webr}
+plot(elevation, z_lion,
+     xlab = "Elevation (standardized)",
+     ylab = "Pr(Lion present)",
+     pch  = ifelse(z_lion == 1, 16, 1), cex = 0.8)
+lines(new_data$elevation, new_data$fit,
+      lwd = 3, col = "royalblue")
+lines(new_data$elevation, new_data$upr,
+      lwd = 1, col = "royalblue", lty = 2)
+lines(new_data$elevation, new_data$lwr,
+      lwd = 1, col = "royalblue", lty = 2)
+```
+
+## The detection problem
+
+::: {.callout-important title="Key insight"}
+**Probability of occurrence ≠ Probability of detection**
+
+A species may be present but not detected. Failing to account for imperfect detection leads to underestimated occurrence.
+:::
+
+A simple logistic regression **conflates** the two processes.
+
+# Occupancy models
+
+## Hierarchical model structure
+
+**State process** (ecological):
+
+$$z_i \sim  ext{Bernoulli}(\psi_i), \qquad  ext{logit}(\psi_i) = eta_0 + eta_1 X_i$$
+
+**Observation process** (conditional on state):
+
+$$y_{ij} \sim   ext{Bernoulli}(z_i  imes p_{ij}), \qquad    ext{logit}(p_{ij}) = lpha_0 + lpha_1 C_{ij}$$
+
+-   $z_i$ = true (partially observed) presence/absence at site $i$
+-   $y_{ij}$ = observed detection at site $i$, visit $j$
+-   $p_{ij}$ = detection probability given the species is present
+
+## Simple occupancy: simulate data
+
+```{webr}
+set.seed(541)
+psi      <- 0.5    # occurrence probability
+p        <- 0.2    # detection probability
+n_site   <- 20
+n_visit  <- 4
+
+# True state
+z <- rbinom(n_site, size = 1, prob = psi)
+
+# Observations
+y <- matrix(NA, nrow = n_site, ncol = n_visit)
+for (i in seq_len(n_site)) {
+  y[i, ] <- rbinom(n_visit, size = 1, prob = z[i] * p)
+}
+
+sim_data <- data.frame(z = z, y = y)
+sim_data
+```
+
+## Naive occupancy
+
+```{webr}
+site_det <- rowSums(y)
+table(site_det)
+
+# Naive: proportion of sites where species was detected
+naive_occ <- sum(site_det > 0) / n_site
+cat("Naive occupancy:", round(naive_occ, 2),
+    " (true:", psi, ")")
+```
+
+## Occupancy model with covariates: simulate
+
+```{webr}
+set.seed(541)
+n_site  <- 100
+n_visit <- 6
+
+# Occupancy covariate
+elevation <- rnorm(n_site, mean = 0, sd = 0.5)
+
+# Detection covariate (temperature)
+temp  <- matrix(
+  sample(c("Cold", "Hot"), n_site * n_visit, replace = TRUE),
+  nrow = n_site, ncol = n_visit
+)
+tempD <- ifelse(temp == "Hot", 1, 0)
+
+# True parameters
+beta0 <- 3;  beta1 <- -1
+alpha0 <- -2; alpha1 <- 2
+
+psi_cov <- plogis(beta0 + beta1 * elevation)
+p_cov   <- plogis(alpha0 + alpha1 * tempD)
+
+lion_z <- rbinom(n_site, size = 1, psi_cov)
+lion_y <- matrix(NA, n_site, n_visit)
+for (i in seq_len(n_site)) {
+  lion_y[i, ] <- rbinom(n_visit, size = 1, prob = lion_z[i] * p_cov[i, ])
+}
+```
+
+## Fit occupancy model (nimble)
+
+```{webr}
+#| cache: true
+library(nimble)
+library(coda)
+
+list_data <- list(
+  y           = lion_y,
+  n_site      = n_site,
+  n_visit     = n_visit,
+  elevation   = elevation,
+  temperature = tempD
+)
+
+model_1 <- nimbleCode({
+  for (i in 1:n_site) {
+    z[i] ~ dbern(psi[i])
+    logit(psi[i]) <- b0 + b_elevation * elevation[i]
+    for (j in 1:n_visit) {
+      y[i,j] ~ dbern(z[i] * p[i,j])
+      logit(p[i,j]) <- a0 + a_temperature * temperature[i,j]
+    }
+  }
+  mean_p   ~ dunif(0, 1)
+  mean_psi ~ dunif(0, 1)
+  a0       <- logit(mean_p)
+  b0       <- logit(mean_psi)
+  b_elevation   ~ dunif(-20, 20)
+  a_temperature ~ dunif(-20, 20)
+})
+
+zst   <- apply(lion_y, 1, max)
+inits <- list(
+  z             = ifelse(zst == 1, 1, NA),
+  mean_p        = runif(1),
+  mean_psi      = runif(1),
+  b_elevation   = runif(1),
+  a_temperature = runif(1)
+)
+params <- c("a0", "b0", "a_temperature", "b_elevation")
+ni <- 30000; nb <- 5000; nc <- 4; nt <- 1
+
+out1 <- nimbleMCMC(
+  code = model_1, constants = list_data,
+  inits = inits, monitors = params,
+  nburnin = nb, niter = ni, thin = nt, nchains = nc,
+  samplesAsCodaMCMC = TRUE, summary = TRUE
+)
+```
+
+## Inspect results
+
+```{webr}
+#| cache: true
+out1$summary$all.chains
+```
+
+::: callout-tip
+Compare with true values: β₀ = 3, β₁ = −1, α₀ = −2, α₁ = 2
+:::
+
+## Traceplots
+
+```{webr}
+#| cache: true
+par(mfrow = c(2, 2))
+coda::traceplot(out1$samples)
+par(mfrow = c(1, 1))
+```
+
+## Predict occupancy across elevations
+
+```{webr}
+#| cache: true
+b0_mean  <- out1$summary$all.chains["b0", "Mean"]
+b1_mean  <- out1$summary$all.chains["b_elevation", "Mean"]
+
+new_elev  <- seq(min(elevation), max(elevation), length.out = 100)
+psi_pred  <- plogis(b0_mean + b1_mean * new_elev)
+
+plot(new_elev, psi_pred, type = "l",
+     lwd = 2, col = "royalblue",
+     xlab = "Elevation (standardized)",
+     ylab = expression(psi ~ "(Pr of lion presence)"))
+```
+
+## Summary
+
+::: {.callout-note title="Key takeaways"}
+-   Logistic regression estimates occurrence probability but **assumes perfect detection**
+-   Occupancy models **separate** state and observation processes
+-   With repeated visits, we can jointly estimate $\psi$ (occurrence) and $p$ (detection)
+-   Bayesian implementation in nimble provides full uncertainty quantification
+:::

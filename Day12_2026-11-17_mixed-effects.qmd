@@ -1,0 +1,169 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 11: Mixed Effects Models"
+author: "Mahdieh Tourani"
+date: "November 17, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover12.jpg"
+  data-background-size: "30%"
+  data-background-position: "right 1px bottom 10px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Model assumptions — continued (independence)
+2.  Mixed effects regression
+3.  Practice
+
+# Independence assumption
+
+## Overview
+
+Sometimes observations within a group share more in common with each other than with observations from other groups — violating the **independence** assumption.
+
+-   Group membership can be modeled as a **random effect**
+-   Today: compare fixed-effect approach vs. mixed-effects approach
+
+## The tick dataset
+
+A researcher studies blood-ingestion rate of ticks as a function of time spent on the host:
+
+-   Multiple ticks per dog → **pseudoreplication**
+-   Response: blood volume ingested (ml)
+-   Predictor: hours since attachment
+-   Grouping: dog ID
+
+## Setup
+
+```{webr}
+rm(list = ls())
+library(lme4)
+library(stats)
+
+url_remote <- "https://raw.githubusercontent.com/"
+path_git   <- "MTourani/WILD541_F2025/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "ticks.RData")))
+str(ticks)
+```
+
+## Explore tick data
+
+```{webr}
+dog_colors <- rainbow(length(levels(ticks$dog.id)))
+names(dog_colors) <- levels(ticks$dog.id)
+
+plot(volume ~ hours, ticks,
+     col = dog_colors[ticks$dog.id],
+     pch = 1, cex = 1.2, lwd = 2,
+     xlab = "Hours spent feeding",
+     ylab = "Blood volume ingested (ml)")
+```
+
+## Fixed effects model (naive)
+
+```{webr}
+my_lm <- stats::lm(volume ~ scale(hours) + factor(dog.id),
+                   data = ticks)
+summary(my_lm)
+```
+
+::: callout-warning
+This uses many degrees of freedom on dog IDs — impractical with many groups or sparse data.
+:::
+
+# Mixed effects regression
+
+## Random intercepts model: frequentist
+
+```{webr}
+my_lmer <- lme4::lmer(
+  volume ~ scale(hours) + (1 | dog.id),
+  data = ticks
+)
+summary(my_lmer)
+```
+
+## Plot with fixed-effect line
+
+```{webr}
+plot(volume ~ hours, ticks,
+     col = dog_colors[ticks$dog.id],
+     pch = 1, cex = 1.2, lwd = 2,
+     xlab = "Hours spent feeding",
+     ylab = "Blood volume ingested (ml)")
+abline(lme4::fixef(my_lmer), lwd = 3)
+```
+
+## Random intercepts: Bayesian (nimble)
+
+```{webr}
+#| cache: true
+library(nimble)
+library(coda)
+
+list_data <- list(
+  volume  = as.numeric(ticks$volume),
+  n       = nrow(ticks),
+  dog.id  = as.numeric(ticks$dog.id),
+  ndog    = length(unique(ticks$dog.id)),
+  hours   = as.numeric(scale(ticks$hours))
+)
+
+model_1 <- nimbleCode({
+  for (i in 1:n) {
+    volume[i] ~ dnorm(mu[i], sd = sd)
+    mu[i]     <- a[dog.id[i]] + b_hour * hours[i]
+  }
+  for (i in 1:ndog) {
+    a[i] ~ dnorm(mean.a, sd = sd.dog)
+  }
+  mean.a ~ dnorm(0, sd = 100)
+  sd.dog ~ dunif(0, 20)
+  b_hour ~ dnorm(0, sd = 100)
+  sd     ~ dunif(0, 100)
+})
+
+inits  <- list(mean.a = rnorm(1), b_hour = rnorm(1),
+               sd = rlnorm(1),    sd.dog = rlnorm(1))
+params <- c("mean.a", "b_hour", "sd", "sd.dog")
+ni <- 4000; nb <- 2000; nc <- 4; nt <- 1
+
+out <- nimbleMCMC(
+  code = model_1, constants = list_data,
+  inits = inits, monitors = params,
+  nburnin = nb, niter = ni, thin = nt, nchains = nc,
+  samplesAsCodaMCMC = TRUE, summary = TRUE
+)
+out$summary$all.chains
+```
+
+## Traceplots
+
+```{webr}
+#| cache: true
+coda::traceplot(out$samples)
+```
+
+## Your turn
+
+## Practice: mixed effects
+
+::: {.callout-tip title="Practice 1"}
+Using the invasive snake **prey** dataset (load from GitHub):
+
+1.  Fit a simple LM with `snake.id` as a fixed effect.
+2.  Fit a mixed LM with `snake.id` as a random effect and SVL as a fixed effect.
+3.  Compare and interpret both outputs.
+4.  Explore your **own data** for dependent structures and repeat.
+:::
+
+```{webr}
+url_remote <- "https://raw.githubusercontent.com/"
+path_git   <- "MTourani/WILD541_F2025/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "prey.RData")))
+
+# Your code here
+
+```

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mahdieh Tourani">
-<meta name="dcterms.date" content="2026-09-01">
+<meta name="dcterms.date" content="2026-11-10">
 
 <title>WILD 541 – Research Design Lab – Research Design Lab</title>
 <style>
@@ -21,41 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -105,6 +70,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -142,14 +136,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Day01_2026-09-01_intro.html"><i class="bi bi-file-slides"></i>RevealJS (live)</a></li></ul></div></div>
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Day11_2026-11-10_power-analysis.html"><i class="bi bi-file-slides"></i>RevealJS (live)</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">WILD 541 – Research Design Lab</h1>
-<p class="subtitle lead">Lesson 1: Introduction to R and Reproducibility</p>
+<p class="subtitle lead">Lesson 10: Power Analysis</p>
 </div>
 
 
@@ -166,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 1, 2026</p>
+      <p class="date">November 10, 2026</p>
     </div>
   </div>
   
@@ -180,360 +174,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="outline" class="level2">
 <h2 class="anchored" data-anchor-id="outline">Outline</h2>
-<div class="incremental">
-<ol class="incremental" type="1">
-<li>Introduction and course overview</li>
-<li>Reproducibility and human error</li>
-<li>Introduction to R/RStudio</li>
-<li>AI policy</li>
-</ol>
-</div>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course overview</h2>
-<p><strong>Objectives &amp; Approach</strong></p>
-<ul>
-<li><p>Hands-on data exploration and visualization</p></li>
-<li><p>A mix of lessons and exercises on basic analysis</p></li>
-<li><p>Learning one tool for all tasks: <strong>R</strong></p></li>
-</ul>
-</section>
-<section id="your-job" class="level2">
-<h2 class="anchored" data-anchor-id="your-job">Your job</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><strong>Explore.</strong></li>
-<li>Work together.</li>
-<li>Ask questions.</li>
-<li>Do the exercises.</li>
-<li>Work with your own data.</li>
-</ul>
-</div>
-</section>
-</section>
-<section id="reproducibility-and-human-error" class="level1">
-<h1>Reproducibility and human error</h1>
-<section id="spreadsheets" class="level2">
-<h2 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h2>
-<div style="display: flex; justify-content: center; gap: 20px; height: 60vh;">
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/HegoJaXOIqQ?si=TjKvOY6he-VDI_jM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</div>
-<div class="incremental">
-<blockquote class="blockquote">
-<p>Spreadsheets are ubiquitous, but they come with hidden risks in scientific research.</p>
-</blockquote>
-</div>
-</section>
-<section id="auto-correct" class="level2">
-<h2 class="anchored" data-anchor-id="auto-correct">Auto-‘correct’</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/date.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%"></p>
-</figure>
-</div>
-</section>
-<section id="auto-correct-gone-wrong" class="level2">
-<h2 class="anchored" data-anchor-id="auto-correct-gone-wrong">Auto-‘correct’ gone wrong</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Example 1:</strong></p>
-<ul>
-<li>Excel converted human genes and protein names to dates</li>
-<li>Still used and causing errors in published research</li>
-</ul>
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/autocorrect.PNG" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="why-not-excel" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-excel">Why not Excel?</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<p><strong>Example 2 — The Reinhart-Rogoff error</strong></p>
-<ul>
-<li>Claimed average real economic growth <strong>increases</strong> when debt &gt; 90% of GDP</li>
-<li>Mistakenly excluding 5 data points flipped the conclusion to a <strong>0.1% decline</strong></li>
-<li>A spreadsheet formula error; reviewed by thousands before discovery</li>
-</ul>
-<blockquote class="blockquote">
-<p>Errors in spreadsheets are invisible as you cannot audit a click.</p>
-</blockquote>
-</div><div class="column" style="width:30%;">
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/humblepi.png" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="king-of-spreadsheets" class="level2">
-<h2 class="anchored" data-anchor-id="king-of-spreadsheets">King of spreadsheets</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/xlking.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:30.0%"></p>
-</figure>
-</div>
-</section>
-</section>
-<section id="introduction-to-rrstudio" class="level1">
-<h1>Introduction to R/RStudio</h1>
-<section id="better-tools-are-available" class="level2">
-<h2 class="anchored" data-anchor-id="better-tools-are-available">Better tools are available</h2>
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="images/latch.png" class="img-fluid quarto-figure quarto-figure-right figure-img" style="margin-right: 30%;margin-right: 30%"></p>
-</figure>
-</div>
-<blockquote class="blockquote">
-<p>Using a better tool produces <strong>reproducible</strong>, <strong>auditable</strong>, <strong>sharable</strong> work.</p>
-</blockquote>
-</section>
-<section id="use-r" class="level2">
-<h2 class="anchored" data-anchor-id="use-r">Use R</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Five steps for today:</p>
 <ol type="1">
-<li>Install <a href="https://cran.r-project.org/">R</a></li>
-<li>Install <a href="https://posit.co/products/open-source/rstudio">RStudio</a></li>
-<li>Create a <a href="https://docs.posit.co/ide/user/ide/get-started/#hello-rstudio-projects">new project</a> for “WILD541”</li>
-<li>Create a <a href="https://docs.posit.co/ide/user/ide/get-started/#hello-rstudio-projects">new R script</a> for today’s class <code>Day01.R</code></li>
-<li><a href="https://rstudio.github.io/cheatsheets/html/rstudio-ide.html#tab-panes">Use R</a> for basic operations</li>
+<li>Power analysis with simulations</li>
+<li>Practice</li>
 </ol>
-<p><img src="images/RStudio.png" class="img-fluid"></p>
-</div><div class="column" style="width:30%;">
-<p><img src="images/R.png" class="img-fluid" style="margin-top: 105px;"></p>
-</div>
-</div>
 </section>
-<section id="some-r-benefits" class="level2">
-<h2 class="anchored" data-anchor-id="some-r-benefits">Some R benefits</h2>
-<div class="incremental">
-<ul class="incremental">
-<li>Environment for statistical computing <strong>and</strong> graphics</li>
-<li><strong>Free</strong> (open-source)</li>
-<li>Used by many researchers worldwide</li>
-<li>Good documentation and community</li>
-<li>Continuously updated and expanded</li>
-<li>Can reuse existing scripts</li>
-<li><strong>Runs the same each time</strong> ← this is reproducibility</li>
-</ul>
-</div>
+<section id="power-analysis-with-simulations" class="level1">
+<h1>Power analysis with simulations</h1>
+<section id="why-power-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="why-power-analysis">Why power analysis?</h2>
+<p>Funding agencies, dissertation committees, and journals often require power calculations for primary analyses.</p>
+<p><strong>Power</strong> = probability of detecting a true effect given the effect exists.</p>
+<p>Conventional threshold: <strong>power ≥ 0.8</strong></p>
 </section>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/rstudio-panes-labeled.jpeg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
-</figure>
-</div>
+<section id="scenario-two-groups" class="level2">
+<h2 class="anchored" data-anchor-id="scenario-two-groups">Scenario: two groups</h2>
+<p><span class="math display">\[y_{ic} \sim   ext{Normal}(0, 1)\]</span> <span class="math display">\[y_{it} \sim   ext{Normal}(0.5, 1)\]</span></p>
+<p>A medium standardized effect size (Cohen’s d = 0.5).</p>
 </section>
-<section id="use-r-as-a-calculator" class="level2">
-<h2 class="anchored" data-anchor-id="use-r-as-a-calculator">Use R as a calculator</h2>
-<p>You can use R for simple and complex calculations using mathematical operators:</p>
+<section id="visualize-the-two-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-the-two-distributions">Visualize the two distributions</h2>
 <div class="cell">
-<pre class="webr cell-code"><code># R as a calculator
-(35 + 55 * 10) / sqrt(99)</code></pre>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can use a hash mark <code>#</code> to include comments, e.g., ”R as a calculator” in the above code. Any text after <code>#</code> is ignored by R. Comment liberally: it helps you remember and others understand your code.</p>
-</div>
-</div>
-</section>
-<section id="use-r-for-summaries" class="level2">
-<h2 class="anchored" data-anchor-id="use-r-for-summaries">Use R for summaries</h2>
-<p>You can use R built-in functions, e.g., summary(), to find summary statistics.</p>
-<div class="cell">
-<pre class="webr cell-code"><code># Create a sequence of numbers
-x &lt;- 1:15
+<pre class="webr cell-code"><code>mu_c &lt;- 0; mu_t &lt;- 0.5
+x   &lt;- seq(-4, 5, by = 0.01)
+c_d &lt;- dnorm(x, mu_c, 1)
+t_d &lt;- dnorm(x, mu_t, 1)
 
-# Display basic statistical measures
-summary(x)</code></pre>
+plot(x, c_d, type = "l", lwd = 2, col = "grey40",
+     ylab = "Density", xlab = "y")
+lines(x, t_d, lwd = 2, col = "blue")
+legend("topright", legend = c("control", "treatment"),
+       col = c("grey40", "blue"), lwd = 2, bty = "n")</code></pre>
 </div>
-<blockquote class="blockquote">
-<p>So, the mean of these data is 8.</p>
-</blockquote>
 </section>
-<section id="cite-r" class="level2">
-<h2 class="anchored" data-anchor-id="cite-r">Cite R</h2>
+<section id="simulate-one-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="simulate-one-dataset">Simulate one dataset</h2>
 <div class="cell">
-<pre class="webr cell-code"><code># Find the citation for R itself
-citation()</code></pre>
+<pre class="webr cell-code"><code>set.seed(2)
+n   &lt;- 50
+mu_c &lt;- 0; mu_t &lt;- 0.5
+
+group     &lt;- rep(c("control", "treatment"), each = n)
+treatment &lt;- ifelse(group == "control", 0, 1)
+y         &lt;- ifelse(group == "control",
+                    rnorm(n, mu_c, 1),
+                    rnorm(n, mu_t, 1))
+
+sim_data  &lt;- data.frame(group, treatment, y)
+head(sim_data)</code></pre>
 </div>
+</section>
+<section id="frequentist-power-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="frequentist-power-simulation">Frequentist power simulation</h2>
 <div class="cell">
-<pre class="webr cell-code"><code># Find your R version
-R.version</code></pre>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Citing software used in your analysis is good scientific practice.</p>
-<p>Likewise, if you ever have a question about what version of R you are using, you could type the above in the R prompt and find the details.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="generative-ai" class="level1">
-<h1>Generative AI</h1>
-<section id="ai-for-coding" class="level2">
-<h2 class="anchored" data-anchor-id="ai-for-coding">AI for coding</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/Elephant.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p><a href="https://en.wikipedia.org/wiki/Elephant_in_the_room">The elephant in the room</a></p>
-<blockquote class="blockquote">
-<p>Per university guidelines, use of <a href="https://libguides.lib.umt.edu/ai">generative artificial intelligence</a> is <strong>not</strong> prohibited. However, instructors set the terms for their course.</p>
-</blockquote>
-</section>
-<section id="course-ai-policy" class="level2">
-<h2 class="anchored" data-anchor-id="course-ai-policy">Course AI policy</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Task</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Understanding concepts, debugging error messages, learning a package</td>
-<td><span class="chip go">🟢 Encouraged</span></td>
-<td>No disclosure needed for incidental use</td>
-</tr>
-<tr class="even">
-<td>Boilerplate &amp; scaffolding (plot themes, cleaning templates)</td>
-<td><span class="chip go">🟢 Allowed</span></td>
-<td>Note it in a code comment</td>
-</tr>
-<tr class="odd">
-<td>Choosing a model or test, study-design decisions</td>
-<td><span class="chip wait">🟡 Case-by-case</span></td>
-<td>AI can help you brainstorm; the justification must be yours</td>
-</tr>
-<tr class="even">
-<td>Writing a full analysis script or its interpretation</td>
-<td><span class="chip stop">🔴 Not permitted</span></td>
-<td>This is the competency being graded</td>
-</tr>
-<tr class="odd">
-<td>Exams &amp; independent problem sets</td>
-<td><span class="chip stop">🔴 Not permitted</span></td>
-<td>Unless the assignment says otherwise</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="step-1-understand-before-you-prompt" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-understand-before-you-prompt">Step 1: Understand Before You Prompt</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Know your question and your data <strong>before</strong> you open the chat window.</p></li>
-<li><p>Separate two different jobs: deciding <em>what the analysis should do</em> (your job) from <em>typing the syntax</em> (AI can help with this job).</p></li>
-<li><p>Use AI to learn field conventions and relevant tools, not only to generate the final answer.</p></li>
-<li><p>Sanity check: could you defend this line of code to your committee?</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Watch out for <a href="https://arxiv.org/html/2510.22254v1">vibe coding</a>: accepting AI output you cannot <strong>evaluate</strong>, <strong>debug</strong>, or <strong>explain</strong> yourself.</p>
-</div>
+<pre class="webr cell-code"><code>simulate_and_test &lt;- function(seed, n, mu_t = 0.5, mu_c = 0) {
+  set.seed(seed)
+  group     &lt;- rep(c("control", "treatment"), each = n)
+  treatment &lt;- ifelse(group == "control", 0, 1)
+  y         &lt;- ifelse(group == "control",
+                      rnorm(n, mu_c, 1),
+                      rnorm(n, mu_t, 1))
+  m &lt;- lm(y ~ treatment)
+  coef(summary(m))["treatment", "Pr(&gt;|t|)"]
+}
+
+# Simulate 200 datasets with n=50
+set.seed(99)
+n_sim  &lt;- 200
+pvals  &lt;- sapply(1:n_sim, simulate_and_test, n = 50)
+power  &lt;- mean(pvals &lt; 0.05)
+cat("Power with n = 50 per group:", round(power, 3))</code></pre>
 </div>
 </section>
-<section id="step-2-choose-your-tool" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-choose-your-tool">Step 2: Choose Your Tool</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tool</th>
-<th>Best for</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Conversational (Claude, ChatGPT)</td>
-<td>Architecture questions, debugging, learning a new package</td>
-</tr>
-<tr class="even">
-<td>IDE assistant (Copilot-style)</td>
-<td>Autocompletion, staying in flow</td>
-</tr>
-<tr class="odd">
-<td>Autonomous agent (Claude Code, Cursor)</td>
-<td>Multi-file edits, rapid prototyping</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Check university guidelines for <a href="https://umontana.ai/guidelines/approved-tools/">approved AI tools</a></li>
-<li>Check AI <a href="https://umontana.ai/guidelines/model-comparison">model comparisons</a></li>
-<li>Restate key constraints in long sessions as most tools don’t remember perfectly</li>
-<li>Commit working code before a big AI-driven change, so you can always roll back</li>
-</ul>
-</div>
+<section id="power-curve" class="level2">
+<h2 class="anchored" data-anchor-id="power-curve">Power curve</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>sample_sizes &lt;- c(30, 50, 75, 100, 150)
+power_curve  &lt;- sapply(sample_sizes, function(n) {
+  ps &lt;- sapply(1:200, simulate_and_test, n = n)
+  mean(ps &lt; 0.05)
+})
+
+plot(sample_sizes, power_curve, type = "b",
+     pch = 19, col = "steelblue", lwd = 2,
+     xlab = "n per group", ylab = "Power",
+     ylim = c(0, 1))
+abline(h = 0.8, col = "red", lty = 2)</code></pre>
 </div>
 </section>
-<section id="step-3-test-everything-trust-nothing" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-test-everything-trust-nothing">Step 3: Test Everything, Trust Nothing</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Ask for tests before or during implementation.</p></li>
-<li><p>Verify the test outputs.</p></li>
-<li><p>Verify the results against something you understand, e.g., a plot or summary statistics.</p></li>
-</ul>
+<section id="bayesian-power-analysis-brms" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-power-analysis-brms">Bayesian power analysis (brms)</h2>
+<div class="cell">
+<pre class="webr cell-code"><code>library(brms)
+
+# Fit initial model
+fit &lt;- brms::brm(
+  data  = sim_data, family = gaussian,
+  y ~ 0 + Intercept + treatment,
+  prior = c(prior(normal(0, 2),          class = b),
+            prior(student_t(3, 1, 1),    class = sigma)),
+  seed = 1
+)
+brms::fixef(fit)</code></pre>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -545,83 +287,35 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Despite AI doesn’t know your data, i.e., if samples are paired, clustered, or spatially autocorrelated unless you tell it, it will still confidently hand you a test.</p>
-<p>If the code ran without errors, it does <em>not</em> mean it is correct.</p>
+<p>The <code>brms</code> model above requires a C++ toolchain and Stan. Run it on your own machine. The frequentist simulation above is fully runnable here.</p>
 </div>
 </div>
 </section>
-<section id="step-4-you-are-still-the-scientist" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-you-are-still-the-scientist">Step 4: You Are Still the Scientist</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>The responsibility for AI-assisted code <strong>always</strong> belongs to the person who submits it.</p></li>
-<li><p><em>“The AI wrote it”</em> is not a defense for a mis-specified model, or results nobody else can reproduce.</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
+</section>
+<section id="practice" class="level1">
+<h1>Practice</h1>
+<section id="practice-power-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="practice-power-analysis">Practice: power analysis</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Practice 2">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Practice 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Rule of thumb: <strong>if you can’t explain a line at your defense, don’t turn it in</strong></p>
+<ol type="1">
+<li>Increase sample size to <strong>n = 65</strong> per group. Does power exceed 0.8?</li>
+<li>To detect a smaller effect size of <strong>0.3</strong>, how many samples are needed? <em>(Hint: modify the <code>simulate_and_test()</code> function.)</em></li>
+</ol>
 </div>
 </div>
-</section>
-<section id="privacy-data-sharing" class="level2">
-<h2 class="anchored" data-anchor-id="privacy-data-sharing">Privacy &amp; data sharing</h2>
-<div class="incremental">
-<ul class="incremental">
-<li><p>Never paste into a public AI tool: unpublished results, embargoed or data subject to data-sharing agreement.</p></li>
-<li><p>Data from Tribal lands, communities, or partnerships: additional authorization applies, regardless of a public tool’s terms of service</p></li>
-<li><p>Precise locations of sensitive, threatened, or poaching-vulnerable species are often legally restricted and the coordinates should be treated as any other confidential data.</p></li>
-<li><p>When unsure: troubleshoot with a simulated or anonymized subset, and ask before uploading anything real</p></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you can’t anonymize data meaningfully, don’t paste it into a public AI tool.</p>
-</div>
-</div>
-</section>
-<section id="disclosure-and-citation-are-mandatory" class="level2">
-<h2 class="anchored" data-anchor-id="disclosure-and-citation-are-mandatory">Disclosure and citation are mandatory</h2>
-<p>Every university policy agrees on disclosing AI use.</p>
-<p>In code, use a header comment as below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debugging help from Claude (Anthropic), 5 Jul 2026:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fixed a factor-level mismatch in the random-effects term below</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mass <span class="sc">~</span> treatment <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> site), <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<blockquote class="blockquote">
-<p>In a report, one sentence is enough. For the above example, you could write: “I used Claude (Anthropic) to debug syntax errors in my mixed-model code; model specification and interpretation are my own.”</p>
-</blockquote>
-</section>
-<section id="do-vs-dont" class="level2">
-<h2 class="anchored" data-anchor-id="do-vs-dont">Do vs Don’t</h2>
-<div class="incremental">
-<p>✔ Ask it to explain an error or an unfamiliar function</p>
-<p>✔ Use it to learn a new package syntax</p>
-<p>✔ Get a first draft of code structure</p>
-<p>✔ Brainstorm modeling approaches, then justify your own choice</p>
-<p>✔ Ask it to generate edge cases you might miss</p>
-<p>✘ Submit code you can’t explain line by line</p>
-<p>✘ Let it pick your statistical test without knowing why</p>
-<p>✘ Paste/import unpublished data or sensitive coordinates into a public tool</p>
-<p>✘ Skip verifying AI-cited functions or references</p>
-<p>✘ Treat “it ran without error” as proof it’s correct</p>
+<pre class="webr cell-code"><code># Power with n = 65
+pvals_65 &lt;- sapply(1:200, simulate_and_test, n = 65)
+cat("Power with n = 65:", round(mean(pvals_65 &lt; 0.05), 3))</code></pre>
 </div>
 
 

@@ -69,7 +69,7 @@ title-slide-attributes:
 :::
 
 ::: {.column width="30%"}
-![](images/autocorrect.png){style="margin-top: -90px;" fig-align="right" style="margin-right: 30%"}
+![](images/autocorrect.PNG){style="margin-top: -90px;" fig-align="right" style="margin-right: 30%"}
 :::
 :::::
 
