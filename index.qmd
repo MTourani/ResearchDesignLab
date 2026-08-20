@@ -47,7 +47,7 @@ if (length(files) == 0) {
 ::: callout-tip
 ## Navigating the slides
 
-Use the arrow keys or the on-screen controls to move between slides. 
+Use the arrow keys or the on-screen controls to move between slides.
 :::
 
 ## Getting help

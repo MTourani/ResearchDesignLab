@@ -1216,5 +1216,54 @@
     "title": "WILD 541 – Research Design Lab",
     "section": "Your turn",
     "text": "Your turn\n\n\n\n\n\n\n\nPractice\n\n\nYou should now be able to identify what kind of data (response variable) you have and specify an appropriate regression model to describe the relationship between response and explanatory variables.\n\nWhat biological process underlies the pattern in your data?\nWhat probabilistic process produces the values of your data?\nFit an appropriate model (Gaussian, Poisson, or Binomial) to your own data using stats::glm()or nimble package."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html",
+    "href": "Day01_2026-09-01_intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Introduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html",
+    "href": "Day07_2026-10-13_model-comparison.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model comparison\nAIC-based model selection\nPractice"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html",
+    "href": "Day02_2026-09-8_r-syntax.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "R syntax\nWhat is in a dataset?\nPractice"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html",
+    "href": "Day03_2026-09-15_visualization.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Why do we visualize?\nWhat to visualize?\nHow to visualize?\nPractice\nGenerating a report: R Markdown"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html",
+    "href": "Day04_2026-09-22_sampling-simulation.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Random sampling\nSimulating data\nData distributions\nPractice"
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html",
+    "href": "Day05_2026-09-29_linear-models.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Linear models\nSimple linear regression\nMultiple regression\nPractice"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "General Linear regression\nGeneralized Linear regression\nPractice"
   }
 ]
