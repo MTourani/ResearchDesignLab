@@ -8,7 +8,6 @@ title-slide-attributes:
   data-background-size: "30%"
   data-background-position: "right 1px bottom 1px"
 ---
-
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Outline
