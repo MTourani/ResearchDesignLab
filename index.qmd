@@ -9,24 +9,47 @@ format:
 lang: en-US
 ---
 
-Each lesson is a set of slides with **live R code**. The code runs in your browser using [webR](https://docs.r-wasm.org/webr/latest/) .You do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the results.
+Each lesson is a set of slides with live R code. You do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the results. That said, I recommend you to install R and RStudio and follow the material on your computer.
 
-The first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant.
+## Lessons
+
+```{r}
+#| echo: false
+#| eval: true
+#| results: asis
+#| warning: false
+
+# Builds the lesson table automatically from every Day*.qmd in this folder.
+# Add a new lesson file, render, and it appears here. Nothing to edit below.
+
+files <- sort(list.files(pattern = "^Day.*\\.qmd$"))
+
+get_field <- function(lines, key) {
+  fences <- which(trimws(lines) == "---")
+  hdr <- if (length(fences) >= 2) lines[1:fences[2]] else lines
+  hit <- grep(paste0("^", key, ":"), hdr, value = TRUE)
+  if (length(hit) == 0) return(NA_character_)
+  trimws(gsub('^"|"$', "", sub(paste0("^", key, ":\\s*"), "", hit[1])))
+}
+
+if (length(files) == 0) {
+  cat("_No lessons published yet._\n")
+} else {
+  for (f in files) {
+    l     <- readLines(f, warn = FALSE)
+    sub_t <- get_field(l, "subtitle")
+    topic <- if (!is.na(sub_t)) sub_t else tools::file_path_sans_ext(f)
+    cat(sprintf("| [%s](%s) \n", topic, sub("\\.qmd$", ".html", f)))
+  }
+  }
+```
 
 ::: callout-tip
 ## Navigating the slides
 
-Use the arrow keys or the on-screen controls to move between slides. Press <kbd>S</kbd> for speaker notes, <kbd>F</kbd> for full screen, and <kbd>Esc</kbd> for a slide overview.
+Use the arrow keys or the on-screen controls to move between slides. 
 :::
-
-## Lessons
-
-| Lesson | Topic | Date |
-|:-----------------------|:-----------------------|:-----------------------|
-| 5 | [Lesson 5 slides: Linear models and multiple regression](Day05_2026-09-29_linear-models.qmd) | September 29, 2026 |
-
-:  {tbl-colwidths="\[10,60,30\]"}
 
 ## Getting help
 
-If a code block will not run, try reloading the page since the browser occasionally drops the R engine after being idle for long.
+If a code block did not run, try reloading the page since the browser occasionally drops the R engine after being idle for long.

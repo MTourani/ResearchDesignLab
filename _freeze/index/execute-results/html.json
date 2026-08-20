@@ -1,17 +1,13 @@
 {
-  "hash": "0cc3bc81752df4de9e24e7b24a0fdfa3",
+  "hash": "7d16e825056b09438f198ddbf7779f8d",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"ResearchDesignLab\"\n---\n\nThis is a Quarto website.\n\nTo learn more about Quarto websites visit <https://quarto.org/docs/websites>.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n:::\n\n",
+    "markdown": "---\ntitle: \"WILD 541 — Research Design Lab\"\nsubtitle: \"\"\nformat:\n  html:\n    toc: false\n    theme: cosmo\n    css: styles.css\nlang: en-US\n---\n\nEach lesson is a set of slides with live R code. You do not need R or RStudio installed to try the examples. Edit any code block and press **Run Code** to see the results. That said, I recommend you to install R and RStudio and follow the material on your computer.\n\n## Lessons\n\n| [Lesson 1: Introduction to R and Reproducibility](Day01_2026-09-01_intro.html) \n| [Lesson 2: R Syntax and Data Exploration](Day02_2026-09-8_r-syntax.html) \n| [Lesson 3: Data Visualization](Day03_2026-09-15_visualization.html) \n| [Lesson 4: Random Sampling and Distributions](Day04_2026-09-22_sampling-simulation.html) \n| [Lesson 5: Linear Models and Multiple Regression](Day05_2026-09-29_linear-models.html) \n| [Lesson 6: Generalized Linear Models](Day06_2026-10-06_glm-bayesian-intro.html) \n| [Lesson 7: Model Comparison and Selection](Day07_2026-10-13_model-comparison.html) \n\n::: callout-tip\n## Navigating the slides\n\nUse the arrow keys or the on-screen controls to move between slides. \n:::\n\n## Getting help\n\nIf a code block did not run, try reloading the page since the browser occasionally drops the R engine after being idle for long.\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
-    "includes": {
-      "include-after-body": [
-        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
-      ]
-    },
+    "includes": {},
     "engineDependencies": {},
     "preserve": {},
     "postProcess": true

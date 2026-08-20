@@ -3,8 +3,8 @@
     "objectID": "Day05_2026-09-29_linear-models.html#outline",
     "href": "Day05_2026-09-29_linear-models.html#outline",
     "title": "WILD 541 – Research Design Lab",
-    "section": "Outline",
-    "text": "Outline\n\nLinear models\nSimple linear regression\nMultiple regression\nPractice"
+    "section": "",
+    "text": "Linear models\nSimple linear regression\nMultiple regression\nPractice"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#overview",
@@ -18,77 +18,77 @@
     "href": "Day05_2026-09-29_linear-models.html#simulate-data",
     "title": "WILD 541 – Research Design Lab",
     "section": "Simulate data",
-    "text": "Simulate data\nWe will use (made-up) plant data to illustrate how simple linear regression models are fitted. First, we clear the workspace and simulate three datasets.\n\n\n\n\n\n\n\n\n\nThese data consist of the individual identification (id) and height (in cm) of 100 plants. All heights were measured 30 days after germination."
+    "text": "Simulate data\nWe will use (made-up) plant data to illustrate how simple linear regression models are fitted. First, we clear the workspace and simulate three datasets.\n\nset.seed(541)\n# data1: intercept-only (plant heights)\ndata1 &lt;- data.frame(id        = paste0(\"A\", 1:100),\n                    height_cm = rnorm(100, mean = 23.09, sd = 2.82))\n# data2: height ~ nitrogen\ndata2 &lt;- data.frame(id             = paste0(\"A\", 1:100),\n                    nitrogen_gsqm  = runif(100, 50, 700),\n                    height_cm      = NA)\ndata2$height_cm &lt;- 23.15 + 0.00985 * data2$nitrogen_gsqm + rnorm(100, 0, 2.84)\n# data3: height ~ species (A vs B)\ndata3 &lt;- data.frame(id      = paste0(\"plant\", 1:100),\n                    species = rep(c(\"Species A\", \"Species B\"), 50))\ndata3$height_cm &lt;- ifelse(data3$species == \"Species A\",\n                          rnorm(50, 23.53, 2.8),\n                          rnorm(50, 20.17, 2.8))\n\n\nThese data consist of the individual identification (id) and height (in cm) of 100 plants. All heights were measured 30 days after germination."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model",
     "href": "Day05_2026-09-29_linear-models.html#intercept-only-model",
     "title": "WILD 541 – Research Design Lab",
     "section": "Intercept-only model",
-    "text": "Intercept-only model\nThe height of the plants is our variable of interest and we can fit a simple linear regression model using the lm() function. You can specify an intercept-only model by using a “1” after the tilde (∼) in the regression formula.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nWe have a response variable (height_cm), but no predictor variables. Therefore, we cannot estimate a slope, only an intercept term. In the absence of a slope, the intercept is equivalent to the mean height of all plants.\n\n\n\n\n\n\n\n\n\nTip\n\n\nThe model output can be displayed with the summary() function."
+    "text": "Intercept-only model\nThe height of the plants is our variable of interest and we can fit a simple linear regression model using the lm() function. You can specify an intercept-only model by using a “1” after the tilde (∼) in the regression formula.\n\nlibrary(stats)\nm1 &lt;- stats::lm(height_cm ~ 1, data = data1)\nsummary(m1)\n\n\n\n\n\n\n\nNote\n\n\n\nWe have a response variable (height_cm), but no predictor variables. Therefore, we cannot estimate a slope, only an intercept term. In the absence of a slope, the intercept is equivalent to the mean height of all plants.\n\n\n\n\n\n\n\n\nTip\n\n\n\nThe model output can be displayed with the summary() function."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-1",
     "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Intercept-only model",
-    "text": "Intercept-only model\nThe intercept value is the average height (in cm) of plants in this sample. The low p-value indicates that this value is significantly different from 0. Next, let’s plot the data and add the regression line."
+    "text": "Intercept-only model\nThe intercept value is the average height (in cm) of plants in this sample. The low p-value indicates that this value is significantly different from 0. Next, let’s plot the data and add the regression line.\n\nplot(data1$height_cm,\n     pch = 19, \n     col = \"grey\",\n     ylab = \"Plant height (cm)\")\nabline(m1, col = \"red\", lwd = 2)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-2",
     "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-2",
     "title": "WILD 541 – Research Design Lab",
     "section": "Intercept-only model",
-    "text": "Intercept-only model\nTo better understand what residuals are, let’s add them to the plot as well. To do so, we obtain the model-predicted value for each data point (i.e., the height a plant would have had if it were on the regression line) using the predict() function. Then we just connect each data point with its predicted value using segments()."
+    "text": "Intercept-only model\nTo better understand what residuals are, let’s add them to the plot as well. To do so, we obtain the model-predicted value for each data point (i.e., the height a plant would have had if it were on the regression line) using the predict() function. Then we just connect each data point with its predicted value using segments().\n\nplot(data1$height_cm,\n     pch = 19,\n     col = \"grey\",\n     ylab = \"Plant height (cm)\")\nabline(m1, col = \"red\", lwd = 2)\nfit &lt;- predict(m1)\nsegments(seq_along(data1$height_cm),\n         fit,\n         seq_along(data1$height_cm),\n         data1$height_cm)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#intercept-only-model-3",
     "href": "Day05_2026-09-29_linear-models.html#intercept-only-model-3",
     "title": "WILD 541 – Research Design Lab",
     "section": "Intercept-only model",
-    "text": "Intercept-only model\nPlotting a scatter plot or a regression line is not that useful when dealing with an intercept-only model. As an alternative, we can plot the density distribution of the data (the response variable) and then superimpose both the calculated and model-estimated mean. And as we just mentioned, these are identical."
+    "text": "Intercept-only model\nPlotting a scatter plot or a regression line is not that useful when dealing with an intercept-only model. As an alternative, we can plot the density distribution of the data (the response variable) and then superimpose both the calculated and model-estimated mean. And as we just mentioned, these are identical.\n\nplot(density(data1$height_cm))\nabline(v = mean(data1$height_cm), lwd = 6, col = grey(0.4))  # calculated mean\nabline(v = coef(m1), lwd = 2, col = \"orange\")   # model estimated mean"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor",
     "href": "Day05_2026-09-29_linear-models.html#continuous-predictor",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous predictor",
-    "text": "Continuous predictor\nGenerally, in regression analysis, we are interested in quantifying the relationship between predictor and response variables. We now inspect data2, which, in addition to each plant’s height, also contains the amount of Nitrogen added to each plant’s growing soil (g per \\(m^2\\)). First, we inspect the data and visualize plant height against nitrogen addition:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nAlways include units with axes labels."
+    "text": "Continuous predictor\nGenerally, in regression analysis, we are interested in quantifying the relationship between predictor and response variables. We now inspect data2, which, in addition to each plant’s height, also contains the amount of Nitrogen added to each plant’s growing soil (g per \\(m^2\\)). First, we inspect the data and visualize plant height against nitrogen addition:\n\nhead(data2)\nplot(height_cm ~ nitrogen_gsqm,\n     data = data2,\n     pch = 19,\n     col = \"grey\",\n     xlab = expression(Nitrogen~addition~(g/m^2)),\n     ylab = \"Plant height (cm)\")\n\n\n\n\n\n\n\nTip\n\n\n\nAlways include units with axes labels."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-1",
     "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous predictor",
-    "text": "Continuous predictor\nWe can fit a linear regression model to the data; this model includes a slope term for the effect of soil nitrogen concentration on plant height. The intercept term is implied and does not need to be specified in the formula."
+    "text": "Continuous predictor\nWe can fit a linear regression model to the data; this model includes a slope term for the effect of soil nitrogen concentration on plant height. The intercept term is implied and does not need to be specified in the formula.\n\nm2 &lt;- stats::lm(height_cm ~ nitrogen_gsqm, data = data2)\nsummary(m2)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-2",
     "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-2",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous predictor",
-    "text": "Continuous predictor\nThe intercept (23.15 cm) is the expected height of a plant when the nitrogen added to the soil is 0 g /\\(m^2\\). The slope coefficient (0.0099 cm) is the expected increase in plant height in cm for every 1 g /\\(m^2\\) increase in nitrogen added to the soil. The low p-value indicates that this slope is significantly different from 0.\n\nHow would you summarize this finding?\n\nOne way to summarize this finding could be: We detected a significant positive relationship between plant height and the amount of nitrogen added to the soil (beta = 0.01, t = 8.11, p &lt;0.001). For example, a plant supplemented with 100 g soil nitrogen reached an average height of 24.14 cm compared with 23.15 cm for a plant without supplementary nitrogen."
+    "text": "Continuous predictor\nThe intercept (23.15 cm) is the expected height of a plant when the nitrogen added to the soil is 0 g /\\(m^2\\). The slope coefficient (0.0099 cm) is the expected increase in plant height in cm for every 1 g /\\(m^2\\) increase in nitrogen added to the soil. The low p-value indicates that this slope is significantly different from 0.\n\nHow would you summarize this finding?\n\n\nOne way to summarize this finding could be: We detected a significant positive relationship between plant height and the amount of nitrogen added to the soil (beta = 0.01, t = 8.11, p &lt;0.001). For example, a plant supplemented with 100 g soil nitrogen reached an average height of 24.14 cm compared with 23.15 cm for a plant without supplementary nitrogen."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-predictor-3",
     "href": "Day05_2026-09-29_linear-models.html#continuous-predictor-3",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous predictor",
-    "text": "Continuous predictor\nWe can use the model object to add the regression line to the scatter plot. And as earlier, we can also show the residuals in the same plot."
+    "text": "Continuous predictor\nWe can use the model object to add the regression line to the scatter plot. And as earlier, we can also show the residuals in the same plot.\n\nplot(height_cm ~ nitrogen_gsqm, \n     data = data2,\n     pch = 19,\n     col = \"grey\",\n     xlab = \"Nitrogen addition (g/m^2)\",\n     ylab = \"Plant height (cm)\")\nabline(m2, col = \"red\", lwd = 2)\nfit &lt;- predict(m2)\nsegments(data2$nitrogen_gsqm,\n         fit,\n         data2$nitrogen_gsqm,\n         data2$height_cm)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor",
     "href": "Day05_2026-09-29_linear-models.html#categorical-predictor",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical predictor",
-    "text": "Categorical predictor\nWe can also use categorical predictor variables. In a linear regression, such variables are dealt with by turning them into so-called dummy variables. This is done by setting one level as a reference value (set to 0; this is the one associated with the intercept). All other levels (set to 1) are then compared with the reference level, one by one. We illustrate the use of categorical predictors in simple linear regression using a new version of the plant data.\n\n\n\n\n\n\n\n\n\nThis data set contains the id and height for two species of plants (species A and B)."
+    "text": "Categorical predictor\nWe can also use categorical predictor variables. In a linear regression, such variables are dealt with by turning them into so-called dummy variables. This is done by setting one level as a reference value (set to 0; this is the one associated with the intercept). All other levels (set to 1) are then compared with the reference level, one by one. We illustrate the use of categorical predictors in simple linear regression using a new version of the plant data.\n\nhead(data3)\n\n\n\nThis data set contains the id and height for two species of plants (species A and B)."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-1",
     "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical predictor",
-    "text": "Categorical predictor\nNext, we fit the simple linear regression with species as the predictor variable:"
+    "text": "Categorical predictor\nNext, we fit the simple linear regression with species as the predictor variable:\n\nm3 &lt;- stats::lm(height_cm ~ species, data = data3)\nsummary(m3)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-predictor-2",
@@ -109,104 +109,1161 @@
     "href": "Day05_2026-09-29_linear-models.html#categorical-predictor-4",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical predictor",
-    "text": "Categorical predictor\nFinally, we plot the data and add the regression line:"
+    "text": "Categorical predictor\nFinally, we plot the data and add the regression line:\n\nboxplot(height_cm ~ species,\n        data = data3,\n        at = c(0, 1),\n        xlab = \"\",\n        ylab = \"Plant height (cm)\")\nabline(m3, col = \"red\", lwd = 2)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#your-turn",
     "href": "Day05_2026-09-29_linear-models.html#your-turn",
     "title": "WILD 541 – Research Design Lab",
     "section": "Your turn",
-    "text": "Your turn\n\n\n\n\n\n\n\nPractice 1\n\n\nUsing your own data:\n\nIdentify variables in your data set that can be used as response and predictor variables in simple linear regression\nFit at least one LM with a continuous predictor and one with a categorical predictor.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
+    "text": "Your turn\n\n\n\n\n\n\nPractice 1\n\n\n\nUsing your own data:\n\nIdentify variables in your data set that can be used as response and predictor variables in simple linear regression\nFit at least one LM with a continuous predictor and one with a categorical predictor.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#overview-1",
     "href": "Day05_2026-09-29_linear-models.html#overview-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Overview",
-    "text": "Overview\nRegression models can have multiple predictors. This lesson will give you a basic understanding of the effects estimates (coefficients) generated by multiple linear regression. When the effects of multiple predictor variables in a regression are independent of each other, we refer to them as additive effects. Today, we look at three examples with different predictor variables that have additive effects on the response."
+    "text": "Overview\nRegression models can have multiple predictors. This lesson will give you a basic understanding of the effects estimates (coefficients) generated by multiple linear regression. When the effects of multiple predictor variables in a regression are independent of each other, we refer to them as additive effects. Today, we look at three examples with different predictor variables that have additive effects on the response.\n\np1 &lt;- data.frame(id        = paste0(\"P\", 1:100),\n                 species   = rep(c(\"Species A\", \"Species B\"), 50),\n                 pesticide = rep(c(FALSE, TRUE), each = 50),\n                 height_cm = NA) # Plant Data 1: species + pesticide (categorical + categorical)\np1$height_cm &lt;- 23.5 +\n                ifelse(p1$species == \"Species B\", -3.4, 0) +\n                ifelse(p1$pesticide, 2.1, 0) +\n                rnorm(100, 0, 2.5)\np2 &lt;- data.frame(nitrogen_gsqm = runif(100, 50, 700),\n                 species       = rep(c(\"Species A\", \"Species B\"), 50),\n                 height_cm     = NA) # Plant Data 2: nitrogen + species (continuous + categorical)\np2$height_cm &lt;- 22 +\n                0.01 * p2$nitrogen_gsqm +\n                ifelse(p2$species == \"Species B\", -3.0, 0) +\n                rnorm(100, 0, 2.5)\np3 &lt;- data.frame( nitrogen_gsqm = runif(100, 50, 700),\n                  temperature   = rep(c(15, 25), 50),\n                  height_cm     = NA) # Plant Data 3: nitrogen + temperature (continuous + continuous)\np3$height_cm &lt;- 20 +\n                0.01 * p3$nitrogen_gsqm +\n                0.5  * p3$temperature +\n                rnorm(100, 0, 2.5)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical",
     "href": "Day05_2026-09-29_linear-models.html#categorical-categorical",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical + Categorical",
-    "text": "Categorical + Categorical\nWe fit a linear regression model to the first data object. This regression model contains the additive effects of species (Species A and Species B) and whether pesticide was applied during the growth period (TRUE/FALSE).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nThe output contains separate coefficients for the intercept and every effect included in the model. Remember, categorical variables are treated as dummy variables, with one category serving as the intercept value (0) to which each additional category is then compared."
+    "text": "Categorical + Categorical\nWe fit a linear regression model to the first data object. This regression model contains the additive effects of species (Species A and Species B) and whether pesticide was applied during the growth period (TRUE/FALSE).\n\nm1 &lt;- stats::lm(height_cm ~ species + pesticide, data = p1)\nsummary(m1)\n\n\n\n\n\n\n\nNote\n\n\n\nThe output contains separate coefficients for the intercept and every effect included in the model. Remember, categorical variables are treated as dummy variables, with one category serving as the intercept value (0) to which each additional category is then compared."
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical-1",
     "href": "Day05_2026-09-29_linear-models.html#categorical-categorical-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical + Categorical",
-    "text": "Categorical + Categorical\nThe model object essentially contains a machine that can be used to make predictions, i.e., to calculate the expected value of the response variable (height_cm) given certain values of the predictor variables (species and pesticide).\nTo make a prediction, we first create a new data object (in this case, one that contains all possible combinations of species and pesticide). We then provide that data object to the predict() function which generates the predictions (fitted values of plant height) for each set of predictor values, as well as the associated standard errors."
+    "text": "Categorical + Categorical\nThe model object essentially contains a machine that can be used to make predictions, i.e., to calculate the expected value of the response variable (height_cm) given certain values of the predictor variables (species and pesticide).\nTo make a prediction, we first create a new data object (in this case, one that contains all possible combinations of species and pesticide). We then provide that data object to the predict() function which generates the predictions (fitted values of plant height) for each set of predictor values, as well as the associated standard errors.\n\nnew_data &lt;- expand.grid(species   = c(\"Species A\", \"Species B\"),\n                        pesticide = c(FALSE, TRUE))\ntemp &lt;- predict(m1, newdata = new_data, se.fit = TRUE)\nnew_data$fit    &lt;- temp$fit\nnew_data$uci    &lt;- new_data$fit + 1.96 * temp$se.fit\nnew_data$lci    &lt;- new_data$fit - 1.96 * temp$se.fit"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#categorical-categorical-2",
     "href": "Day05_2026-09-29_linear-models.html#categorical-categorical-2",
     "title": "WILD 541 – Research Design Lab",
     "section": "Categorical + Categorical",
-    "text": "Categorical + Categorical\nWe can use what you have previously learned about plotting in R to generate a graph that visualizes the results (model predictions)."
+    "text": "Categorical + Categorical\nWe can use what you have previously learned about plotting in R to generate a graph that visualizes the results (model predictions).\n\ncols &lt;- c(\"orange\", \"turquoise\")\nnames(cols) &lt;- sort(unique(new_data$species))\n\nplot(fit ~ as.numeric(pesticide),\n     data = new_data,\n     xlim = c(-0.25, 1.25),\n     col  = cols[species],\n     pch = 19,\n     cex = 2,\n     ylim = c(min(new_data$lci), max(new_data$uci)),\n     axes = FALSE,\n     xlab = \"Treatment\",\n     ylab = \"Height (cm)\")\naxis(1, at = c(0, 1), labels = c(\"w/o pesticide\", \"w/ pesticide\"))\naxis(2)\n# Add confidence intervals\nsegments(as.numeric(new_data$pesticide),\n         new_data$lci,\n         as.numeric(new_data$pesticide),\n         new_data$uci,\n         col  = cols[new_data$species],\n         lwd  = 5,\n         lend = 1)\n# Add legend\nlegend(\"topleft\", \n       legend = names(cols), \n       pch    = 19,\n       pt.cex = 2,\n       col    = cols, \n       bty    = \"n\")"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical",
     "href": "Day05_2026-09-29_linear-models.html#continuous-categorical",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous + Categorical",
-    "text": "Continuous + Categorical\nLet’s fit a model with one continuous and one categorical predictor variable."
+    "text": "Continuous + Categorical\nLet’s fit a model with one continuous and one categorical predictor variable.\n\nm2 &lt;- stats::lm(height_cm ~ nitrogen_gsqm + species, data = p2)\nsummary(m2)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical-1",
     "href": "Day05_2026-09-29_linear-models.html#continuous-categorical-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous + Categorical",
-    "text": "Continuous + Categorical\nThen create a new table with combination of predictor variables and use the predict ():"
+    "text": "Continuous + Categorical\nThen create a new table with combination of predictor variables and use the predict ():\n\nn_range  &lt;- seq(min(p2$nitrogen_gsqm),\n                max(p2$nitrogen_gsqm),\n                length.out = 50)\nnew_data &lt;- expand.grid(nitrogen_gsqm = n_range,\n                        species       = c(\"Species A\", \"Species B\"))\ntemp &lt;- predict(m2, newdata = new_data, se.fit = TRUE)\nnew_data$fit &lt;- temp$fit\nnew_data$uci &lt;- new_data$fit + 1.96 * temp$se.fit\nnew_data$lci &lt;- new_data$fit - 1.96 * temp$se.fit"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-categorical-2",
     "href": "Day05_2026-09-29_linear-models.html#continuous-categorical-2",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous + Categorical",
-    "text": "Continuous + Categorical\nFinally, plot the results:"
+    "text": "Continuous + Categorical\nFinally, plot the results:\n\ncols &lt;- c(\"orange\", \"turquoise\")\nnames(cols) &lt;- sort(unique(new_data$species))\n\nplot(height_cm ~ nitrogen_gsqm,\n     data = p2,\n     pch = 19,\n     col = cols[species],\n     cex = 0.4,\n     ylab = \"Height (cm)\",\n     xlab = \"Nitrogen (g/m²)\")\nfor (sp in names(cols)) {\n  sub &lt;- new_data[new_data$species == sp, ]\n  # Add regression line\n  lines(fit ~ nitrogen_gsqm, data = sub, col = cols[sp], lwd = 3)\n  # Add confidence intervals\n  lines(lci ~ nitrogen_gsqm, data = sub, col = cols[sp], lty = 2)\n  lines(uci ~ nitrogen_gsqm, data = sub, col = cols[sp], lty = 2)\n}\n# Add legend\nlegend(\"topleft\", \n       legend = names(cols),\n       lwd    = 3, \n       col    = cols,\n       bty    = \"n\", \n       title  = \"Species\")"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-continuous",
     "href": "Day05_2026-09-29_linear-models.html#continuous-continuous",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous + Continuous",
-    "text": "Continuous + Continuous\nLet’s fit a model with two continuous predictor variables."
+    "text": "Continuous + Continuous\nLet’s fit a model with two continuous predictor variables.\n\nm3 &lt;- stats::lm(height_cm ~ nitrogen_gsqm + temperature, data = p3)\nsummary(m3)"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#continuous-continuous-1",
     "href": "Day05_2026-09-29_linear-models.html#continuous-continuous-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Continuous + Continuous",
-    "text": "Continuous + Continuous\nWe can make predictions and visualize the results as before."
+    "text": "Continuous + Continuous\nWe can make predictions and visualize the results as before.\n\nn_range  &lt;- seq(min(p3$nitrogen_gsqm),\n                max(p3$nitrogen_gsqm),\n                length.out = 50)\nnew_data &lt;- expand.grid(nitrogen_gsqm = n_range,\n                        temperature   = c(15, 25))\ntemp &lt;- predict(m3, newdata = new_data, se.fit = TRUE)\nnew_data$fit &lt;- temp$fit\nnew_data$uci &lt;- new_data$fit + 1.96 * temp$se.fit\nnew_data$lci &lt;- new_data$fit - 1.96 * temp$se.fit\n\ncols  &lt;- c(\"orange\", \"turquoise\")\ncats  &lt;- sort(unique(new_data$temperature))\nnames(cols) &lt;- as.character(cats)\nplot(height_cm ~ nitrogen_gsqm,\n     data = p3,\n     pch = 19,\n     cex = 0.4,\n     ylab = \"Height (cm)\", xlab = \"Nitrogen (g/m²)\")\n\nfor (t in as.character(cats)) {\n  sub &lt;- new_data[as.character(new_data$temperature) == t, ]\n  #Add regression line\n  lines(fit ~ nitrogen_gsqm, data = sub, col = cols[t], lwd = 3)\n  #Add confidence intervals\n  lines(lci ~ nitrogen_gsqm, data = sub, col = cols[t], lty = 2)\n  lines(uci ~ nitrogen_gsqm, data = sub, col = cols[t], lty = 2)\n}\n#Add legend\nlegend(\"topleft\",\n       legend = paste(cats, \"°C\"),\n       lwd = 3, \n       col = cols,\n       bty = \"n\",\n       title = \"Temperature\")"
   },
   {
     "objectID": "Day05_2026-09-29_linear-models.html#your-turn-1",
     "href": "Day05_2026-09-29_linear-models.html#your-turn-1",
     "title": "WILD 541 – Research Design Lab",
     "section": "Your turn",
-    "text": "Your turn\n\n\n\n\n\n\n\nPractice 2\n\n\nUsing your own data:\n\nFit at least one multiple regression with additive terms of two predictor variables.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
+    "text": "Your turn\n\n\n\n\n\n\nPractice 2\n\n\n\nUsing your own data:\n\nFit at least one multiple regression with additive terms of two predictor variables.\nInspect the output and write a 1–3 sentence interpretation as a comment in your R script.\nGenerate figures showing the data and the regression line for each of the regression models you fit."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "WILD 541 — Research Design Lab",
     "section": "",
-    "text": "Each lesson is a set of slides with live R code. The code runs in your browser using webR .You do not need R or RStudio installed to try the examples. Edit any code block and press Run Code to see the results.\nThe first time a deck loads it downloads the R engine, which takes a few seconds. After that it is instant."
+    "text": "Each lesson is a set of slides with live R code. You do not need R or RStudio installed to try the examples. Edit any code block and press Run Code to see the results. That said, I recommend you to install R and RStudio and follow the material on your computer."
   },
   {
     "objectID": "index.html#lessons",
     "href": "index.html#lessons",
     "title": "WILD 541 — Research Design Lab",
     "section": "Lessons",
-    "text": "Lessons\n\n\n\n\n\n\n\n\nLesson\nTopic\nDate\n\n\n\n\n5\nLesson 5 slides: Linear models and multiple regression\nSeptember 29, 2026"
+    "text": "Lessons\nLesson 1: Introduction to R and Reproducibility\nLesson 2: R Syntax and Data Exploration\nLesson 3: Data Visualization\nLesson 4: Random Sampling and Distributions\nLesson 5: Linear Models and Multiple Regression\nLesson 6: Generalized Linear Models\nLesson 7: Model Comparison and Selection\n\n\n\n\n\n\nNavigating the slides\n\n\n\nUse the arrow keys or the on-screen controls to move between slides."
   },
   {
     "objectID": "index.html#getting-help",
     "href": "index.html#getting-help",
     "title": "WILD 541 — Research Design Lab",
     "section": "Getting help",
-    "text": "Getting help\nIf a code block will not run, try reloading the page since the browser occasionally drops the R engine after being idle for long."
+    "text": "Getting help\nIf a code block did not run, try reloading the page since the browser occasionally drops the R engine after being idle for long."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html",
+    "href": "Day02_2026-09-8_r-syntax.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "R syntax\nWhat is in a dataset?\nPractice"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#outline",
+    "href": "Day02_2026-09-8_r-syntax.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "R syntax\nWhat is in a dataset?\nPractice"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-1",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax",
+    "text": "R Syntax\nA core component in R is the object. Objects can contain almost anything: data, models, and functions.\n\n# Assign a sequence of numbers to object x\nx &lt;- 1:15\n\n# Display it\nprint(x)\n\n\n\nObjects can contain almost anything, including data, statistical models, and functions. Here you will get an introduction to creating and working with simple data objects. For example, we assigned a series of numbers to an object named “x”.\n\n\nBy typing the name of the object and executing that line (with Ctrl+R or Ctrl+Enter), we can get R to display the current contents of a given object. Alternatively, you can use the print() function."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-2",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax",
+    "text": "R Syntax\nYou can assign the result of a calculation to an object:\n\nx &lt;- 1 + 15\n\ny &lt;- 5.2          # second object\n\nz &lt;- x ^ y        # third object\n\n\n\nNotice how x now contains the new value; the previous content has been overwritten."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-3",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax",
+    "text": "R Syntax\nHow do you find all objects you’ve created?\n\nx &lt;- 1 + 15\ny &lt;- 5.2\nz &lt;- x ^ y\n\nls()              # lists objects in the workspace\n\n\nYou can use objects as you would the value they contain. For example, we can create another object with the value 5.2 and then combine x and y in a calculation with the result assigned to z."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-4",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-4",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax",
+    "text": "R Syntax\nObjects can also contain other types of information, including strings and boolean characters (TRUE/FALSE). Objects may contain only a single value, e.g., objects x and y. But objects can contain much more, including entire data sets. You will learn about additional types of variables later.\n\nx &lt;- \"leopard\"\ny &lt;- FALSE\n\nclass(x)\nclass(y)\n\n\n\n\n\n\n\nNote\n\n\n\nString variables are surrounded by quotation marks; TRUE / FALSE are not."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-vectors",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-vectors",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax: vectors",
+    "text": "R Syntax: vectors\nA vector is a sequence of values. Use c() to combine values:\n\n# Numeric vector\nmass_kg &lt;- c(38, 217, 7, 40)\n\n# Character vector\nspecies &lt;- c(\"leopard\", \"bear\", \"fox\", \"wolf\")\n\n# Logical vector\nus_range &lt;- c(FALSE, TRUE, TRUE, TRUE)"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#r-syntax-dataframes",
+    "href": "Day02_2026-09-8_r-syntax.html#r-syntax-dataframes",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "R Syntax: dataframes",
+    "text": "R Syntax: dataframes\nA dataframe stitches vectors together as columns of a table:\n\nmass_kg  &lt;- c(38, 217, 7, 40)\nspecies  &lt;- c(\"leopard\", \"bear\", \"fox\", \"wolf\")\nus_range &lt;- c(FALSE, TRUE, TRUE, TRUE)\n\nsp_data &lt;- data.frame(species, mass_kg, us_range)\nsp_data"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#snapshot-usa",
+    "href": "Day02_2026-09-8_r-syntax.html#snapshot-usa",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Snapshot USA",
+    "text": "Snapshot USA\nSnapshot USA is a coordinated monitoring of mammals (and birds) via camera traps across the US.\nToday we explore a subset of this processed dataset."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#overview",
+    "href": "Day02_2026-09-8_r-syntax.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nTo analyze data, you need to get them into the R workspace. Typically, this means loading data from external files (e.g., .txt or .csv) and assigning them to an object. Eventually, you may also want to export an R data object to an external file, for example, after creating or processing data in R. There are numerous alternatives for loading and exporting data; next are just a few examples."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#loading-data",
+    "href": "Day02_2026-09-8_r-syntax.html#loading-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Loading data",
+    "text": "Loading data\nFirst, let’s empty the workspace, in case there are objects from a previous analysis, which could interfere with what we are going to do now:\n\n# Clear workspace\nrm(list = ls())\n\nMake sure the required R packages (also called libraries) are installed and loaded. In this example, we can use the ”readr” or ”utils” package to load our .csv file. Then, download the input file and make sure it is in the current working directory, and load it into R as shown below.\n\n# Load the snapshot_usa dataset from GitHub\nlibrary(utils)\nurl_remote &lt;- \"https://raw.githubusercontent.com/\"\npath_git   &lt;- \"MTourani/WILD541_F2026/refs/heads/main/\"\nfile_name  &lt;- \"snapshot_usa.csv\"\n\nsnapshot_usa &lt;- utils::read.csv(paste0(url_remote, path_git, file_name))"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#explore-data",
+    "href": "Day02_2026-09-8_r-syntax.html#explore-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore data",
+    "text": "Explore data\nYou can check that the file has been loaded correctly by displaying the entire object or, if it is too unwieldy, the first 6 rows with function head():\n\n\n\nEach row = one observation\nEach column = one variable\n\n\n\nhead(snapshot_usa)\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nWhat do you think the function tail() does?"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#explore-data-1",
+    "href": "Day02_2026-09-8_r-syntax.html#explore-data-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore data",
+    "text": "Explore data\nThis object contains a data frame, which has two dimensions (rows and columns).\n\n# How many rows and columns?\ndim(snapshot_usa)\nnrow(snapshot_usa)\nncol(snapshot_usa)\n\n\nFunction dim() returns the size of each dimension (number of rows and number of columns).\n\nBoth rows and columns can be named; dimnames() returns these names.\n\n# How many rows and columns?\ndimnames(snapshot_usa)"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#explore-data-2",
+    "href": "Day02_2026-09-8_r-syntax.html#explore-data-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore data",
+    "text": "Explore data\nYou can also specify which rows you want shown by providing the row index in square brackets.\n\n# Return rows 1 through 3\nsnapshot_usa[1:3, ]"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#explore-data-3",
+    "href": "Day02_2026-09-8_r-syntax.html#explore-data-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Explore data",
+    "text": "Explore data\nYou may only want to inspect a certain column in a data frame. Here are different ways to have R return a column of a data frame:\n\n# Three ways to access a column\nsnapshot_usa$Species_Name         # by name with $\nsnapshot_usa[, \"Species_Name\"]    # by name with []\nsnapshot_usa[, 3]                 # by index\n\n\n\n\n\n\n\nTip\n\n\n\nR is case sensitive and the lower/upper case should match the exact column name."
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#quantitative-summaries",
+    "href": "Day02_2026-09-8_r-syntax.html#quantitative-summaries",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Quantitative summaries",
+    "text": "Quantitative summaries\nWe used summary() in previous class. Similarly, we can use functions mean(), median(), sd() to get summaries of any dataset.\nFor example, we can find the mean number of animals in the camera trap images using mean() and use round() to show whole numbers.\n\nmean(snapshot_usa$Count)\nround(mean(snapshot_usa$Count), 0)\n\n\n\n\n\n\n\nWarning\n\n\n\nWhy won’t mean(snapshot_usa$Species_Name) work?"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#class-of-variables",
+    "href": "Day02_2026-09-8_r-syntax.html#class-of-variables",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Class of variables",
+    "text": "Class of variables\nTo find out what type of data you are dealing with, use the function class().\n\nclass(snapshot_usa$Count)\nclass(snapshot_usa$Species_Name)\nclass(snapshot_usa$Age)"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#sort-and-order",
+    "href": "Day02_2026-09-8_r-syntax.html#sort-and-order",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Sort and order",
+    "text": "Sort and order\nYou may want to inspect a sorted column, or find the lowest or highest value in your data frame.\n\n# Sort a column by spa\nhead(sort(snapshot_usa$Species_Name))\n\n# Reorder the whole dataframe alphabetically by species\nsnapshot_usa[order(snapshot_usa$Species_Name), ]"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#getting-help",
+    "href": "Day02_2026-09-8_r-syntax.html#getting-help",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Getting help",
+    "text": "Getting help\nIf you are unsure about how to use a function, you can get help from R’s help facilities. For example, if you know the name of a function you can get the associated help pages displayed simply by typing “?” followed by the name of the function (e.g., ?order). If you are not sure about the function name, you can do a “fuzzy” search using “??” followed by the word that you are looking for.\n\n?order          # help for a specific function\n??aggregate     # fuzzy search"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#tallies",
+    "href": "Day02_2026-09-8_r-syntax.html#tallies",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Tallies",
+    "text": "Tallies\nThe function table() is a simple way to tally your data. For example, you can get the number of images per age class like this:\n\ntable(snapshot_usa$Age)\n\n\nMore complex tallies can also be obtained, for example the number of observations associated with the different combinations of “Age” and “Class”.\n\ntable(snapshot_usa$Age, snapshot_usa$Class)"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#tallies-1",
+    "href": "Day02_2026-09-8_r-syntax.html#tallies-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Tallies",
+    "text": "Tallies\nThe function table() only counts the number of observations associated with different combinations of variables. We can use aggregate() if we want elements in a given category summarized differently. For example, we can calculate the mean number of animals in the camera trap images by age class:\n\n# Mean count by age class\naggregate(Count ~ Age, data = snapshot_usa, FUN = mean)\n\nBy adding additional variables on the right side of the formula, we can break things down further:\n\n# Break down further by species\nhead(aggregate(Count ~ Age + Species_Name,\n               data = snapshot_usa, FUN = mean))"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#export-data",
+    "href": "Day02_2026-09-8_r-syntax.html#export-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Export data",
+    "text": "Export data\nYou can take the modified data frame and export it as a comma-delimited text file that can then be opened with other software.\n\n# Export as CSV\nutils::write.csv(snapshot_usa, \"snapshot_usa.csv\", row.names = FALSE)\n\n# Export as RData\nsave(snapshot_usa, file = \"snapshot_usa.RData\")"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#reload-and-inspect",
+    "href": "Day02_2026-09-8_r-syntax.html#reload-and-inspect",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Reload and inspect",
+    "text": "Reload and inspect\nExporting your data as an R data file ensures that all information is stored and can be retrieved exactly the way it was when you last worked with it in R. You can confirm this by removing the object from the workspace and then loading the .RData file.\n\nrm(snapshot_usa)           # remove from workspace\n\nload(\"snapshot_usa.RData\") # reload\nhead(snapshot_usa)"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#your-turn",
+    "href": "Day02_2026-09-8_r-syntax.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice 1\n\n\n\nUsing snapshot_usa:\n\nHow many camera trap images were recorded?\nHow many species had at least one record?\nHow many birds and mammals were recorded? (Hint: tally Class)\nHow many images contained humans (pedestrians, bicycles, vehicles)?\nHow many images contained domestic animals?"
+  },
+  {
+    "objectID": "Day02_2026-09-8_r-syntax.html#your-turn-1",
+    "href": "Day02_2026-09-8_r-syntax.html#your-turn-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice 2\n\n\n\n\nLoad your own data into R and inspect them.\nAdd or remove a column; save as .RData. Inspect the output.\nWhat are the dimensions of your dataset?\nHow many columns are numeric, logical, or character?\nUse table() to tally observations.\nUse aggregate() to summarize in different ways."
+  },
+  {
+    "objectID": "Day05_2026-09-29_linear-models.html",
+    "href": "Day05_2026-09-29_linear-models.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Linear models\nSimple linear regression\nMultiple regression\nPractice"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html",
+    "href": "Day01_2026-09-01_intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Introduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#outline",
+    "href": "Day01_2026-09-01_intro.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nIntroduction and course overview\nReproducibility and human error\nIntroduction to R/RStudio\nAI policy"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#course-overview",
+    "href": "Day01_2026-09-01_intro.html#course-overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Course overview",
+    "text": "Course overview\nObjectives & Approach\n\nHands-on data exploration and visualization\nA mix of lessons and exercises on basic analysis\nLearning one tool for all tasks: R"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#your-job",
+    "href": "Day01_2026-09-01_intro.html#your-job",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your job",
+    "text": "Your job\n\nExplore.\nWork together.\nAsk questions.\nDo the exercises.\nWork with your own data."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#spreadsheets",
+    "href": "Day01_2026-09-01_intro.html#spreadsheets",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Spreadsheets",
+    "text": "Spreadsheets\n\n\n\n\nSpreadsheets are ubiquitous, but they come with hidden risks in scientific research."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#auto-correct",
+    "href": "Day01_2026-09-01_intro.html#auto-correct",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Auto-‘correct’",
+    "text": "Auto-‘correct’"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#auto-correct-gone-wrong",
+    "href": "Day01_2026-09-01_intro.html#auto-correct-gone-wrong",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Auto-‘correct’ gone wrong",
+    "text": "Auto-‘correct’ gone wrong\n\n\nExample 1:\n\nExcel converted human genes and protein names to dates\nStill used and causing errors in published research"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#why-not-excel",
+    "href": "Day01_2026-09-01_intro.html#why-not-excel",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Why not Excel?",
+    "text": "Why not Excel?\n\n\nExample 2 — The Reinhart-Rogoff error\n\nClaimed average real economic growth increases when debt &gt; 90% of GDP\nMistakenly excluding 5 data points flipped the conclusion to a 0.1% decline\nA spreadsheet formula error; reviewed by thousands before discovery\n\n\nErrors in spreadsheets are invisible as you cannot audit a click."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#king-of-spreadsheets",
+    "href": "Day01_2026-09-01_intro.html#king-of-spreadsheets",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "King of spreadsheets",
+    "text": "King of spreadsheets"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#better-tools-are-available",
+    "href": "Day01_2026-09-01_intro.html#better-tools-are-available",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Better tools are available",
+    "text": "Better tools are available\n\n\nUsing a better tool produces reproducible, auditable, sharable work."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#use-r",
+    "href": "Day01_2026-09-01_intro.html#use-r",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Use R",
+    "text": "Use R\n\n\nFive steps for today:\n\nInstall R\nInstall RStudio\nCreate a new project for “WILD541”\nCreate a new R script for today’s class Day01.R\nUse R for basic operations"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#some-r-benefits",
+    "href": "Day01_2026-09-01_intro.html#some-r-benefits",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Some R benefits",
+    "text": "Some R benefits\n\nEnvironment for statistical computing and graphics\nFree (open-source)\nUsed by many researchers worldwide\nGood documentation and community\nContinuously updated and expanded\nCan reuse existing scripts\nRuns the same each time ← this is reproducibility"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#overview",
+    "href": "Day01_2026-09-01_intro.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#use-r-as-a-calculator",
+    "href": "Day01_2026-09-01_intro.html#use-r-as-a-calculator",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Use R as a calculator",
+    "text": "Use R as a calculator\nYou can use R for simple and complex calculations using mathematical operators:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nYou can use a hash mark # to include comments, e.g., ”R as a calculator” in the above code. Any text after # is ignored by R. Comment liberally: it helps you remember and others understand your code."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#use-r-for-summaries",
+    "href": "Day01_2026-09-01_intro.html#use-r-for-summaries",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Use R for summaries",
+    "text": "Use R for summaries\nYou can use R built-in functions, e.g., summary(), to find summary statistics.\n\n\n\n\n\n\n\n\n\nSo, the mean of these data is 8."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#cite-r",
+    "href": "Day01_2026-09-01_intro.html#cite-r",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Cite R",
+    "text": "Cite R\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nCiting software used in your analysis is good scientific practice.\nLikewise, if you ever have a question about what version of R you are using, you could type the above in the R prompt and find the details."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#ai-for-coding",
+    "href": "Day01_2026-09-01_intro.html#ai-for-coding",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "AI for coding",
+    "text": "AI for coding\n\nThe elephant in the room\n\nPer university guidelines, use of generative artificial intelligence is not prohibited. However, instructors set the terms for their course."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#course-ai-policy",
+    "href": "Day01_2026-09-01_intro.html#course-ai-policy",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Course AI policy",
+    "text": "Course AI policy\n\n\n\n\n\n\n\n\nTask\nStatus\nNotes\n\n\n\n\nUnderstanding concepts, debugging error messages, learning a package\n🟢 Encouraged\nNo disclosure needed for incidental use\n\n\nBoilerplate & scaffolding (plot themes, cleaning templates)\n🟢 Allowed\nNote it in a code comment\n\n\nChoosing a model or test, study-design decisions\n🟡 Case-by-case\nAI can help you brainstorm; the justification must be yours\n\n\nWriting a full analysis script or its interpretation\n🔴 Not permitted\nThis is the competency being graded\n\n\nExams & independent problem sets\n🔴 Not permitted\nUnless the assignment says otherwise"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#step-1-understand-before-you-prompt",
+    "href": "Day01_2026-09-01_intro.html#step-1-understand-before-you-prompt",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step 1: Understand Before You Prompt",
+    "text": "Step 1: Understand Before You Prompt\n\nKnow your question and your data before you open the chat window.\nSeparate two different jobs: deciding what the analysis should do (your job) from typing the syntax (AI can help with this job).\nUse AI to learn field conventions and relevant tools, not only to generate the final answer.\nSanity check: could you defend this line of code to your committee?\n\n\n\n\n\n\n\nWarning\n\n\nWatch out for vibe coding: accepting AI output you cannot evaluate, debug, or explain yourself."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#step-2-choose-your-tool",
+    "href": "Day01_2026-09-01_intro.html#step-2-choose-your-tool",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step 2: Choose Your Tool",
+    "text": "Step 2: Choose Your Tool\n\n\n\n\n\n\n\nTool\nBest for\n\n\n\n\nConversational (Claude, ChatGPT)\nArchitecture questions, debugging, learning a new package\n\n\nIDE assistant (Copilot-style)\nAutocompletion, staying in flow\n\n\nAutonomous agent (Claude Code, Cursor)\nMulti-file edits, rapid prototyping\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nCheck university guidelines for approved AI tools\nCheck AI model comparisons\nRestate key constraints in long sessions as most tools don’t remember perfectly\nCommit working code before a big AI-driven change, so you can always roll back"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#step-3-test-everything-trust-nothing",
+    "href": "Day01_2026-09-01_intro.html#step-3-test-everything-trust-nothing",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step 3: Test Everything, Trust Nothing",
+    "text": "Step 3: Test Everything, Trust Nothing\n\nAsk for tests before or during implementation.\nVerify the test outputs.\nVerify the results against something you understand, e.g., a plot or summary statistics.\n\n\n\n\n\n\n\nNote\n\n\nDespite AI doesn’t know your data, i.e., if samples are paired, clustered, or spatially autocorrelated unless you tell it, it will still confidently hand you a test.\nIf the code ran without errors, it does not mean it is correct."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#step-4-you-are-still-the-scientist",
+    "href": "Day01_2026-09-01_intro.html#step-4-you-are-still-the-scientist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step 4: You Are Still the Scientist",
+    "text": "Step 4: You Are Still the Scientist\n\nThe responsibility for AI-assisted code always belongs to the person who submits it.\n“The AI wrote it” is not a defense for a mis-specified model, or results nobody else can reproduce.\n\n\n\n\n\n\n\nImportant\n\n\nRule of thumb: if you can’t explain a line at your defense, don’t turn it in"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#privacy-data-sharing",
+    "href": "Day01_2026-09-01_intro.html#privacy-data-sharing",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Privacy & data sharing",
+    "text": "Privacy & data sharing\n\nNever paste into a public AI tool: unpublished results, embargoed or data subject to data-sharing agreement.\nData from Tribal lands, communities, or partnerships: additional authorization applies, regardless of a public tool’s terms of service\nPrecise locations of sensitive, threatened, or poaching-vulnerable species are often legally restricted and the coordinates should be treated as any other confidential data.\nWhen unsure: troubleshoot with a simulated or anonymized subset, and ask before uploading anything real\n\n\n\n\n\n\n\nImportant\n\n\nIf you can’t anonymize data meaningfully, don’t paste it into a public AI tool."
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#disclosure-and-citation-are-mandatory",
+    "href": "Day01_2026-09-01_intro.html#disclosure-and-citation-are-mandatory",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Disclosure and citation are mandatory",
+    "text": "Disclosure and citation are mandatory\nEvery university policy agrees on disclosing AI use.\nIn code, use a header comment as below:\n\n\n\n\n\n\n\n\n\nIn a report, one sentence is enough. For the above example, you could write: “I used Claude (Anthropic) to debug syntax errors in my mixed-model code; model specification and interpretation are my own.”"
+  },
+  {
+    "objectID": "Day01_2026-09-01_intro.html#do-vs-dont",
+    "href": "Day01_2026-09-01_intro.html#do-vs-dont",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Do vs Don’t",
+    "text": "Do vs Don’t\n✔ Ask it to explain an error or an unfamiliar function\n✔ Use it to learn a new package syntax\n✔ Get a first draft of code structure\n✔ Brainstorm modeling approaches, then justify your own choice\n✔ Ask it to generate edge cases you might miss\n✘ Submit code you can’t explain line by line\n✘ Let it pick your statistical test without knowing why\n✘ Paste/import unpublished data or sensitive coordinates into a public tool\n✘ Skip verifying AI-cited functions or references\n✘ Treat “it ran without error” as proof it’s correct"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html",
+    "href": "Day07_2026-10-13_model-comparison.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Model comparison\nAIC-based model selection\nPractice"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#outline",
+    "href": "Day07_2026-10-13_model-comparison.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nModel comparison\nAIC-based model selection\nPractice"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#overview",
+    "href": "Day07_2026-10-13_model-comparison.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nThere are many options and different criteria for model comparison. Here, we show a few popular methods in ecological research. Remember, all things equal, the simpler model is preferred over any more complex alternative. This is known as the ”principle of parsimony”.\nThe Akaike Information Criterion (AIC) allows for model comparison and selection considering both the fit of the model (rewarded) and the number of parameters estimated (penalized). Here, we will use AIC-based selection methods to identify the top model in a set of candidate models."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#getting-started",
+    "href": "Day07_2026-10-13_model-comparison.html#getting-started",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Getting started",
+    "text": "Getting started\nIn a telemetry study, wolverines (Gulo gulo) were monitored to determine factors influencing survival. Animals were live-trapped, equipped with a GPS transmitter, and released. For each tagged individual, the researchers recorded the sex, age, personality (based on behavior in the trap), and an index for the abundance of reindeer in the area used by the animal. They then recorded whether the animal was still alive after 1 year of monitoring."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#setup",
+    "href": "Day07_2026-10-13_model-comparison.html#setup",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup",
+    "text": "Setup\nTo begin, start from a clear workspace, load the required libraries, and the data (weasel.RData).\n\nrm(list = ls()) # Clear workspace\n# Specify the libraries\nlbs &lt;- list(\"stats\",  # model fitting in ML\n            \"MASS\",   # AIC\n            \"nimble\", # model fitting Bayesian example\n            \"coda\"    # post-processing, used w nimble\n)\n# Call the libraries\nsapply(lbs, library, char = TRUE)\n\n# Specify path and load data\nurl_remote &lt;- \"https://raw.githubusercontent.com/\"\npath_git   &lt;- \"MTourani/WILD541_F2026/refs/heads/main/\"\nload(url(paste0(url_remote, path_git, \"weasel.RData\")))\nhead(weasel)\n\n\nAs always, inspect the data, tally the information, and visualize the different variables before model fitting."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#full-model",
+    "href": "Day07_2026-10-13_model-comparison.html#full-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Full model",
+    "text": "Full model\nOur goal is to determine which variables influence survival and how. Based on our knowledge of the system, we build the most complex model that we are willing to consider. In this case, we allow only 2-way interactions.\n\n\n\n\n\n\n\n\n\nLooking at the model output, you notice that several of the coefficients estimated by the model are not significantly different from 0. Apparently, this model uses too many parameters that do not seem to explain the variation in these data."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#step-wise-selection-based-on-parsimony",
+    "href": "Day07_2026-10-13_model-comparison.html#step-wise-selection-based-on-parsimony",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step-wise selection based on parsimony",
+    "text": "Step-wise selection based on parsimony\nWith AIC-based model selection, the goal is to find the model (or group of models) with the lowest AIC-value(s). The absolute value itself is not important.\n\nNote also, that you can only use AIC to compare models fitted to the same data set!"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#step-wise-selection-based-on-parsimony-1",
+    "href": "Day07_2026-10-13_model-comparison.html#step-wise-selection-based-on-parsimony-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Step-wise selection based on parsimony",
+    "text": "Step-wise selection based on parsimony\nWe can use the stepAIC() function in the MASS library to do a step-wise selection of terms, shown next.\nIn each step, the function removes the term whose removal results in the lowest AIC value. Once no more terms can be removed without a reduction in AIC, the procedure stops and returns the top model.\n\n\n\n\n\n\n\n\n\nYou could display the terms included in the top model and check the output of the top model using summary() and formula()."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-frequentist",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: frequentist",
+    "text": "A-priori candidate models: frequentist\nA drawback of the step-wise selection process is that, due to the sequential removal (or addition) of terms, a predictor may be dropped from a more complex model when it is actually important in the simpler model. As an alternative to the step-wise selection procedure, you can build multiple candidate models and then compare these using AIC (or WAIC in the next example).\n\n\n\n\n\n\n\n\n\nBased on the results, which model is superior (lowest AIC) to the other three models in this comparison?"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nWe can fit the same set of candidate models in a Bayesian framework. Here, we use nimble package to fit these models. First, we need to bundle data in a list:"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-1",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nSecond, we will write Nimble models in BUGS language, shown next."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-2",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nNow that we have defined the models, we generate initial values for the parameters of each of the four candidate models:"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-3",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nWe also provide a list of parameters we need monitored:"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-4",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-4",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nWe can now put all the model definitions, initial values, and parameter names in three lists. Then use a for loop to avoid repeating code.\n\n\n\n\n\n\n\n\nNext, we specify the MCMC settings and create an empty list to save the output of the different models."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-5",
+    "href": "Day07_2026-10-13_model-comparison.html#a-priori-candidate-models-bayesian-5",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A-priori candidate models: Bayesian",
+    "text": "A-priori candidate models: Bayesian\nFinally, fit the model using the nimble package. Notice the WAIC options is set to TRUE for model comparison in the next step.\n\n\n\n\n\n\n\n\nWe can now extract the WAIC and find the best model.\n\n\n\n\n\n\n\n\n\nIs the superior model found by WAIC consistent with the top model in the frequentist analysis?"
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#your-turn",
+    "href": "Day07_2026-10-13_model-comparison.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 1\n\n\n\nTally the weasel data to show the number of wolverine individuals that died and the number that survived, according to individual characteristics (sex and personality).\nFit the models above and confirm which one has the lowest AIC.\nMake predictions to determine the probability of survival for 3-year-old female and male wolverines at average prey density."
+  },
+  {
+    "objectID": "Day07_2026-10-13_model-comparison.html#your-turn-1",
+    "href": "Day07_2026-10-13_model-comparison.html#your-turn-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice 2\n\n\n\nUsing your own data, define a set of biologically motivated candidate models and compare them with (a) step-wise selection, starting from the most complex model you are willing to consider. (b) comparisons of a set of candidate models that you chose based on your knowledge of the system and your research questions.\nMake predictions from the top model and generate 1 - 2 plots to show the results."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html",
+    "href": "Day03_2026-09-15_visualization.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Why do we visualize?\nWhat to visualize?\nHow to visualize?\nPractice\nGenerating a report: R Markdown"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#outline",
+    "href": "Day03_2026-09-15_visualization.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Why do we visualize?\nWhat to visualize?\nHow to visualize?\nPractice\nGenerating a report: R Markdown"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#a-picture-is-worth-a-thousand-words",
+    "href": "Day03_2026-09-15_visualization.html#a-picture-is-worth-a-thousand-words",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "A picture is worth a thousand words",
+    "text": "A picture is worth a thousand words\n\nThe Nightingale rose diagram"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#anscombes-quartet",
+    "href": "Day03_2026-09-15_visualization.html#anscombes-quartet",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Anscombe’s Quartet",
+    "text": "Anscombe’s Quartet\n\n\n\n\n\n\nNote\n\n\n\nEach dataset has the same summary statistics (mean, standard deviation, correlation), and the datasets are clearly different, and visually distinct."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#overview",
+    "href": "Day03_2026-09-15_visualization.html#overview",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Overview",
+    "text": "Overview\nGraphics are an important tool for conveying information. Good figures can raise a scientific article and make its contents accessible to a larger audience.\nHere you will learn the basics of producing publication-quality graphs with R."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#choose-the-right-visualization",
+    "href": "Day03_2026-09-15_visualization.html#choose-the-right-visualization",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Choose the right visualization",
+    "text": "Choose the right visualization"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#setup-load-data",
+    "href": "Day03_2026-09-15_visualization.html#setup-load-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Setup: load data",
+    "text": "Setup: load data\nIf you saved “.RData” in your RStudio project folder last week, you can load it as below. It’s a good practice to start by emptying the workspace and then loading the data.\n\nrm(list = ls())            # Clear workspace\nload(\"snapshot_usa.RData\") # Load data\n\n\nOtherwise, you can load the original “.csv”:\n\nrm(list = ls())  # Clear workspace\n\nlibrary(utils)   # Load required R package\n\n# Specify data path\nurl_remote &lt;- \"https://raw.githubusercontent.com/\"\npath_git   &lt;- \"MTourani/WILD541_F2026/refs/heads/main/\"\n\n# Load data\nsnapshot_usa &lt;- utils::read.csv(paste0(url_remote, path_git, \"snapshot_usa.csv\"))"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#data-preparation-new-column",
+    "href": "Day03_2026-09-15_visualization.html#data-preparation-new-column",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Data preparation: new column",
+    "text": "Data preparation: new column\nLet’s add a column so that every row has a unique ID.\n\n# Add unique row ID\nsnapshot_usa$ID &lt;- seq_len(nrow(snapshot_usa))\n\nNext, let’s extract the week number and add it as a new column to the existing table:\n\n# Extract numeric week number (handles \"2019-W35\" format)\nsnapshot_usa$Week &lt;- as.integer(sub(\".*-W(\\\\d+).*\",\n                                    \"\\\\1\",\n                                    snapshot_usa$Week,\n                                    perl = TRUE)\n)\n\n# Inspect the table\nhead(snapshot_usa)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#data-preparation-subset",
+    "href": "Day03_2026-09-15_visualization.html#data-preparation-subset",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Data preparation: subset",
+    "text": "Data preparation: subset\nAs you learned in the previous class, we can use conditions to subset data. For example, we could ask how many mammal species were recorded at least once.\n\nmammal_snapshot &lt;- snapshot_usa[snapshot_usa$Class == \"Mammals\", ]\n# Number of mammal species\nlength(unique(mammal_snapshot$Species_Name))\n\n# Number of days with at least one photo\n\n# Number of deployment locations with at least one photo\n\n\n\nHow many survey days have at least one photo? How many deployment locations?"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#data-preparation-aggregate",
+    "href": "Day03_2026-09-15_visualization.html#data-preparation-aggregate",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Data preparation: aggregate",
+    "text": "Data preparation: aggregate\nLet’s aggregate and find the number of observations per animal class or species.\n\n# How many observations per animal class?\naggregate(ID ~ Class,\n          data = snapshot_usa,\n          FUN  = function(x)length(unique(x)))\n\n\n\nCan you find the species with the most number of detection locations?\n\n\n# How many detection locations per species?\naggregate(Deployment_ID ~ Species_Name,\n          data = snapshot_usa,\n          FUN = function(x)length(unique(x)))"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#data-preparation-aggregate-1",
+    "href": "Day03_2026-09-15_visualization.html#data-preparation-aggregate-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Data preparation: aggregate",
+    "text": "Data preparation: aggregate\n\n# Observations per week\ntab1 &lt;- aggregate(ID ~ Week,\n                  data = snapshot_usa,\n                  FUN  = function(x) length(unique(x)))\n\n# Per species per week\ntab2 &lt;- aggregate(ID ~ Common_Name + Week,\n                  data = snapshot_usa,\n                  FUN  = function(x) length(unique(x)))\n\n# Per class per week\ntab3 &lt;- aggregate(ID ~ Class + Week,\n                  data = snapshot_usa,\n                  FUN  = function(x) length(unique(x)))"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#simple-plot",
+    "href": "Day03_2026-09-15_visualization.html#simple-plot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simple plot",
+    "text": "Simple plot\nThe plot() function is the basic function for generating plots in R.\n\nplot(snapshot_usa$ID ~ snapshot_usa$Week)\n\n\nThe formula y∼x indicates to plot() that time (week) should be plotted on the x-axis as a function of the number of IDs on the y-axis."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#simple-plot-1",
+    "href": "Day03_2026-09-15_visualization.html#simple-plot-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simple plot",
+    "text": "Simple plot\nWe could also use aggregated tables for plotting to make more sense of the data.\n\nplot(tab1$ID ~ tab1$Week)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#customize-a-plot",
+    "href": "Day03_2026-09-15_visualization.html#customize-a-plot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Customize a plot",
+    "text": "Customize a plot\nWithin the plot() function, you have a lot of options to customize the graph. See the examples below.\n\nplot(tab1$ID ~ tab1$Week,\n     xlab  = \"Week\",\n     ylab  = \"Number of photos\",\n     type  = \"l\",\n     lty   = 2,\n     col   = \"grey\",\n     axes  = FALSE,\n     xlim  = c(min(tab1$Week) - 1, max(tab1$Week) + 1),\n     ylim  = c(min(tab1$ID)  - 30, max(tab1$ID)  + 200),\n     lwd   = 2, \n     xaxs  = \"i\", \n     yaxs  = \"i\", \n     frame = FALSE)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#customizing-the-axes",
+    "href": "Day03_2026-09-15_visualization.html#customizing-the-axes",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Customizing the axes",
+    "text": "Customizing the axes\nThe default axes produced by plot() are often appropriate, but sometimes we want to have more control over the axes, including their position and scale. To create custom axes, set the axes argument in the plot() function to FALSE and then execute a separate axis() function for each axis.\n\nplot(tab1$ID ~ tab1$Week,\n     type  = \"l\",\n     lty   = 2,\n     col   = \"grey\", \n     axes  = FALSE,\n     xlim  = c(min(tab1$Week) - 1, max(tab1$Week) + 1),\n     ylim  = c(min(tab1$ID) - 30,  max(tab1$ID) + 200),\n     lwd   = 2,\n     xaxs  = \"i\", \n     yaxs  = \"i\",\n     frame = FALSE,\n     xlab  = \"Week\",\n     ylab  = \"Number of photos\")\n \naxis(1,\n     at    = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     label = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     las   = 1,\n     lwd   = 2)\n\n\nWhich axis was just added to the plot?"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#customizing-the-axes-1",
+    "href": "Day03_2026-09-15_visualization.html#customizing-the-axes-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Customizing the axes",
+    "text": "Customizing the axes\nSimilarly, add the second axis as shown below.\n\nplot(tab1$ID ~ tab1$Week,\n     type  = \"l\",\n     lty   = 2,\n     col   = \"grey\", \n     axes  = FALSE,\n     xlim  = c(min(tab1$Week) - 1, max(tab1$Week) + 1),\n     ylim  = c(0, max(tab1$ID) + 200),\n     lwd   = 2,\n     xaxs  = \"i\", \n     yaxs  = \"i\", \n     frame = FALSE,\n     xlab  = \"Week\",\n     ylab  = \"Number of photos\")\n\naxis(1,\n     at = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     label = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     las = 1, \n     lwd = 2)\naxis(2,\n     at = seq(0, max(tab1$ID), 200),\n     label = seq(0, max(tab1$ID), 200), \n     las = 1, lwd = 2)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#customizing-the-plot",
+    "href": "Day03_2026-09-15_visualization.html#customizing-the-plot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Customizing the plot",
+    "text": "Customizing the plot\nFinally, add the points to the already existing plot.\n\nplot(tab1$ID ~ tab1$Week,\n     type  = \"l\",\n     lty   = 2,\n     col   = \"grey\", \n     axes  = FALSE,\n     xlim  = c(min(tab1$Week) - 1, max(tab1$Week) + 1),\n     ylim  = c(0, max(tab1$ID) + 200),\n     lwd   = 2,\n     xaxs  = \"i\", \n     yaxs  = \"i\", \n     frame = FALSE,\n     xlab  = \"Week\",\n     ylab  = \"Number of photos\")\n\naxis(1,\n     at = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     label = seq(min(tab1$Week) - 1, max(tab1$Week) + 1, 2),\n     las = 1, \n     lwd = 2)\naxis(2,\n     at = seq(0, max(tab1$ID), 200),\n     label = seq(0, max(tab1$ID), 200), \n     las = 1, lwd = 2)\n\npoints(tab1$ID ~ tab1$Week, pch = 21, bg = \"firebrick\", cex = 1.1)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#conveying-additional-information",
+    "href": "Day03_2026-09-15_visualization.html#conveying-additional-information",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Conveying additional information",
+    "text": "Conveying additional information\nWe can use plots for a graphical comparison between two groups. For example, we can plot the number of bird observations vs mammals’. We first plot the number of mammal records per survey week, and then add to the existing plot the number of bird records.\n\ntab3_mammals &lt;- tab3[tab3$Class == \"Mammals\", ]\ntab3_aves    &lt;- tab3[tab3$Class == \"Aves\",    ]\n\nplot(tab3_mammals$ID ~ tab3_mammals$Week,\n     col  = \"orange\",\n     lwd  = 3,\n     pch  = 19,\n     xlab = \"Week\",\n     ylab = \"Number of photos\",\n     main = \"\")"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#conveying-additional-information-1",
+    "href": "Day03_2026-09-15_visualization.html#conveying-additional-information-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Conveying additional information",
+    "text": "Conveying additional information\nYou can enrich the data part of your graphs by adding additional features such as colors, text, etc. This allows you to convey more information than just the usual 2 dimensions.\n\nplot(tab3_mammals$ID ~ tab3_mammals$Week,\n     col  = \"orange\",\n     lwd  = 3,\n     pch  = 19,\n     xlab = \"Week\",\n     ylab = \"Number of photos\",\n     main = \"\")\n\npoints(tab3_aves$ID ~ tab3_aves$Week,\n       pch = 17,\n       col = \"lightblue\", \n       lwd = 3)\n\nlegend(\"topright\",\n       legend = c(\"Aves\", \"Mammals\"),\n       lwd    = 3, \n       pch    = c(17, 19),\n       col    = c(\"lightblue\", \"orange\"))"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#barplot",
+    "href": "Day03_2026-09-15_visualization.html#barplot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Barplot",
+    "text": "Barplot\nLet’s use a barplot to display the number of records for canids.\n\ncanid_index &lt;- c(\"Coyote\",\n                 \"Domestic Dog\",\n                 \"Red Fox\",\n                 \"Gray Fox\",\n                 \"Gray Wolf\",\n                 \"Kit Fox\",\n                 \"Red Wolf\")\ncanid_snapshot &lt;- mammal_snapshot[mammal_snapshot$Common_Name %in% canid_index, ]\nmx &lt;- table(canid_snapshot$Common_Name)\n\nbarplot(height    = mx,\n        xlab      = \"Canid species\",\n        ylab      = \"Number of photos\",\n        names.arg = names(mx),\n        density   = seq(10, 70, 10),\n        col       = \"firebrick\")"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#stacked-barplot",
+    "href": "Day03_2026-09-15_visualization.html#stacked-barplot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Stacked barplot",
+    "text": "Stacked barplot\nHow about the number of records per week for bears?\n\nbear_index &lt;- c(\"Ursus arctos\", \"Ursus americanus\")\nbear &lt;- mammal_snapshot[mammal_snapshot$Species_Name %in% bear_index, ]\nmx   &lt;- table(bear$Species_Name, bear$Week)\n\nbarplot(height    = mx, \n        width     = 10,\n        xlab      = \"Week\",\n        ylab      = \"Number of photos\",\n        names.arg = colnames(mx),\n        beside    = TRUE,\n        density   = c(20, 50), \n        col       = \"black\")\nlegend(210,\n       100,\n       legend  = unique(bear$Species_Name),\n       density = c(20, 50),\n       bty     = \"n\", \n       title   = \"\")"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#add-text-labels-to-a-plot",
+    "href": "Day03_2026-09-15_visualization.html#add-text-labels-to-a-plot",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Add text labels to a plot",
+    "text": "Add text labels to a plot\nYou can add text (e.g., point labels) inside a plot. Let’s plot the weekly number of records per species (tab2) and flag the species with the most weekly records. One approach is to first use order() and see which species have over 1000 detections per week.\n\ntab4 &lt;- tab2[order(tab2$ID, decreasing = TRUE), ]\n\nplot(tab4$ID ~ tab4$Week,\n     xlab = \"Week\",\n     ylab = \"Number of photos\",\n     ylim = c(0, max(tab4$ID) + 120))\n\ntext(tab4$ID[1:9] ~ tab4$Week[1:9],\n     labels = tab4$Common_Name[1:9],\n     pos    = 1, \n     cex    = 0.7)\n\n# Highlight top records in colour\npoints(tab4$ID[1:9] ~ tab4$Week[1:9], col = \"turquoise\")\n\n\nIn the above plot, we have flagged the highest number of weekly records by adding the species name. Now, can you use colors to flag these points?"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#customizing-the-plot-1",
+    "href": "Day03_2026-09-15_visualization.html#customizing-the-plot-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Customizing the plot",
+    "text": "Customizing the plot\nLet’s filter tab2 and keep canids and display the number of weekly records per canid species. You can pick one color for each input type from the color scale provided by function topo.colors().\n\ntab5     &lt;- tab2[tab2$Common_Name %in% canid_index, ]\nmy_cols  &lt;- topo.colors(length(unique(tab5$Common_Name)))\nnames(my_cols) &lt;- unique(tab5$Common_Name)\n\nplot(ID ~ Week, \n     data = tab5,\n     ylab = \"Number of photos\",\n     xlab = \"Week\",\n     xlim = c(min(tab5$Week) - 1, max(tab5$Week) + 3),\n     pch = 19,\n     col = my_cols[Common_Name],\n     cex = 1.3, \n     main = \"\")\n\nlegend(\"topright\",\n       legend = unique(tab5$Common_Name),\n       pch    = 19,\n       cex    = 1, \n       pt.cex = 1.5, \n       col    = my_cols)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#multiple-panels",
+    "href": "Day03_2026-09-15_visualization.html#multiple-panels",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Multiple panels",
+    "text": "Multiple panels\nOften, we display multiple graphs in multiple panels as part of the same figure. You can use the par() function to split your display into panels. In the previous table, let’s filter foxes and make one plot per fox species.\n\ntab6     &lt;- tab5[grep(\"Fox\", tab5$Common_Name), ]\nmy_cols  &lt;- c(\"darkorange\", \"grey\", \"lightblue\")\nnames(my_cols) &lt;- unique(tab6$Common_Name)\n\npar(mfrow = c(1, 3))\nfor (i in seq_along(unique(tab6$Common_Name))) {\n  this_fox &lt;- unique(tab6$Common_Name)[i]\n  plot(ID ~ Week,\n       data = tab6[tab6$Common_Name == this_fox, ],\n       ylab = \"Number of photos\",\n       xlab = \"Week\",\n       xlim = c(min(tab6$Week) - 1, max(tab6$Week) + 3),\n       ylim = c(0, max(tab6$ID) + 3),\n       pch = 19, \n       cex = 1.3,\n       col = my_cols[Common_Name],\n       type = \"h\",\n       lend = 1, \n       lwd = 5,\n       main = this_fox)\n}\npar(mfrow = c(1,1))"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#plot-device",
+    "href": "Day03_2026-09-15_visualization.html#plot-device",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Plot device",
+    "text": "Plot device\n\nwindows(4,4)\nplot(ID ~ Week,\n     data = tab6[tab6$Common_Name == \"Red Fox\",],\n     ylab = \"Number of photos\",\n     xlab = \"Week\",\n     xlim = c(min(tab6$Week) - 1, max(tab6$Week) + 3),\n     ylim = c(0, max(tab6$ID) + 3),\n     pch  = 19,\n     col  = my_cols[Common_Name],\n     cex  = 1.3, \n     type = \"h\",\n     lend = 1,\n     lwd = 5,\n     main = this_fox\n)\n\n\n\n\n\n\n\ntip\n\n\n\nYou can open a new plot window, outside of R, with the windows() function. This can be helpful if you want to have multiple plots open simultaneously for comparison or if you want to see what your plot looks like given a certain size and aspect ratio."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#plot-device-1",
+    "href": "Day03_2026-09-15_visualization.html#plot-device-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Plot device",
+    "text": "Plot device\nWe want to make it easy for the viewer to pick out the important relationships or differences in our figure. Aside from the features mentioned earlier in this lesson, you can control the appearance of a plot and thus the emphasis on its characteristics by changing the scaling of the axes and their aspect ratio. To see how important the choice of aspect can be, run the following code and then resize the plot window by stretching it out horizontally.\n\nx &lt;- seq(1, 100, 0.5)\ny &lt;- sin(x)\nwindows(5, 3)\nplot(y ~ x)"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#exporting-figures",
+    "href": "Day03_2026-09-15_visualization.html#exporting-figures",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Exporting figures",
+    "text": "Exporting figures\nAlthough RStudio will allow you to save figures from the interface, exporting figures with dedicated functions will give you full control over size, resolution and other attributes. This is the way we tend to create figures for scientific articles and presentations. First, we run one of the figure export functions (e.g., tiff() to export a figure in TIF/tiff format). Here we specify the attributes of the figure.\n\ntiff(filename = \"myplot.tif\", width = 10, height = 7, units = \"cm\", res = 300)\n\npar(mfrow = c(1, 3))\nfor (i in seq_along(unique(tab6$Common_Name))) {\n  this_fox &lt;- unique(tab6$Common_Name)[i]\n  plot(ID ~ Week,\n       data = tab6[tab6$Common_Name == this_fox, ],\n       ylab = \"Number of photos\",\n       xlab = \"Week\",\n       xlim = c(min(tab6$Week) - 1, max(tab6$Week) + 3),\n       ylim = c(0, max(tab6$ID) + 3),\n       pch = 19,\n       cex = 1.3,\n       type = \"h\", \n       lend = 1, \n       lwd = 5,\n       col = my_cols[Common_Name], \n       main = this_fox)\n}\n\ndev.off()\n\n\n\n\n\n\n\ntip\n\n\n\nWe close the plotting device using dev.off(), which finalizes and saves the image file. The resulting figure will not show up in R."
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#your-turn",
+    "href": "Day03_2026-09-15_visualization.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice\n\n\n\nUsing your own data, create at least 5 plots that demonstrate:\n\nDisplaying additional information via colors, symbol shapes, and sizes\nAdding more data to an existing plot\nCombining several plots in multi-panel figures\nExporting figures to various file formats"
+  },
+  {
+    "objectID": "Day03_2026-09-15_visualization.html#what-is-r-markdown",
+    "href": "Day03_2026-09-15_visualization.html#what-is-r-markdown",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "What is R Markdown?",
+    "text": "What is R Markdown?\nR Markdown lets you weave together code, output, and narrative text into a single reproducible document. Check out the cheatsheet."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html",
+    "href": "Day04_2026-09-22_sampling-simulation.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Random sampling\nSimulating data\nData distributions\nPractice"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#outline",
+    "href": "Day04_2026-09-22_sampling-simulation.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "Random sampling\nSimulating data\nData distributions\nPractice"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#what-is-randomness",
+    "href": "Day04_2026-09-22_sampling-simulation.html#what-is-randomness",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "What is randomness?",
+    "text": "What is randomness?\n\n\n\nEqual and independent chance of being selected.\nWe cannot predict the outcome of a particular roll with certainty — this is a random (stochastic) process.\n\n\n\n\n\n\nCan you draw 30 random points?\nHumans are surprisingly bad at generating truly random sequences. That’s why we use algorithms."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#why-do-we-sample",
+    "href": "Day04_2026-09-22_sampling-simulation.html#why-do-we-sample",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Why do we sample?",
+    "text": "Why do we sample?"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#terminology",
+    "href": "Day04_2026-09-22_sampling-simulation.html#terminology",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Terminology",
+    "text": "Terminology\n\n\n\nEvent\nSet\n\nOutcome\nTrial\n\nExperiment"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#measuring-probability",
+    "href": "Day04_2026-09-22_sampling-simulation.html#measuring-probability",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Measuring probability",
+    "text": "Measuring probability\n\nWhat is the probability of trout being captured by an osprey?\n\n\n\nThe event is a predator attack.\nAn attack has 2 outcomes: escape or capture.\nThese outcomes are discrete.\nThe set {(escape), (capture)} consisting of all the possibles outcomes is called the sample space.\nWe are interested in the outcome «capture».\nEach attack is also called a trial.\nA set of trials is an experiment."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#simulating-data",
+    "href": "Day04_2026-09-22_sampling-simulation.html#simulating-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simulating data",
+    "text": "Simulating data\nOne way to understand distributions is to generate and inspect simulated data.\nSimulated data from a known distribution can also be compared with real data to identify which distribution the data came from.\nHere you will learn how to simulate data from common theoretical distributions, as well as how to visualize and compare them."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution",
+    "href": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Uniform distribution",
+    "text": "Uniform distribution\nLet’s start with 100 draws from a uniform distribution between 0 and 10.\n\nx_unif &lt;- runif(n = 100, min = 0, max = 10)\n\nWe can summarize the resulting data:\n\nsummary(x_unif)\n\n… and plot the raw data in the order in which the samples were drawn:\n\nplot(x_unif, type = \"h\")\n\n\nCompare your simulated data with your neighbor. Did you generate the same values?"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution-1",
+    "href": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Uniform distribution",
+    "text": "Uniform distribution\nYou can use set.seed() to make your simulation reproducible.\n\nset.seed(2026)\nx_unif &lt;- runif(n = 100, min = 0, max = 10)\nsummary(x_unif)\nplot(x_unif, type = \"h\")\n\n\nCompare your simulated data with your neighbor. Did you generate the same values?"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution-2",
+    "href": "Day04_2026-09-22_sampling-simulation.html#uniform-distribution-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Uniform distribution",
+    "text": "Uniform distribution\nWe can generate a histogram to visualize the distribution of these simulated data:\n\nset.seed(2026)\nx_unif &lt;- runif(n = 100, min = 0, max = 10)\nhist(x_unif)"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#your-turn",
+    "href": "Day04_2026-09-22_sampling-simulation.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice 1\n\n\n\nRepeat the uniform sampling for sample sizes: 50, 250, 500, and 5000.\nPlot all 4 histograms in a multi-panel figure. How does the shape change with increasing sample size?\n(Hint: use par(mfrow = ...) and a for loop.)\n\n\n\nset.seed(2026)\npar(mfrow = c(2, 2))\nfor (n in c(50, 250, 500, 5000)) {\n  x &lt;- runif(n = n, min = 0, max = 10)\n  hist(x, main = paste(\"n =\", n), xlab = \"Value\")\n}\npar(mfrow = c(1,1))"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#normal-distribution",
+    "href": "Day04_2026-09-22_sampling-simulation.html#normal-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Normal distribution",
+    "text": "Normal distribution\nWe can draw samples from a normal distribution using function rnorm(). We provide the number of samples to be drawn, the mean, and the standard deviation.\n\nx_norm &lt;- rnorm(n = 100, mean = 0, sd = 1)\nsummary(x_norm)\nplot(x_norm, type = \"h\")\n\n\nAre the sample mean and standard deviation identical to the specified values?"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#visualization",
+    "href": "Day04_2026-09-22_sampling-simulation.html#visualization",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualization",
+    "text": "Visualization\nThe previous plot gives us an idea about the spread (apparently symmetrical around 0) and order (random) of values, but it is not a great way to discern their distribution. There are different ways to visualize the distribution. We can, for example, use a histogram:\n\nset.seed(2026)\nx_norm &lt;- rnorm(n = 100, mean = 0, sd = 1)\nhist(x_norm)\n\nor a Kernel density plot, with vertical lines added for the mean and 95% confidence interval:\n\nset.seed(2026)\nx_norm &lt;- rnorm(n = 100, mean = 0, sd = 1)\nplot(density(x_norm))\nabline(v = mean(x_norm), lwd = 2, col = \"red\")\nci &lt;- quantile(x_norm, probs = c(0.025, 0.975))\nabline(v = ci, col = \"red\", lty = 2)"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#visualization-1",
+    "href": "Day04_2026-09-22_sampling-simulation.html#visualization-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualization",
+    "text": "Visualization\nWe can also plot a Kernel density on top of the histogram:\n\nset.seed(2026)\nx_norm &lt;- rnorm(n = 100, mean = 0, sd = 1)\nhist(x_norm, probability = TRUE)\nlines(density(x_norm), col = \"red\", lwd = 4)\n\n\n\n\n\n\n\nNote\n\n\n\nHere we display the probability, instead of the frequency of falling into a bin of values. This allows us to compare the histogram and density kernel in the same plot."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#visualization-2",
+    "href": "Day04_2026-09-22_sampling-simulation.html#visualization-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Visualization",
+    "text": "Visualization\nWe can compare two distributions by plotting their Kernel densities in the same graph:\n\nset.seed(2026)\nx1_norm &lt;- rnorm(1000, mean = 25, sd = 5)\nx2_norm &lt;- rnorm(1000, mean = 15, sd = 2)\n\nplot(density(x1_norm), col = \"red\",  lwd = 4, ylim = c(0, 0.30))\nlines(density(x2_norm), col = \"blue\", lwd = 4)\n\nor by plotting them as box-and-whisker plots:\n\nset.seed(2026)\nx1_norm &lt;- rnorm(1000, mean = 25, sd = 5)\nx2_norm &lt;- rnorm(1000, mean = 15, sd = 2)\n\ndata1  &lt;- data.frame(x = x1_norm, sample = \"A\")\ndata2  &lt;- data.frame(x = x2_norm, sample = \"B\")\nmy_data &lt;- rbind(data1, data2)\n\nboxplot(x ~ sample, data = my_data)"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#poisson-distribution",
+    "href": "Day04_2026-09-22_sampling-simulation.html#poisson-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Poisson distribution",
+    "text": "Poisson distribution\nCount data are often assumed to follow a Poisson distribution. You can simulate count data using the rpois() function. As you recall the normal distribution has two parameters, the mean and the standard deviation. The Poisson function only has one parameter, the mean count λ (lambda). Here is an example of how to generate and display Poisson data:\n\nx_pois &lt;- rpois(n = 250, lambda = 3.3)\nhist(x_pois, probability = TRUE)"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#poisson-distribution-1",
+    "href": "Day04_2026-09-22_sampling-simulation.html#poisson-distribution-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Poisson distribution",
+    "text": "Poisson distribution\nHere too, we can compare the distribution of different samples in the same plot:\n\nx1_pois &lt;- rpois(250, lambda = 3.3)\nx2_pois &lt;- rpois(250, lambda = 1.5)\nmax_count &lt;- max(c(x1_pois, x2_pois))\n\nhist(x1_pois,\n     probability = TRUE,\n     breaks = 0 : max_count,\n     ylim = c(0, 0.8),\n     xlab = \"x\",\n     main = \"\")\nhist(x2_pois,\n     add = TRUE, \n     probability = TRUE,\n     col = adjustcolor(\"blue\", 0.25),\n     border = \"blue\",\n     breaks = 0 : max_count)"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#your-turn-1",
+    "href": "Day04_2026-09-22_sampling-simulation.html#your-turn-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice 2\n\n\n\nGenerate a figure showing histograms of 3 different draws from a Poisson distribution in a single multi-panel figure. Use different values of lambda for simulating the 3 datasets.\n\n\n\npar(mfrow = c(1, 3))\nfor (m in c(1, 5, 15)) {\n  x &lt;- rpois(250, lambda = m)\n  hist(x, main = paste(\"λ =\", m), xlab = \"Count\", probability = TRUE)\n}\npar(mfrow = c(1,1))"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#binomial-distribution",
+    "href": "Day04_2026-09-22_sampling-simulation.html#binomial-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Binomial distribution",
+    "text": "Binomial distribution\nThe binomial distribution results from a process whereby repeated trials lead to either success or failure. In R, we can use the rbinom() function, which takes as arguments the sample size (number of observations), the number of trials per observation, and the probability of success in a given trial. In the following example, we draw 10 samples from a Binomial distribution based on 5 trials and a 0.25 probability of success:\n\nx_binom &lt;- rbinom(n = 10, size = 5, prob = 0.25)\n\n\n\nThe output gives the number of successes (out of 5 trials) for each of the 10 samples we drew."
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#bernoulli-distribution",
+    "href": "Day04_2026-09-22_sampling-simulation.html#bernoulli-distribution",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Bernoulli distribution",
+    "text": "Bernoulli distribution\nThe Bernoulli distribution is a special case of the Binomial distribution where each observation consists of only a single trial. For example, we can draw 10 samples from a Bernoulli distribution using the rbinom() function like this:\n\n# e.g., flipping a coin with P(heads) = 0.35\nx_bern &lt;- rbinom(n = 10, size = 1, prob = 0.35)\n\n\nThis is essentially the same as tossing a coin 10 times. In this example, the probability of getting heads (“success”) instead of tails (“failure”) is 0.35.\n\nOne way to display the distribution of the resulting data is as a bar plot of the tabulated results, showing the frequency of a success vs. failure:\n\nbarplot(table(x_bern == 1),\n        xlab = \"Outcome\",\n        ylab = \"Number of cases\")"
+  },
+  {
+    "objectID": "Day04_2026-09-22_sampling-simulation.html#your-turn-2",
+    "href": "Day04_2026-09-22_sampling-simulation.html#your-turn-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nPractice 3\n\n\n\nUsing your own data:\n\nVisualize the distribution of continuous and/or count variables in your data. Use different types of displays, such as density plots, histograms, and box-and-whisker plots. You may have to select portions of your data, as different subsets may originate from different distributions (e.g., adult vs. juvenile body weights).\nUse simulations (with parameters from your real data) to compare whether your data resemble a theoretical distribution (uniform, normal, Poisson, etc.). Do this by plotting the simulated distributions over the empirical distributions. Example distributions to compare your data with are the uniform, the normal, and the Poisson distribution. But feel free to look up and try other distributions as well."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "",
+    "text": "General Linear regression\nGeneralized Linear regression\nPractice"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#outline",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#outline",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Outline",
+    "text": "Outline\n\nGeneral Linear regression\nGeneralized Linear regression\nPractice"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#why-use-glm",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#why-use-glm",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Why use GLM?",
+    "text": "Why use GLM?\nA linear model describes the relationship between a response and explanatory variable(s), assuming:\n\n\n\nThe model makes biological sense\nIndependence of errors (blocking, mixed effects models later)\nHomoscedasticity — equal variance of errors\nNormality of errors\n\n\\[y = b_0   \\times X_0 + b_1    \\times X_1 + b_2    \\times X_2 + \\ldots\\]"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#what-is-a-glm",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#what-is-a-glm",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "What is a GLM?",
+    "text": "What is a GLM?\nIn a Gaussian linear model, the expected values are:\n\n\n\\[\\mu = X \\beta\\]\nand the errors follow a normal distribution:\n\\[y \\sim    {Normal}(\\mu, \\sigma)\\]\n\n\n\n\n\n\nNote\n\n\nBut are the errors always normal? What if our response is a count, a proportion, or presence/absence?"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#model-structure",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#model-structure",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Model structure",
+    "text": "Model structure\nStatistical models describe:\n\nSystematic pattern in a random variable (response), possibly as a function of covariates\nRandom (unexplained) variability around the mean:\n\nResponse = systematic + random\n\n\n\n\n\n\nNote\n\n\nother pairs of terms: deterministic + stochastic, or mean + dispersion structure of model"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#key-elements-of-a-model",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#key-elements-of-a-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Key elements of a model",
+    "text": "Key elements of a model\n\n\nDeterministic process:\n\n\nStochastic process:\n\n\n\nWhy do we need both? Deterministic part is a mathematical model of a process while stochastic part is a statistical model of data that arise from the process."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#basic-regression-model",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#basic-regression-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Basic regression model",
+    "text": "Basic regression model\nDeterministic process: What biological process underlies the pattern in my data?\nStochastic process: What probabilistic process produces the values of my data?\n\\[y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i, \\qquad \\epsilon_i \\sim  {Normal}(0, \\sigma^2)\\]\nis exactly the same as:\n\\[\\mu_i = \\beta_0 + \\beta_1 x_i, \\qquad y_i \\sim    {Normal}(\\mu_i, \\sigma^2)\\]\n\nWhat if the errors aren’t normal?"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#common-error-distributions",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#common-error-distributions",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Common error distributions",
+    "text": "Common error distributions\n\n\n\n\n\n\nThe family for the errors can be: Gaussian for normally distributed data\n\nOther example error distributions include:\n\n\nPoisson for count data\nBinomial for success/failure data\nBernoulli for presence/absence"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#what-is-a-glm-1",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#what-is-a-glm-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "What is a GLM?",
+    "text": "What is a GLM?\nA GLM uses a link function \\(L\\) to describe the relationship between the mean response and the predictor:\n\\[L(E(y)) = \\beta_0 + \\beta_1 x\\]"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#simple-linear-regression",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#simple-linear-regression",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Simple linear regression",
+    "text": "Simple linear regression\n\\[E(y) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_n x_n\\]\n\nThe link is called ”identity”\nProduces μ on range (−∞, ∞)\nPossibility to add interaction effects (e.g., \\(\\beta_3 x_1 x_2\\)) and curvilinear effects (e.g., \\(\\beta_4 x_1^3\\) )\nWhen should we not use a linear model?\n– Simple linear models produce continuous predictions across the range of all real numbers\n– Equations must provide predictions matched to the biological quantities we wish to understand"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-model-simulate-data",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-model-simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only model: simulate data",
+    "text": "Intercept-only model: simulate data\nLet’s simulate observations as 1000 samples of body mass measurements of male peregrines."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-frequentist",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only: frequentist",
+    "text": "Intercept-only: frequentist\nAs we did last week, we can analyse these data using canned software. There are R packages to fit linear models using frequentist inference methods (e.g., lm() or glm() from stats package), or Bayesian inference (e.g., brms package)."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only: Bayesian",
+    "text": "Intercept-only: Bayesian\nWe could also use general-purpose software to fit models. In this lesson, you will see how to fit linear models using R package ”nimble”. When we use R packages, we need to learn the syntax and provide the required input and format. First, make sure the required packages are installed and loaded into R. Second, bundle data in a list. Third, write the Nimble model in BUGS language."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-1",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only: Bayesian",
+    "text": "Intercept-only: Bayesian\nWe use Markov Chain Monte Carlo simulations to draw samples from the posterior distribution of our parameters of interest. For this, we need additional input, including starting values for MCMC chains, parameters we want monitored, and MCMC settings."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-2",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only: Bayesian",
+    "text": "Intercept-only: Bayesian\nWe generated starting values and saved them in a list, saved a vector of the parameter names, and finally, determined how many MCMC chains and iterations we need, how many samples to keep, and how many samples to discard. Now, we can fit this model:"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-3",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#intercept-only-bayesian-3",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Intercept-only: Bayesian",
+    "text": "Intercept-only: Bayesian\nThe model output will be a list. To show its contents we could use lapply(), as shown below. You should always inspect the model outputs."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-simulate-data",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Linear regression with covariate: simulate data",
+    "text": "Linear regression with covariate: simulate data\nLet’s generate some data, including a response (body mass measurements of male peregrines during cold months) and a continuous covariate, e.g., temperature in Celsius.\n\n\n\n\n\n\n\n\n\nNote that we do not measure eps in reality; we measure x.\nVisualizing the resulting data in this example is similar to visualizing the data you collected in the field (y) in addition to your explanatory variable (x)."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-frequentist",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Linear regression with covariate: frequentist",
+    "text": "Linear regression with covariate: frequentist\nLet’s use the same function as before to fit the regression line that describes the relationship between response and explanatory variables."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-bayesian",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-bayesian",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Linear regression with covariate: Bayesian",
+    "text": "Linear regression with covariate: Bayesian\nAs before, we need to bundle data in a list and write the nimble model in BUGS language. We generate starting values and save them in a list, save a vector of the parameter names, and finally, determine how many MCMC chains and iterations we need, how many samples to keep, and how many samples to discard."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-frequentist-1",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#linear-regression-with-covariate-frequentist-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Linear regression with covariate: frequentist",
+    "text": "Linear regression with covariate: frequentist\nWe can also use the glm() fucntion to fit the regression line.\n\n\n\n\n\n\n\n\n\nThe default is “identity” link. What if the response is not continuous?"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#exponential-model",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#exponential-model",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Exponential model",
+    "text": "Exponential model\n\\[log(E(y)) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_n x_n\\]\n\nModels quantities that are only positive\nProduces μ on range (0, ∞)\nPreserves the additive simplicity of linear\n“We used a log-transformed response variable”\n“We used a linear model with a log link”"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-simulate-data",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Poisson GLM: simulate data",
+    "text": "Poisson GLM: simulate data\nRelationships with count data as the response can be modeled using Poisson GLM. A logarithmic link is used between the expectation of the response (i.e., the mean count) and the predictor function (i.e., the combination of parameters on the right side of the regression equation). As a result, exponentiated coefficient estimates are the multiplicative effect on the count (response) of one unit increase in the predictor."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-frequentist",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Poisson GLM: frequentist",
+    "text": "Poisson GLM: frequentist\nWe can use glm() to fit a generalized linear model to count data by specifying the “poisson” link. Similar to a linear model, we can make predictions as below."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-bayesian",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#poisson-glm-bayesian",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Poisson GLM: Bayesian",
+    "text": "Poisson GLM: Bayesian\nWe can fit the same model using nimble():"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Logistic regression",
+    "text": "Logistic regression\n\\[logit(E(y)) = \\beta_0 + \\beta_1 x_1 + ... + \\beta_n x_n\\]\n\nModels quantities that are proportions\nProduces μ on range (0, 1)\nPreserves the additive simplicity of linear\n“We used a linear model with a logit link”"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-simulate-data",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-simulate-data",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Logistic regression: simulate data",
+    "text": "Logistic regression: simulate data\nLet’s simulate a different response. When the response is a probability, a proportion, or a success/failure, we can fit logistic (or binomial) regression. Here we simulate data with a binary response (0/1) and two predictors, one continuous (age) and one categorical (sex). We then fit a logistic regression model and use it to make predictions."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-frequentist",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-frequentist",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Logistic regression: frequentist",
+    "text": "Logistic regression: frequentist\nWe can fit a logistic regression model using the glm() function. We need to specify the family as ”binomial”."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: logistic regression",
+    "text": "Predictions: logistic regression\nWe can make predictions from this model. As before, we create a new dataframe and use the predict function.\n\n\n\n\n\n\n\n\n\nNote that type = “response” in predictions from Poisson and logistic regression."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-bayesian",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#logistic-regression-bayesian",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Logistic regression: Bayesian",
+    "text": "Logistic regression: Bayesian\nWe can fit the same model using nimble()."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression-1",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression-1",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: logistic regression",
+    "text": "Predictions: logistic regression\n\n\n\n\n\n\n\n\n\nCan you add a legend to this plot to show what colors represent?"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression-2",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#predictions-logistic-regression-2",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Predictions: logistic regression",
+    "text": "Predictions: logistic regression\nWe can compute 95% Bayesian credible intervals around predictions.\n\n\n\n\n\n\n\n\n\nCan you repeat find the upper uncertainty bound and add the line similar to above?"
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#recap",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#recap",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Recap",
+    "text": "Recap\n▶ Your deterministic model is your hypothesis about how the world works. Depending on your purpose, you may want different functions.\n▶ In this lesson, we only focused on the three most popular deterministic models, but there are many more: e.g., power functions, asymptotic functions, etc.\n▶ Different choices have different trade-offs in ease of modeling vs. ease of interpretation."
+  },
+  {
+    "objectID": "Day06_2026-10-06_glm-bayesian-intro.html#your-turn",
+    "href": "Day06_2026-10-06_glm-bayesian-intro.html#your-turn",
+    "title": "WILD 541 – Research Design Lab",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\n\nPractice\n\n\nYou should now be able to identify what kind of data (response variable) you have and specify an appropriate regression model to describe the relationship between response and explanatory variables.\n\nWhat biological process underlies the pattern in your data?\nWhat probabilistic process produces the values of your data?\nFit an appropriate model (Gaussian, Poisson, or Binomial) to your own data using stats::glm()or nimble package."
   }
 ]

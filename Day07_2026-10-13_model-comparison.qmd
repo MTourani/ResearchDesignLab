@@ -1,0 +1,354 @@
+---
+title: "WILD 541 – Research Design Lab"
+subtitle: "Lesson 7: Model Comparison and Selection"
+author: "Mahdieh Tourani"
+date: "October 13, 2026"
+title-slide-attributes:
+  data-background-image: "images/cover08.JPG"
+  data-background-size: "45%"
+  data-background-position: "right -100px bottom 10px"
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Outline
+
+1.  Model comparison
+2.  AIC-based model selection
+3.  Practice
+
+# Model comparison
+
+## Overview
+
+There are many options and different criteria for model comparison. Here, we show a few popular methods in ecological research. Remember, all things equal, the simpler model is preferred over any more complex alternative. This is known as the ”principle of parsimony”.
+
+The Akaike Information Criterion (AIC) allows for model comparison and selection considering both the fit of the model (rewarded) and the number of parameters estimated (penalized). Here, we will use AIC-based selection methods to identify the top model in a set of candidate models.
+
+## Getting started
+
+In a telemetry study, wolverines (*Gulo gulo*) were monitored to determine factors influencing survival. Animals were live-trapped, equipped with a GPS transmitter, and released. For each tagged individual, the researchers recorded the sex, age, personality (based on behavior in the trap), and an index for the abundance of reindeer in the area used by the animal. They then recorded whether the animal was still alive after 1 year of monitoring.
+
+## Setup
+
+To begin, start from a clear workspace, load the required libraries, and the data (weasel.RData).
+
+```{r}
+rm(list = ls()) # Clear workspace
+# Specify the libraries
+lbs <- list("stats",  # model fitting in ML
+            "MASS",   # AIC
+            "nimble", # model fitting Bayesian example
+            "coda"    # post-processing, used w nimble
+)
+# Call the libraries
+sapply(lbs, library, char = TRUE)
+
+# Specify path and load data
+url_remote <- "https://raw.githubusercontent.com/"
+path_git   <- "MTourani/WILD541_F2026/refs/heads/main/"
+load(url(paste0(url_remote, path_git, "weasel.RData")))
+head(weasel)
+```
+
+> As always, inspect the data, tally the information, and visualize the different variables before model fitting.
+
+## Full model
+
+Our goal is to determine which variables influence survival and how. Based on our knowledge of the system, we build the most complex model that we are willing to consider. In this case, we allow only 2-way interactions.
+
+```{webr}
+my_glm <- stats::glm(surv ~ personality * sex +
+                            personality * age +
+                            sex * prey +
+                            sex * age,
+                     data = weasel,
+                     family = "binomial")
+summary(my_glm)
+```
+
+> Looking at the model output, you notice that several of the coefficients estimated by the model are not significantly different from 0. Apparently, this model uses too many parameters that do not seem to explain the variation in these data.
+
+## Step-wise selection based on parsimony
+
+With AIC-based model selection, the goal is to find the model (or group of models) with the lowest AIC-value(s). The absolute value itself is not important.
+
+> Note also, that you can only use AIC to compare models fitted to the same data set!
+
+## Step-wise selection based on parsimony
+
+We can use the stepAIC() function in the MASS library to do a step-wise selection of terms, shown next.
+
+In each step, the function removes the term whose removal results in the lowest AIC value. Once no more terms can be removed without a reduction in AIC, the procedure stops and returns the top model.
+
+```{webr}
+top_model <- MASS::stepAIC(my_glm, trace = FALSE)
+formula(top_model)
+summary(top_model)
+
+```
+
+> You could display the terms included in the top model and check the output of the top model using summary() and formula().
+
+## A-priori candidate models: frequentist
+
+A drawback of the step-wise selection process is that, due to the sequential removal (or addition) of terms, a predictor may be dropped from a more complex model when it is actually important in the simpler model. As an alternative to the step-wise selection procedure, you can build multiple candidate models and then compare these using AIC (or WAIC in the next example).
+
+```{webr}
+# Null model
+m0 <- stats::glm(surv ~ 1,
+                 data = weasel,
+                 family = "binomial")
+# Additive models
+m1 <- stats::glm(surv ~ sex + age + personality + prey,
+                 data   = weasel,
+                 family = "binomial")
+m2 <- stats::glm(surv ~ sex + age + prey,
+                 data   = weasel,
+                 family = "binomial")
+# Interactive model
+m3 <- stats::glm(surv ~ age + prey * sex,
+                 data   = weasel,
+                 family = "binomial")
+# Model comaprison
+stats::AIC(my_glm1, my_glm2, my_glm3, my_glm4)
+
+```
+
+> Based on the results, which model is superior (lowest AIC) to the other three models in this comparison?
+
+## A-priori candidate models: Bayesian
+
+We can fit the same set of candidate models in a Bayesian framework. Here, we use nimble package to fit these models. First, we need to bundle data in a list:
+
+```{webr}
+# Because all the input must be numeric
+sex <- as.numeric(weasel$sex) - 1
+personality <- as.numeric(weasel$personality) - 1
+list_data <- list(surv        = weasel$surv,
+                  n           = nrow(weasel),
+                  sex         = sex,
+                  age         = weasel$age,
+                  personality = personality,
+                  prey        = weasel$prey)
+
+```
+
+## A-priori candidate models: Bayesian
+
+Second, we will write Nimble models in BUGS language, shown next.
+
+```{webr}
+# Null model
+model_1 <- nimble::nimbleCode( {
+  # Likelihood
+  for(i in 1 : n) {
+    # Response is from a Binomial distribution
+    surv[i] ~ dbern(p[i]) #the same as dbinom(p[i], 1)
+    # Linear predictor
+    logit(p[i]) <- a
+  }
+  # Prior
+  a ~ dnorm(0, 0.001)
+} )
+
+# First additive model 
+model_2 <- nimble::nimbleCode( {
+  # Likelihood
+  for(i in 1 : n) {
+    surv[i] ~ dbern(p[i])
+    # Linear predictor
+    logit(p[i]) <- a +
+                   b_sex * sex[i] +
+                   b_age * age[i] +
+                   b_personality * personality[i] +
+                   b_prey * prey[i] 
+    }
+  # Priors
+  a ~ dnorm(0, 0.001)
+  b_sex ~ dnorm(0, 0.001)
+  b_personality ~ dnorm(0, 0.001)
+  b_age ~ dnorm(0, 0.001)
+  b_prey ~ dnorm(0, 0.001)
+} )
+
+# Second additive model 
+model_3 <- nimble::nimbleCode( {
+  # Likelihood
+  for(i in 1 : n) {
+    surv[i] ~ dbern(p[i])
+    # Linear predictor
+    logit(p[i]) <- a +
+                   b_sex * sex[i] +
+                   b_age * age[i] +
+                   b_prey * prey[i] 
+    }
+  # Priors
+  a ~ dnorm(0, 0.001)
+  b_sex ~ dnorm(0, 0.001)
+  b_age ~ dnorm(0, 0.001)
+  b_prey ~ dnorm(0, 0.001)
+} )
+
+# Full interactive model
+model_4 <- nimble::nimbleCode( {
+  # Likelihood
+  for(i in 1 : n) {
+    surv[i] ~ dbern(p[i])
+    # Linear predictor
+    logit(p[i]) <- a +
+                   b_age * age[i] +
+                   b_sex * sex[i] +
+                   b_prey * prey[i] +
+                   b_i_sex_prey * sex[i] * prey[i] 
+    }
+  # Priors
+  a ~ dnorm(0, 0.001)
+  b_sex ~ dnorm(0, 0.001)
+  b_age ~ dnorm(0, 0.001)
+  b_prey ~ dnorm(0, 0.001)
+  b_i_sex_prey ~ dnorm(0, 0.001)
+} )
+```
+
+## A-priori candidate models: Bayesian
+
+Now that we have defined the models, we generate initial values for the parameters of each of the four candidate models:
+
+```{webr}
+inits_1 <- list(a = rnorm(1))
+inits_2 <- list(a             = rnorm(1),
+                b_sex         = rnorm(1),
+                b_age         = rnorm(1),
+                b_prey        = rnorm(1),
+                b_personality = rnorm(1))
+inits_3 <- list(a      = rnorm(1),
+                b_sex  = rnorm(1),
+                b_age  = rnorm(1),
+                b_prey = rnorm(1))
+inits_4 <- list(a            = rnorm(1),
+                b_sex        = rnorm(1),
+                b_age        = rnorm(1),
+                b_prey       = rnorm(1),
+                b_i_sex_prey = rnorm(1))
+
+```
+
+## A-priori candidate models: Bayesian
+
+We also provide a list of parameters we need monitored:
+
+```{webr}
+params_1 <- c("a")
+params_2 <- c("a",
+              "b_sex",
+              "b_age",
+              "b_prey",
+              "b_personality")
+params_3 <- c("a",
+              "b_sex",
+              "b_age",
+              "b_prey")
+params_4 <- c("a",
+              "b_sex",
+              "b_age",
+              "b_prey",
+              "b_i_sex_prey")
+
+```
+
+## A-priori candidate models: Bayesian
+
+We can now put all the model definitions, initial values, and parameter names in three lists. Then use a for loop to avoid repeating code.
+
+```{webr}
+all_models <- list(model_1, model_2, model_3, model_4)
+all_inits <- list(inits_1, inits_2, inits_3, inits_4)
+all_params <- list(params_1, params_2, params_3, params_4)
+
+```
+
+Next, we specify the MCMC settings and create an empty list to save the output of the different models.
+
+```{webr}
+ni <- 20000   # number of iterations
+nb <- 5000    # number of burnin
+nc <- 4       # number of MCMC chains
+nt <- 1       # thining interval
+out <- list() # create an empty list
+
+```
+
+## A-priori candidate models: Bayesian
+
+Finally, fit the model using the nimble package. Notice the WAIC options is set to TRUE for model comparison in the next step.
+
+```{webr}
+for (i in 1 : length(all_models)) {
+  out[[i]] <- nimbleMCMC( code      = all_models[[i]],
+                          constants = list_data,
+                          inits     = all_inits[[i]],
+                          monitors  = all_params[[i]],
+                          nburnin   = nb,
+                          niter     = ni,
+                          thin      = nt,
+                          nchains   = nc,
+                          WAIC      = TRUE,
+                          summary   = TRUE)
+}
+
+```
+
+We can now extract the WAIC and find the best model.
+
+```{webr}
+lapply(out, function(x) x$WAIC$WAIC)
+which.min(lapply(out, function(x) x$WAIC$WAIC))
+
+
+```
+
+> Is the superior model found by WAIC consistent with the top model in the frequentist analysis?
+
+````{=html}
+<!-- 
+## Predictions from best model
+
+```{webr}
+library(ggplot2)
+new_data <- expand.grid(
+  sex          = levels(weasel$sex),
+  body.length  = seq(min(weasel$body.length),
+                     max(weasel$body.length), length.out = 50),
+  skull.width  = mean(weasel$skull.width)
+)
+pred <- predict(m7, newdata = new_data, interval = "confidence")
+new_data <- cbind(new_data, pred)
+
+ggplot(weasel, aes(x = body.length, y = weight, color = sex)) +
+  geom_point(alpha = 0.5) +
+  geom_line(data = new_data, aes(y = fit), linewidth = 1) +
+  geom_ribbon(data = new_data,
+              aes(y = fit, ymin = lwr, ymax = upr, fill = sex),
+              alpha = 0.2) +
+  xlab("Body length (cm)") + ylab("Weight (g)")
+```
+-->
+````
+
+# Practice
+
+## Your turn
+
+::: {.callout-tip title="Practice 1"}
+1.  Tally the weasel data to show the number of wolverine individuals that died and the number that survived, according to individual characteristics (sex and personality).
+2.  Fit the models above and confirm which one has the lowest AIC.
+3.  Make predictions to determine the probability of survival for 3-year-old female and male wolverines at average prey density.
+:::
+
+## Your turn
+
+::: {.callout-tip title="Practice 2"}
+1.  Using **your own data**, define a set of biologically motivated candidate models and compare them with (a) step-wise selection, starting from the most complex model you are willing to consider. (b) comparisons of a set of candidate models that you chose based on your knowledge of the system and your research questions.
+2.  Make predictions from the top model and generate 1 - 2 plots to show the results.
+:::
